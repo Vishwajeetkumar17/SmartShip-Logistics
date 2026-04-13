@@ -1,0 +1,164 @@
+:host { display: block; }
+
+.dashboard-page {
+  animation: fadeInUp 0.3s ease forwards;
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.page-header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.page-header {
+  display: flex;
+  flex-direction: column;
+}
+
+.page-header h1 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #111827;
+  margin: 0;
+  letter-spacing: -0.02em;
+}
+
+.subtitle {
+  color: #6B7280;
+  font-size: 0.9rem;
+  margin: 0.3rem 0 0;
+}
+
+.btn-create {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.6rem 1.2rem;
+  background: #4F46E5;
+  color: #FFFFFF;
+  font-size: 0.85rem;
+  font-weight: 600;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: all 0.15s;
+  box-shadow: 0 1px 2px rgba(79, 70, 229, 0.2);
+}
+
+.btn-create:hover {
+  background: #4338CA;
+  transform: translateY(-1px);
+}
+
+/* Recent Shipments layout matching admin shipments */
+.recent-header {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #111827;
+  padding: 1.25rem 1.25rem 0.5rem;
+  margin: 0;
+}
+
+.table-card {
+  background: #FFFFFF;
+  border: 1px solid #E5E7EB;
+  border-radius: 12px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+  overflow: hidden;
+  margin-top: 1rem;
+}
+
+.table-scroll { overflow-x: auto; }
+
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.data-table thead th {
+  padding: 0.7rem 1rem;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: #6B7280;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  background: #F9FAFB;
+  border-bottom: 1px solid #E5E7EB;
+  white-space: nowrap;
+}
+
+.data-table tbody td {
+  padding: 0.8rem 1rem;
+  font-size: 0.875rem;
+  color: #374151;
+  border-bottom: 1px solid #F3F4F6;
+  vertical-align: middle;
+}
+
+.data-table tbody tr:hover { background: #F9FAFB; }
+
+.tracking-main {
+  font-weight: 700;
+  color: #111827;
+  font-size: 0.85rem;
+  font-family: 'Consolas', 'SF Mono', monospace;
+  letter-spacing: 0.01em;
+}
+
+.route-to { font-size: 0.875rem; color: #374151; font-weight: 500; }
+.general-text { font-size: 0.875rem; color: #6B7280; }
+
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  white-space: nowrap;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+.status-draft        { background: #F3F4F6; color: #4B5563; }
+.status-delivered    { background: #D1FAE5; color: #065F46; }
+.status-intransit,
+.status-in-transit   { background: #DBEAFE; color: #1E40AF; }
+.status-pending      { background: #FEF3C7; color: #92400E; }
+.status-booked       { background: #EDE9FE; color: #5B21B6; }
+.status-pickedup,
+.status-picked-up    { background: #E0E7FF; color: #3730A3; }
+.status-outfordelivery,
+.status-out-for-delivery { background: #FEF3C7; color: #92400E; }
+.status-failed       { background: #FEE2E2; color: #991B1B; }
+.status-cancelled    { background: #F3F4F6; color: #4B5563; }
+
+.btn-view {
+  color: #4F46E5;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-decoration: none;
+  padding: 6px 12px;
+  border-radius: 8px;
+  transition: all 0.15s;
+  background: transparent;
+}
+
+.btn-view:hover {
+  background: #EEF2FF;
+  color: #4338CA;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 3rem 1rem;
+}
+.empty-icon { font-size: 3rem; color: #D1D5DB; margin-bottom: 1rem; }
+.empty-heading { font-size: 1.25rem; color: #111827; margin: 0 0 0.5rem 0; font-weight: 600; }
+.empty-text { margin: 0 0 1.5rem 0; font-size: 0.95rem; color: #6B7280; }

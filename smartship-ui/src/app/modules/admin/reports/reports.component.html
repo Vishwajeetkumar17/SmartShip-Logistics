@@ -1,0 +1,189 @@
+<div class="reports-page">
+  <div class="reports-header">
+    <div>
+      <h1>Reports &amp; Analytics</h1>
+      <p>Performance metrics and operational insights</p>
+    </div>
+    <div class="header-actions">
+      <button class="btn-secondary" type="button" (click)="toggleDateRangePicker()">
+        <span class="material-icons">calendar_month</span>
+        Date Range
+      </button>
+      <button class="btn-primary" type="button" (click)="exportAll()">
+        <span class="material-icons">download</span>
+        Export All
+      </button>
+    </div>
+  </div>
+
+  @if (showDateRangePicker) {
+  <div class="date-range-panel">
+    <div class="date-field">
+      <label>From</label>
+      <input type="date" [(ngModel)]="fromDate" (ngModelChange)="onDateRangeInputChange()" />
+    </div>
+    <div class="date-field">
+      <label>To</label>
+      <input type="date" [(ngModel)]="toDate" (ngModelChange)="onDateRangeInputChange()" />
+    </div>
+    <div class="date-actions">
+      <button type="button" class="btn-secondary" (click)="clearDateRange()">Clear</button>
+      <button type="button" class="btn-primary" (click)="applyDateRange()">Apply</button>
+    </div>
+  </div>
+  @if (dateRangeError) {
+  <div class="date-range-error">{{ dateRangeError }}</div>
+  }
+  }
+
+  @if (hasActiveRange) {
+  <div class="range-badge">
+    <span class="material-icons">filter_alt</span>
+    Filtered Range: {{ activeRangeLabel }}
+  </div>
+  }
+
+  @if (isLoading) {
+  <div class="loading-state">
+    <span class="loader"></span>
+    <p>Loading analytics...</p>
+  </div>
+  } @else {
+  <div class="kpi-grid">
+    <div class="kpi-card kpi-blue">
+      <div class="kpi-title"><span class="material-icons">inventory_2</span> Total Shipments</div>
+      <div class="kpi-value">{{ totalShipments() | number }}</div>
+      <div class="kpi-sub">{{ kpiTimeScope }}</div>
+    </div>
+    <div class="kpi-card kpi-green">
+      <div class="kpi-title"><span class="material-icons">trending_up</span> Revenue</div>
+      <div class="kpi-value">₹{{ revenue() | number }}</div>
+      <div class="kpi-sub">{{ kpiTimeScope }}</div>
+    </div>
+    <div class="kpi-card kpi-purple">
+      <div class="kpi-title"><span class="material-icons">insights</span> Customer Satisfaction</div>
+      <div class="kpi-value">{{ customerSatisfaction() | number:'1.1-1' }}/5</div>
+      <div class="kpi-sub">Average rating</div>
+    </div>
+  </div>
+
+  <div class="chart-grid-2">
+    <div class="chart-card">
+      <div class="card-head">
+        <h3>Daily Shipments Trend</h3>
+      </div>
+      @if (hasLineData) {
+      <div class="chart-wrap medium daily-chart-tall">
+        <canvas baseChart [data]="lineChartData()" [type]="lineChartType" [options]="lineChartOptions"></canvas>
+      </div>
+      } @else {
+      <div class="empty-state">No daily shipment trend data available.</div>
+      }
+    </div>
+
+    <div class="chart-card">
+      <div class="card-head">
+        <h3>Service Type Distribution</h3>
+      </div>
+      @if (hasPieData) {
+      <div class="chart-wrap medium">
+        <canvas baseChart [data]="pieChartData()" [type]="pieChartType" [options]="pieChartOptions"></canvas>
+      </div>
+      <div class="chart-legend">
+        @for (item of getServiceDistributionLegendItems(); track item.label) {
+        <div class="chart-legend-item">
+          <span class="chart-color-dot" [style.background-color]="item.color"></span>
+          <span class="chart-legend-label">{{ item.label }}</span>
+        </div>
+        }
+      </div>
+      } @else {
+      <div class="empty-state">No service distribution data available.</div>
+      }
+    </div>
+  </div>
+
+  <div class="chart-card full-width">
+    <div class="card-head">
+      <h3>Delivery Performance (6 Month Trend)</h3>
+    </div>
+    @if (hasBarData) {
+    <div class="chart-wrap large">
+      <canvas baseChart [data]="barChartData()" [type]="barChartType" [options]="barChartOptions"></canvas>
+    </div>
+    <div class="chart-legend">
+      @for (item of getBarChartLegendItems(); track item.label) {
+      <div class="chart-legend-item">
+        <span class="chart-color-dot" [style.background-color]="item.color"></span>
+        <span class="chart-legend-label">{{ item.label }}</span>
+      </div>
+      }
+    </div>
+    } @else {
+    <div class="empty-state">No delivery performance trend data available.</div>
+    }
+  </div>
+
+  <div class="table-card">
+    <h3>Hub Performance Summary</h3>
+    <div class="table-scroll">
+      <table>
+        <thead>
+          <tr>
+            <th>Hub Location</th>
+            <th>Total Shipments</th>
+            <th>On-Time %</th>
+            <th>Avg Processing Time</th>
+            <th>Performance</th>
+          </tr>
+        </thead>
+        <tbody>
+          @if (!hasHubRows) {
+          <tr>
+            <td colspan="5" class="empty-table-cell">No hub performance data available.</td>
+          </tr>
+          }
+          @for (row of hubPerformanceRows(); track row.hubLocation) {
+          <tr>
+            <td>{{ row.hubLocation }}</td>
+            <td>{{ row.totalShipments }}</td>
+            <td>
+              <span class="percentage-pill" [ngClass]="getPercentageColorClass(row.onTimePercent)">
+                {{ row.onTimePercent }}%
+              </span>
+            </td>
+            <td>{{ row.avgProcessingTime }}</td>
+            <td>
+              <span class="performance-pill" [ngClass]="getPerformanceClass(row.performance)">
+                {{ row.performance }}
+              </span>
+            </td>
+          </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  @if (detailsOpen) {
+  <div class="details-card">
+    <div class="details-head">
+      <h3>{{ detailsTitle }}</h3>
+      <button type="button" class="btn-secondary" (click)="closeDetails()">Close</button>
+    </div>
+    <div class="details-list">
+      @if (detailsRows.length === 0) {
+      <p class="empty-details">No details available for this section.</p>
+      } @else {
+      @for (detail of detailsRows; track detail.label) {
+      <div class="details-row">
+        <span>{{ detail.label }}</span>
+        <strong>{{ detail.value }}</strong>
+      </div>
+      }
+      }
+    </div>
+  </div>
+  }
+  }
+</div>

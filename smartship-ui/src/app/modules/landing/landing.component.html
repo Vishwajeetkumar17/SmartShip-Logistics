@@ -1,0 +1,639 @@
+<!-- ═══════════════════════ NAVBAR ═══════════════════════ -->
+<nav class="navbar" id="navbar" [class.scrolled]="navScrolled">
+  <div class="nav-container">
+    <a routerLink="/" class="nav-logo" aria-label="SmartShip Home">
+      <div class="logo-icon">
+        <div
+          style="display: flex; align-items: center; justify-content: center; height: 40px; width: 40px; background-color: #ffffff; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); margin-right: 8px; overflow: hidden; flex-shrink: 0;">
+          <img src="/logo.png" alt="SmartShip Logo" style="height: 150%; width: 150%; object-fit: contain;">
+        </div>
+      </div>
+      <span class="logo-text">SmartShip</span>
+    </a>
+    <div class="nav-links" id="navLinks" [class.active]="mobileMenuOpen">
+      <a href="#features" class="nav-link" (click)="scrollTo('features', $event)">Features</a>
+      <a href="#how-it-works" class="nav-link" (click)="scrollTo('how-it-works', $event)">How it Works</a>
+      <a href="#tracking" class="nav-link" (click)="scrollTo('tracking', $event)">Track</a>
+      <!-- Point to Auth app -->
+      <a routerLink="/auth/login" class="nav-link">Login</a>
+      <a routerLink="/auth/signup" class="nav-cta-btn">Get Started</a>
+    </div>
+    <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle menu" (click)="toggleMobileMenu()"
+      [class.active]="mobileMenuOpen">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- ═══════════════════════ HERO ═══════════════════════ -->
+<section class="hero" id="hero">
+  <div class="hero-bg-blobs">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+  </div>
+  <div class="hero-container">
+    <div class="hero-left animate-on-scroll">
+      <!-- Changed explicitly to Indian context -->
+      <h1 class="hero-headline">Logistics that actually<br>feels <span class="gradient-text">under control</span></h1>
+      <p class="hero-subtext">
+        End-to-end shipment tracking, automated dispatch, and delivery insights
+        — built for teams across India that need reliability, not just dashboards.
+      </p>
+      <div class="hero-cta-group">
+        <a routerLink="/auth/signup" class="btn btn-primary btn-glow">
+          Start Shipping
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+            stroke-linecap="round" stroke-linejoin="round">
+            <path d="M5 12h14M12 5l7 7-7 7" />
+          </svg>
+        </a>
+        <a routerLink="/admin" class="btn btn-secondary">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="3" width="18" height="18" rx="2" />
+            <path d="M3 9h18M9 21V9" />
+          </svg>
+          View Dashboard
+        </a>
+      </div>
+    </div>
+    <div class="hero-right animate-on-scroll" style="--delay:0.2s">
+      <!-- Logistics Network Visualization -->
+      <div class="logistics-network-card">
+        <div class="network-grid-bg"></div>
+
+        <!-- SVG Route Curves -->
+        <svg class="network-routes-svg" viewBox="0 0 440 340" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <!-- Route 1: Truck to Warehouse 1 -->
+          <path d="M 70,60 C 140,60 160,130 220,140" stroke="#6366F1" stroke-width="2" stroke-dasharray="8 6"
+            stroke-linecap="round" class="route-curve-animate" />
+          <!-- Route 2: Truck to Warehouse 2 -->
+          <path d="M 70,60 C 120,100 180,200 300,210" stroke="#6366F1" stroke-width="2" stroke-dasharray="8 6"
+            stroke-linecap="round" class="route-curve-animate delay-1" />
+          <!-- Route 3: Warehouse 1 to Warehouse 2 -->
+          <path d="M 220,140 C 260,160 280,190 300,210" stroke="#818CF8" stroke-width="1.5" stroke-dasharray="6 5"
+            stroke-linecap="round" class="route-curve-animate delay-2" />
+        </svg>
+
+        <!-- Truck Icon (top-left) -->
+        <div class="network-truck-icon">
+          <svg width="44" height="36" viewBox="0 0 48 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="1" y="2" width="28" height="20" rx="3" fill="#6366F1" stroke="#4F46E5" stroke-width="1.5" />
+            <path d="M29 10H38C39.5 10 41 11 42 12.5L45 16V22H29V10Z" fill="#818CF8" stroke="#4F46E5" stroke-width="1.5"
+              stroke-linejoin="round" />
+            <path d="M31 12H37C38 12 39 12.5 39.5 13.5L41.5 16.5H31V12Z" fill="#4338CA" />
+            <!-- Packages on truck -->
+            <rect x="4" y="5" width="8" height="7" rx="1.5" fill="#FCD34D" stroke="#F59E0B" stroke-width="1" />
+            <rect x="13" y="5" width="8" height="7" rx="1.5" fill="#FCD34D" stroke="#F59E0B" stroke-width="1" />
+            <rect x="8" y="0" width="7" height="6" rx="1.5" fill="#FBBF24" stroke="#F59E0B" stroke-width="1" />
+            <!-- Wheels -->
+            <circle cx="10" cy="24" r="4" fill="#1E293B" />
+            <circle cx="22" cy="24" r="4" fill="#1E293B" />
+            <circle cx="39" cy="24" r="4" fill="#1E293B" />
+            <circle cx="10" cy="24" r="1.8" fill="#94A3B8" />
+            <circle cx="22" cy="24" r="1.8" fill="#94A3B8" />
+            <circle cx="39" cy="24" r="1.8" fill="#94A3B8" />
+          </svg>
+        </div>
+
+        <!-- Warehouse Node 1 -->
+        <div class="network-warehouse" style="left: 46%; top: 36%;">
+          <div class="warehouse-icon-wrap">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#6366F1" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round">
+              <path d="M3 21h18" />
+              <path d="M5 21V7l7-4 7 4v14" />
+              <path d="M9 21v-6h6v6" />
+            </svg>
+          </div>
+        </div>
+
+        <!-- Warehouse Node 2 -->
+        <div class="network-warehouse" style="left: 64%; top: 56%;">
+          <div class="warehouse-icon-wrap">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#6366F1" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round">
+              <path d="M3 21h18" />
+              <path d="M5 21V7l7-4 7 4v14" />
+              <path d="M9 21v-6h6v6" />
+            </svg>
+          </div>
+        </div>
+
+        <!-- Dot markers -->
+        <div class="network-dot" style="left: 55%; top: 25%;"></div>
+        <div class="network-dot" style="left: 78%; top: 50%;"></div>
+        <div class="network-dot accent" style="left: 28%; top: 55%;"></div>
+
+        <!-- Floating Labels -->
+        <div class="network-float-label label-delivery">
+          <span class="float-label-icon">🚚</span>
+          <span class="float-label-text">Fast Delivery</span>
+        </div>
+
+        <div class="network-float-label label-reliable">
+          <span class="float-label-icon">🌐</span>
+          <span class="float-label-text">Pan-India</span>
+        </div>
+
+        <div class="network-float-label label-secure">
+          <span class="float-label-icon">✅</span>
+          <span class="float-label-text">Secure</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════ STATS ═══════════════════════ -->
+<section class="stats" id="stats">
+  <div class="stats-container">
+    @for (counter of counters; track counter.label; let i = $index) {
+    <div class="stat-card animate-on-scroll" [style.--delay]="i * 0.1 + 's'">
+      <div class="stat-icon" [ngClass]="counter.color">
+        <svg *ngIf="counter.icon === 'inventory_2'" width="24" height="24" viewBox="0 0 24 24" fill="none"
+          stroke="currentColor" stroke-width="2" stroke-linecap="round">
+          <rect x="1" y="6" width="22" height="12" rx="2" />
+          <path d="M1 10h22" />
+        </svg>
+        <svg *ngIf="counter.icon === 'schedule'" width="24" height="24" viewBox="0 0 24 24" fill="none"
+          stroke="currentColor" stroke-width="2" stroke-linecap="round">
+          <circle cx="12" cy="12" r="10" />
+          <path d="M12 6v6l4 2" />
+        </svg>
+        <svg *ngIf="counter.icon === 'route'" width="24" height="24" viewBox="0 0 24 24" fill="none"
+          stroke="currentColor" stroke-width="2" stroke-linecap="round">
+          <circle cx="12" cy="10" r="3" />
+          <path d="M12 21.7C17.3 17 20 13 20 10a8 8 0 10-16 0c0 3 2.7 7 8 11.7z" />
+        </svg>
+      </div>
+      <div class="stat-value">{{ formatCounter(counter) }}</div>
+      <div class="stat-label">{{ counter.label }}</div>
+      <div class="stat-trend" [ngClass]="i === 2 ? 'neutral' : 'up'">
+        <svg *ngIf="i !== 2" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+          stroke-width="3" stroke-linecap="round">
+          <path d="M12 19V5M5 12l7-7 7 7" />
+        </svg>
+        {{ i === 0 ? 'Consistent growth' : i === 1 ? 'Faster than industry avg' : 'Covering 28 states' }}
+      </div>
+    </div>
+    }
+  </div>
+</section>
+
+<!-- ═══════════════════════ FEATURES ═══════════════════════ -->
+<section class="features" id="features">
+  <div class="features-bg-blobs">
+    <div class="blob blob-4"></div>
+    <div class="blob blob-5"></div>
+  </div>
+  <div class="features-container">
+    <div class="section-header animate-on-scroll">
+      <span class="section-tag">Capabilities</span>
+      <h2 class="section-title">Everything your logistics<br>team actually needs</h2>
+      <p class="section-sub">Built from real operational pain points — not a feature checklist.</p>
+    </div>
+    <div class="features-grid">
+      <div class="feature-card animate-on-scroll" style="--delay:0s">
+        <div class="feature-icon-wrap gradient-1">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"
+            stroke-linecap="round">
+            <circle cx="12" cy="10" r="3" />
+            <path d="M12 21.7C17.3 17 20 13 20 10a8 8 0 10-16 0c0 3 2.7 7 8 11.7z" />
+          </svg>
+        </div>
+        <h3 class="feature-title">Live Shipment Tracking</h3>
+        <p class="feature-desc">GPS-powered real-time visibility across every leg of the journey. No refresh needed —
+          updates push to your dashboard automatically.</p>
+      </div>
+      <div class="feature-card feature-card-tall animate-on-scroll" style="--delay:0.08s">
+        <div class="feature-icon-wrap gradient-2">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"
+            stroke-linecap="round">
+            <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" />
+            <path d="M14 2v6h6M16 13H8M16 17H8M10 9H8" />
+          </svg>
+        </div>
+        <h3 class="feature-title">Automated Documentation</h3>
+        <p class="feature-desc">Bills of lading, E-way bills, and proof of delivery — generated, validated, and filed
+          without manual work. Compliance built in for Indian regulations.</p>
+      </div>
+      <div class="feature-card animate-on-scroll" style="--delay:0.16s">
+        <div class="feature-icon-wrap gradient-3">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"
+            stroke-linecap="round">
+            <path d="M12 20V10M18 20V4M6 20v-4" />
+          </svg>
+        </div>
+        <h3 class="feature-title">Delivery Analytics</h3>
+        <p class="feature-desc">Turn raw delivery data into operational insight. Identify bottlenecks, predict delays,
+          and benchmark carrier performance across routes.</p>
+      </div>
+      <div class="feature-card animate-on-scroll" style="--delay:0.05s">
+        <div class="feature-icon-wrap gradient-4">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"
+            stroke-linecap="round">
+            <path d="M16 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" />
+            <circle cx="8.5" cy="7" r="4" />
+            <path d="M20 8v6M23 11h-6" />
+          </svg>
+        </div>
+        <h3 class="feature-title">Team Collaboration</h3>
+        <p class="feature-desc">Shared views, role-based access, and in-context comments. Everyone from dispatch to the
+          warehouse sees what they need.</p>
+      </div>
+      <div class="feature-card animate-on-scroll" style="--delay:0.12s">
+        <div class="feature-icon-wrap gradient-5">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"
+            stroke-linecap="round">
+            <path
+              d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0zM12 9v4M12 17h.01" />
+          </svg>
+        </div>
+        <h3 class="feature-title">Issue Detection</h3>
+        <p class="feature-desc">Automatic flagging of delays, route deviations, and delivery issues. Get notified before
+          your customers do.</p>
+      </div>
+      <div class="feature-card feature-card-tall animate-on-scroll" style="--delay:0.2s">
+        <div class="feature-icon-wrap gradient-6">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"
+            stroke-linecap="round">
+            <rect x="2" y="2" width="20" height="8" rx="2" />
+            <rect x="2" y="14" width="20" height="8" rx="2" />
+            <path d="M6 6h.01M6 18h.01" />
+          </svg>
+        </div>
+        <h3 class="feature-title">API & Integrations</h3>
+        <p class="feature-desc">RESTful APIs, webhooks, and pre-built connectors for Shopify, Zoho, and major Indian
+          carriers like Delhivery, BlueDart, DTDC.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════ HOW IT WORKS ═══════════════════════ -->
+<section class="how-it-works" id="how-it-works">
+  <div class="how-container">
+    <div class="section-header animate-on-scroll">
+      <span class="section-tag">Process</span>
+      <h2 class="section-title">Three steps to smarter shipping</h2>
+      <p class="section-sub">From first shipment to full visibility — up and running in minutes.</p>
+    </div>
+    <div class="steps-track">
+      <div class="steps-line"></div>
+      <div class="step-item animate-on-scroll" style="--delay:0s">
+        <div class="step-number">1</div>
+        <div class="step-content">
+          <h3 class="step-title">Create Shipment</h3>
+          <p class="step-desc">Enter origin, destination, and package details. Our system auto-assigns carriers and
+            generates documentation.</p>
+        </div>
+        <div class="step-visual">
+          <div class="step-mock">
+            <div class="mock-field"><span class="mock-label">Origin</span><span class="mock-value">Mumbai, MH</span>
+            </div>
+            <div class="mock-field"><span class="mock-label">Destination</span><span class="mock-value">Bengaluru,
+                KA</span></div>
+            <div class="mock-btn">Create →</div>
+          </div>
+        </div>
+      </div>
+      <div class="step-item animate-on-scroll" style="--delay:0.15s">
+        <div class="step-number">2</div>
+        <div class="step-content">
+          <h3 class="step-title">Track in Real-Time</h3>
+          <p class="step-desc">Watch your shipment move across every checkpoint. Receive proactive alerts for delays or
+            route changes.</p>
+        </div>
+        <div class="step-visual">
+          <div class="step-mock tracking-mock">
+            <div class="mock-track-dot active"></div>
+            <div class="mock-track-line"></div>
+            <div class="mock-track-dot active"></div>
+            <div class="mock-track-line"></div>
+            <div class="mock-track-dot pulse-dot"></div>
+            <div class="mock-track-line dim"></div>
+            <div class="mock-track-dot dim"></div>
+          </div>
+        </div>
+      </div>
+      <div class="step-item animate-on-scroll" style="--delay:0.3s">
+        <div class="step-number">3</div>
+        <div class="step-content">
+          <h3 class="step-title">Delivery & Insights</h3>
+          <p class="step-desc">Confirm delivery with e-signature or photo proof. Access performance analytics and
+            optimize future routes.</p>
+        </div>
+        <div class="step-visual">
+          <div class="step-mock insights-mock">
+            <div class="insight-bar" style="--w:92%"><span>On-time</span><span>92%</span></div>
+            <div class="insight-bar" style="--w:78%"><span>Efficiency</span><span>78%</span></div>
+            <div class="insight-bar" style="--w:96%"><span>Accuracy</span><span>96%</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════ TRACKING ═══════════════════════ -->
+<section class="tracking" id="tracking">
+  <div class="tracking-container">
+    <div class="tracking-left animate-on-scroll">
+      <span class="section-tag">Live Tracking</span>
+      <h2 class="section-title">Track any shipment,<br>anytime</h2>
+      <p class="section-sub">Enter your tracking ID to see real-time status, location history, and estimated delivery.
+      </p>
+      <div class="track-input-group">
+        <div class="track-input-wrap">
+          <svg class="track-search-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#94A3B8"
+            stroke-width="2" stroke-linecap="round">
+            <circle cx="11" cy="11" r="8" />
+            <path d="M21 21l-4.35-4.35" />
+          </svg>
+          <input type="text" class="track-input" [(ngModel)]="trackingId" placeholder="e.g. SS-2024-4821"
+            (keyup.enter)="onTrack()" />
+        </div>
+        <button class="btn btn-primary btn-glow track-btn" (click)="onTrack()">
+          Track Shipment
+        </button>
+      </div>
+    </div>
+    <div class="tracking-right animate-on-scroll" style="--delay:0.15s">
+      <div class="shipment-card" id="shipmentCard">
+        <div class="shipment-header">
+          <div>
+            <span class="shipment-id">SS-2024-4821</span>
+            <span class="shipment-status delivered">Delivered</span>
+          </div>
+          <span class="shipment-carrier">Delhivery Express</span>
+        </div>
+        <div class="shipment-route">
+          <div class="route-point">
+            <span class="route-city">Mumbai, MH</span>
+            <span class="route-date">Apr 2, 10:30 AM</span>
+          </div>
+          <div class="route-arrow">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#6366F1" stroke-width="2"
+              stroke-linecap="round">
+              <path d="M5 12h14M12 5l7 7-7 7" />
+            </svg>
+          </div>
+          <div class="route-point">
+            <span class="route-city">Pune, MH</span>
+            <span class="route-date">Apr 4, 2:15 PM</span>
+          </div>
+        </div>
+        <div class="shipment-timeline">
+          <div class="tl-item completed">
+            <div class="tl-dot"></div>
+            <div class="tl-content">
+              <span class="tl-title">Package picked up</span>
+              <span class="tl-meta">Mumbai, MH — Apr 2, 10:30 AM</span>
+            </div>
+          </div>
+          <div class="tl-item completed">
+            <div class="tl-dot"></div>
+            <div class="tl-content">
+              <span class="tl-title">In transit — departed facility</span>
+              <span class="tl-meta">Navi Mumbai hub — Apr 2, 8:45 PM</span>
+            </div>
+          </div>
+          <div class="tl-item completed">
+            <div class="tl-dot"></div>
+            <div class="tl-content">
+              <span class="tl-title">Arrived at destination hub</span>
+              <span class="tl-meta">Pune, MH — Apr 3, 6:20 AM</span>
+            </div>
+          </div>
+          <div class="tl-item completed">
+            <div class="tl-dot"></div>
+            <div class="tl-content">
+              <span class="tl-title">Out for delivery</span>
+              <span class="tl-meta">Pune, MH — Apr 4, 9:00 AM</span>
+            </div>
+          </div>
+          <div class="tl-item completed final">
+            <div class="tl-dot"></div>
+            <div class="tl-content">
+              <span class="tl-title">Delivered — signed by J. Martinez</span>
+              <span class="tl-meta">Pune, MH — Apr 4, 2:15 PM</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════ SECURITY ═══════════════════════ -->
+<section class="security" id="security">
+  <div class="security-container">
+    <div class="section-header animate-on-scroll">
+      <span class="section-tag light">Security</span>
+      <h2 class="section-title light">Built for secure logistics operations</h2>
+      <p class="section-sub light">Enterprise-grade protection at every layer — from data in transit to user access.</p>
+    </div>
+    <div class="security-grid">
+      <div class="security-card animate-on-scroll" style="--delay:0s">
+        <div class="security-icon">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="url(#secGrad1)" stroke-width="2"
+            stroke-linecap="round">
+            <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" />
+            <circle cx="9" cy="7" r="4" />
+            <path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75" />
+            <defs>
+              <linearGradient id="secGrad1" x1="0" y1="0" x2="24" y2="24">
+                <stop stop-color="#818CF8" />
+                <stop offset="1" stop-color="#6366F1" />
+              </linearGradient>
+            </defs>
+          </svg>
+        </div>
+        <h3 class="security-title">Role-Based Access Control</h3>
+        <p class="security-desc">Granular permissions for every team role. Dispatchers, managers, and admins each see
+          only what they need.</p>
+      </div>
+      <div class="security-card animate-on-scroll" style="--delay:0.1s">
+        <div class="security-icon">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="url(#secGrad2)" stroke-width="2"
+            stroke-linecap="round">
+            <rect x="3" y="11" width="18" height="11" rx="2" />
+            <path d="M7 11V7a5 5 0 0110 0v4" />
+            <defs>
+              <linearGradient id="secGrad2" x1="0" y1="0" x2="24" y2="24">
+                <stop stop-color="#818CF8" />
+                <stop offset="1" stop-color="#6366F1" />
+              </linearGradient>
+            </defs>
+          </svg>
+        </div>
+        <h3 class="security-title">End-to-End Encryption</h3>
+        <p class="security-desc">AES-256 encryption at rest and TLS 1.3 in transit. Your shipment data stays private,
+          always.</p>
+      </div>
+      <div class="security-card animate-on-scroll" style="--delay:0.2s">
+        <div class="security-icon">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="url(#secGrad3)" stroke-width="2"
+            stroke-linecap="round">
+            <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" />
+            <path d="M14 2v6h6M16 13H8M16 17H8" />
+            <defs>
+              <linearGradient id="secGrad3" x1="0" y1="0" x2="24" y2="24">
+                <stop stop-color="#818CF8" />
+                <stop offset="1" stop-color="#6366F1" />
+              </linearGradient>
+            </defs>
+          </svg>
+        </div>
+        <h3 class="security-title">Comprehensive Audit Logs</h3>
+        <p class="security-desc">Every action logged with timestamps and user context. Full traceability for compliance
+          and investigations.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════ TESTIMONIALS ═══════════════════════ -->
+<section class="testimonials" id="testimonials">
+  <div class="testimonials-container">
+    <div class="section-header animate-on-scroll">
+      <span class="section-tag">What teams say</span>
+      <h2 class="section-title">Real feedback from<br>real operations</h2>
+    </div>
+    <div class="testimonials-grid">
+      <div class="testimonial-card animate-on-scroll" style="--delay:0s">
+        <div class="testimonial-stars">★★★★★</div>
+        <p class="testimonial-text">"We switched from spreadsheets and three different apps. SmartShip replaced all of
+          them — and the visibility alone saved us from two major customer escalations last month in our Delhi-Mumbai
+          corridor."</p>
+        <div class="testimonial-author">
+          <div class="author-avatar" style="background: linear-gradient(135deg, #6366F1, #818CF8);">PK</div>
+          <div class="author-info">
+            <span class="author-name">Priyanka Kapoor</span>
+            <span class="author-role">Operations Manager, Vertex Logistics, Mumbai</span>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card offset-down animate-on-scroll" style="--delay:0.12s">
+        <div class="testimonial-stars">★★★★★</div>
+        <p class="testimonial-text">"The automated e-way bills alone are worth it. We used to spend 4 hours a day on GST
+          compliance and documentation. Now it's maybe 20 minutes of review."</p>
+        <div class="testimonial-author">
+          <div class="author-avatar" style="background: linear-gradient(135deg, #0EA5E9, #38BDF8);">AJ</div>
+          <div class="author-info">
+            <span class="author-name">Amit Joshi</span>
+            <span class="author-role">Supply Chain Lead, NovaTrade, Pune</span>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card animate-on-scroll" style="--delay:0.24s">
+        <div class="testimonial-stars">★★★★<span style="opacity:0.3">★</span></div>
+        <p class="testimonial-text">"Solid platform with great API docs. Integration with our WMS took about two days.
+          The issue detection has caught a few things we would have missed on our Hyderabad routes."</p>
+        <div class="testimonial-author">
+          <div class="author-avatar" style="background: linear-gradient(135deg, #8B5CF6, #A78BFA);">RN</div>
+          <div class="author-info">
+            <span class="author-name">Rahul Nair</span>
+            <span class="author-role">CTO, QuickFreight Solutions, Bengaluru</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════ FINAL CTA ═══════════════════════ -->
+<section class="final-cta" id="cta">
+  <div class="cta-bg-noise"></div>
+  <div class="cta-container animate-on-scroll">
+    <h2 class="cta-headline">Start shipping smarter today</h2>
+    <p class="cta-sub">Join logistics teams who've already modernized their operations.<br>Get started in under 5
+      minutes.</p>
+    <div class="cta-btn-group">
+      <a routerLink="/auth/signup" class="btn btn-primary btn-glow btn-lg">
+        Start Free
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+          stroke-linecap="round">
+          <path d="M5 12h14M12 5l7 7-7 7" />
+        </svg>
+      </a>
+      <a href="vishwajeet17raj@gmail.com" class="btn btn-ghost btn-lg">Talk to Sales</a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════ FOOTER ═══════════════════════ -->
+<footer class="footer" id="footer">
+  <div class="footer-container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a href="#" class="nav-logo footer-logo">
+          <div class="logo-icon">
+            <div
+              style="display: flex; align-items: center; justify-content: center; height: 40px; width: 40px; background-color: #ffffff; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); margin-right: 8px; overflow: hidden; flex-shrink: 0;">
+              <img src="/logo.png" alt="SmartShip Logo" style="height: 150%; width: 150%; object-fit: contain;">
+            </div>
+          </div>
+          <span class="logo-text light">SmartShip</span>
+        </a>
+        <p class="footer-tagline">Modern logistics infrastructure<br>for growing businesses in India.</p>
+        <div class="footer-social">
+          <a href="#" class="social-link" aria-label="Twitter">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+              <path
+                d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+            </svg>
+          </a>
+          <a href="#" class="social-link" aria-label="LinkedIn">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+              <path
+                d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+            </svg>
+          </a>
+          <a href="#" class="social-link" aria-label="GitHub">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+              <path
+                d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
+            </svg>
+          </a>
+        </div>
+      </div>
+      <div class="footer-links-grid">
+        <div class="footer-col">
+          <h4 class="footer-col-title">Product</h4>
+          <a href="#features" class="footer-link">Features</a>
+          <a href="#tracking" class="footer-link">Tracking</a>
+          <a href="#" class="footer-link">Integrations</a>
+          <a href="#" class="footer-link">Changelog</a>
+        </div>
+        <div class="footer-col">
+          <h4 class="footer-col-title">Company</h4>
+          <a href="#" class="footer-link">About</a>
+          <a href="#" class="footer-link">Blog</a>
+          <a href="#" class="footer-link">Careers</a>
+          <a href="#" class="footer-link">Press</a>
+        </div>
+        <div class="footer-col">
+          <h4 class="footer-col-title">Resources</h4>
+          <a href="#" class="footer-link">Documentation</a>
+          <a href="#" class="footer-link">API Reference</a>
+          <a href="#" class="footer-link">Status</a>
+          <a href="#" class="footer-link">Support</a>
+        </div>
+        <div class="footer-col">
+          <h4 class="footer-col-title">Legal</h4>
+          <a href="#" class="footer-link">Privacy Policy</a>
+          <a href="#" class="footer-link">Terms of Service</a>
+          <a href="#" class="footer-link">Cookie Policy</a>
+          <a href="#" class="footer-link">GDPR</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; {{ currentYear }} SmartShip, Inc. All rights reserved.</span>
+      <span>Built with care for logistics teams everywhere.</span>
+    </div>
+  </div>
+</footer>

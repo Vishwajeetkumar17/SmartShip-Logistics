@@ -1,0 +1,124 @@
+<div class="auth-shell">
+  <!-- Left Panel: 50% dark aesthetic -->
+  <div class="auth-left">
+    <a class="auth-brand" routerLink="/" aria-label="Go to landing page">
+      <div
+        style="display: flex; align-items: center; justify-content: center; height: 40px; width: 40px; background-color: #ffffff; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); margin-right: 8px; overflow: hidden; flex-shrink: 0;">
+        <img src="/logo.png" alt="SmartShip Logo" style="height: 150%; width: 150%; object-fit: contain;">
+      </div>
+      <span class="brand-name">SmartShip</span>
+    </a>
+
+    <div class="auth-hero">
+      <h2>Redefining modern<br />logistics.</h2>
+      <p>Experience lightning-fast deliveries, end-to-end encryption, and unparalleled insights.</p>
+    </div>
+
+    <div class="auth-features">
+      <div class="feature-item">
+        <div class="feature-icon"><span class="material-icons">bolt</span></div>
+        <div class="feature-text">
+          <h3>Lightning Fast</h3>
+          <p>Optimized routing ensures your packages arrive ahead of schedule.</p>
+        </div>
+      </div>
+      <div class="feature-item">
+        <div class="feature-icon"><span class="material-icons">shield</span></div>
+        <div class="feature-text">
+          <h3>Bank-Grade Security</h3>
+          <p>End-to-end encryption and real-time tracking for peace of mind.</p>
+        </div>
+      </div>
+      <div class="feature-item">
+        <div class="feature-icon"><span class="material-icons">public</span></div>
+        <div class="feature-text">
+          <h3>Pan-India Network</h3>
+          <p>Seamlessly reach every pin code with our unified logistics grid.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Right Panel: 50% white form area -->
+  <div class="auth-right">
+    <div class="auth-card">
+      <h1>Welcome back</h1>
+      <p class="auth-subtitle">Sign in to your SmartShip account</p>
+
+      <form (ngSubmit)="onLogin(loginForm)" #loginForm="ngForm">
+
+        <!-- Email -->
+        <div class="form-group">
+          <label class="form-label" for="email">Email Address <span class="req">*</span></label>
+          <div class="input-wrap">
+            <span class="material-icons input-icon">mail_outline</span>
+            <input type="email" id="email" name="email" [(ngModel)]="credentials.email" required email maxlength="150"
+              placeholder="you@company.com" #emailCtrl="ngModel" (ngModelChange)="onFieldChange('email')"
+              [class.invalid]="(emailCtrl.invalid && (emailCtrl.touched || loginForm.submitted)) || !!fieldErrors['email']" />
+          </div>
+          @if (fieldErrors['email']) {
+          <small class="field-error">{{ fieldErrors['email'] }}</small>
+          } @else if (emailCtrl.invalid && (emailCtrl.touched || loginForm.submitted)) {
+          <small class="field-error">Enter a valid email address.</small>
+          }
+        </div>
+
+        <!-- Password -->
+        <div class="form-group">
+          <div class="label-row">
+            <label class="form-label" for="password">Password <span class="req">*</span></label>
+            <a routerLink="/auth/forgot-password" class="forgot-link">Forgot password?</a>
+          </div>
+          <div class="input-wrap">
+            <span class="material-icons input-icon">lock_outline</span>
+            <input type="password" id="password" name="password" [(ngModel)]="credentials.password" required
+              minlength="8" maxlength="128" placeholder="Enter your password" #passwordCtrl="ngModel"
+              (ngModelChange)="onFieldChange('password')"
+              [class.invalid]="(passwordCtrl.invalid && (passwordCtrl.touched || loginForm.submitted)) || !!fieldErrors['password']" />
+          </div>
+          @if (fieldErrors['password']) {
+          <small class="field-error">{{ fieldErrors['password'] }}</small>
+          } @else if (passwordCtrl.invalid && (passwordCtrl.touched || loginForm.submitted)) {
+          <small class="field-error">Password must be at least 8 characters.</small>
+          }
+        </div>
+
+        <!-- Role Toggle -->
+        <div class="form-group">
+          <label class="form-label">Login as</label>
+          <div class="role-selector">
+            <label class="role-option" [class.selected]="selectedRole === 'CUSTOMER'">
+              <input type="radio" name="role" value="CUSTOMER" [(ngModel)]="selectedRole" />
+              <span class="material-icons" style="font-size:1rem">person</span>
+              Customer
+            </label>
+            <label class="role-option" [class.selected]="selectedRole === 'ADMIN'">
+              <input type="radio" name="role" value="ADMIN" [(ngModel)]="selectedRole" />
+              <span class="material-icons" style="font-size:1rem">admin_panel_settings</span>
+              Admin
+            </label>
+          </div>
+        </div>
+
+        <!-- Submit -->
+        <button type="submit" class="btn-submit" [disabled]="loginForm.invalid || isLoading">
+          {{ isLoading ? 'Signing in...' : 'Sign In' }}
+        </button>
+
+        <!-- Form Error -->
+        @if (formError) {
+        <small class="form-error">{{ formError }}</small>
+        }
+
+        <!-- Divider -->
+        <div class="divider"><span>or continue with</span></div>
+
+        <!-- Google Button Container -->
+        <div id="google-login-btn" class="google-wrapper"></div>
+
+      </form>
+
+      <p class="auth-footer">Don't have an account? <a routerLink="/auth/signup">Sign up</a></p>
+    </div>
+  </div>
+</div>

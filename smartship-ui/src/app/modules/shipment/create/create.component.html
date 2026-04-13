@@ -1,0 +1,329 @@
+<div class="create-page">
+  <div class="page-header">
+    <h1>Create Shipment</h1>
+    <p class="subtitle">Fill in the details to create your shipment request</p>
+  </div>
+
+  <div class="form-card">
+    <!-- Stepper -->
+    <div class="stepper">
+      <div class="step-item" [class.active]="currentStep === 1" [class.completed]="currentStep > 1">
+        <div class="step-circle">
+          @if (currentStep > 1) {
+          <span class="material-icons step-icon">check</span>
+          } @else {
+          <span class="material-icons step-icon">person</span>
+          }
+        </div>
+        <span class="step-label">Sender<br />Details</span>
+      </div>
+      <div class="step-line" [class.active]="currentStep > 1"></div>
+      <div class="step-item" [class.active]="currentStep === 2" [class.completed]="currentStep > 2">
+        <div class="step-circle">
+          @if (currentStep > 2) {
+          <span class="material-icons step-icon">check</span>
+          } @else {
+          <span class="material-icons step-icon">location_on</span>
+          }
+        </div>
+        <span class="step-label">Receiver<br />Details</span>
+      </div>
+      <div class="step-line" [class.active]="currentStep > 2"></div>
+      <div class="step-item" [class.active]="currentStep === 3" [class.completed]="currentStep > 3">
+        <div class="step-circle">
+          @if (currentStep > 3) {
+          <span class="material-icons step-icon">check</span>
+          } @else {
+          <span class="material-icons step-icon">inventory_2</span>
+          }
+        </div>
+        <span class="step-label">Package Info</span>
+      </div>
+      <div class="step-line" [class.active]="currentStep > 3"></div>
+      <div class="step-item" [class.active]="currentStep === 4" [class.completed]="false">
+        <div class="step-circle">
+          <span class="material-icons step-icon">fact_check</span>
+        </div>
+        <span class="step-label">Review &<br />Submit</span>
+      </div>
+    </div>
+
+    <!-- Step 1: Sender -->
+    @if (currentStep === 1) {
+    <h2 class="section-title">Sender Information</h2>
+    <div class="fields">
+      <div class="field full">
+        <label class="field-label">Full Name <span class="required">*</span></label>
+        <input type="text" [(ngModel)]="senderName" placeholder="Full Name" (ngModelChange)="onFieldInput('senderName')"
+          [class.input-invalid]="!!getFieldError('senderName')" />
+        @if (getFieldError('senderName')) {
+        <small class="field-error">{{ getFieldError('senderName') }}</small>
+        }
+      </div>
+      <div class="field-row">
+        <div class="field full">
+          <label class="field-label">Email <span class="required">*</span></label>
+          <input type="email" [(ngModel)]="senderEmail" placeholder="Email"
+            (ngModelChange)="onFieldInput('senderEmail')" [class.input-invalid]="!!getFieldError('senderEmail')" />
+          @if (getFieldError('senderEmail')) {
+          <small class="field-error">{{ getFieldError('senderEmail') }}</small>
+          }
+        </div>
+        <div class="field full">
+          <label class="field-label">Phone <span class="required">*</span></label>
+          <input type="tel" [(ngModel)]="senderPhone" placeholder="Phone" (ngModelChange)="onFieldInput('senderPhone')"
+            [class.input-invalid]="!!getFieldError('senderPhone')" />
+          @if (getFieldError('senderPhone')) {
+          <small class="field-error">{{ getFieldError('senderPhone') }}</small>
+          }
+        </div>
+      </div>
+      <div class="field full">
+        <label class="field-label">Street Address <span class="required">*</span></label>
+        <input type="text" [(ngModel)]="senderAddress.street" placeholder="Street Address"
+          (ngModelChange)="onFieldInput('senderStreet')" [class.input-invalid]="!!getFieldError('senderStreet')" />
+        @if (getFieldError('senderStreet')) {
+        <small class="field-error">{{ getFieldError('senderStreet') }}</small>
+        }
+      </div>
+      <div class="field-row">
+        <div class="field full">
+          <label class="field-label">City <span class="required">*</span></label>
+          <input type="text" [(ngModel)]="senderAddress.city" placeholder="City"
+            (ngModelChange)="onFieldInput('senderCity')" [class.input-invalid]="!!getFieldError('senderCity')" />
+          @if (getFieldError('senderCity')) {
+          <small class="field-error">{{ getFieldError('senderCity') }}</small>
+          }
+        </div>
+        <div class="field full">
+          <label class="field-label">State <span class="required">*</span></label>
+          <input type="text" [(ngModel)]="senderAddress.state" placeholder="State"
+            (ngModelChange)="onFieldInput('senderState')" [class.input-invalid]="!!getFieldError('senderState')" />
+          @if (getFieldError('senderState')) {
+          <small class="field-error">{{ getFieldError('senderState') }}</small>
+          }
+        </div>
+      </div>
+      <div class="field full">
+        <label class="field-label">ZIP Code <span class="required">*</span></label>
+        <input type="text" [(ngModel)]="senderAddress.postalCode" placeholder="ZIP Code"
+          (ngModelChange)="onFieldInput('senderPostalCode')"
+          [class.input-invalid]="!!getFieldError('senderPostalCode')" />
+        @if (getFieldError('senderPostalCode')) {
+        <small class="field-error">{{ getFieldError('senderPostalCode') }}</small>
+        }
+      </div>
+    </div>
+    }
+
+    <!-- Step 2: Receiver -->
+    @if (currentStep === 2) {
+    <h2 class="section-title">Receiver Information</h2>
+    <div class="fields">
+      <div class="field full">
+        <label class="field-label">Full Name <span class="required">*</span></label>
+        <input type="text" [(ngModel)]="receiverName" placeholder="Full Name"
+          (ngModelChange)="onFieldInput('receiverName')" [class.input-invalid]="!!getFieldError('receiverName')" />
+        @if (getFieldError('receiverName')) {
+        <small class="field-error">{{ getFieldError('receiverName') }}</small>
+        }
+      </div>
+      <div class="field-row">
+        <div class="field full">
+          <label class="field-label">Email <span class="required">*</span></label>
+          <input type="email" [(ngModel)]="receiverEmail" placeholder="Email"
+            (ngModelChange)="onFieldInput('receiverEmail')" [class.input-invalid]="!!getFieldError('receiverEmail')" />
+          @if (getFieldError('receiverEmail')) {
+          <small class="field-error">{{ getFieldError('receiverEmail') }}</small>
+          }
+        </div>
+        <div class="field full">
+          <label class="field-label">Phone <span class="required">*</span></label>
+          <input type="tel" [(ngModel)]="receiverPhone" placeholder="Phone"
+            (ngModelChange)="onFieldInput('receiverPhone')" [class.input-invalid]="!!getFieldError('receiverPhone')" />
+          @if (getFieldError('receiverPhone')) {
+          <small class="field-error">{{ getFieldError('receiverPhone') }}</small>
+          }
+        </div>
+      </div>
+      <div class="field full">
+        <label class="field-label">Street Address <span class="required">*</span></label>
+        <input type="text" [(ngModel)]="receiverAddress.street" placeholder="Street Address"
+          (ngModelChange)="onFieldInput('receiverStreet')" [class.input-invalid]="!!getFieldError('receiverStreet')" />
+        @if (getFieldError('receiverStreet')) {
+        <small class="field-error">{{ getFieldError('receiverStreet') }}</small>
+        }
+      </div>
+      <div class="field-row">
+        <div class="field full">
+          <label class="field-label">City <span class="required">*</span></label>
+          <input type="text" [(ngModel)]="receiverAddress.city" placeholder="City"
+            (ngModelChange)="onFieldInput('receiverCity')" [class.input-invalid]="!!getFieldError('receiverCity')" />
+          @if (getFieldError('receiverCity')) {
+          <small class="field-error">{{ getFieldError('receiverCity') }}</small>
+          }
+        </div>
+        <div class="field full">
+          <label class="field-label">State <span class="required">*</span></label>
+          <input type="text" [(ngModel)]="receiverAddress.state" placeholder="State"
+            (ngModelChange)="onFieldInput('receiverState')" [class.input-invalid]="!!getFieldError('receiverState')" />
+          @if (getFieldError('receiverState')) {
+          <small class="field-error">{{ getFieldError('receiverState') }}</small>
+          }
+        </div>
+      </div>
+      <div class="field full">
+        <label class="field-label">ZIP Code <span class="required">*</span></label>
+        <input type="text" [(ngModel)]="receiverAddress.postalCode" placeholder="ZIP Code"
+          (ngModelChange)="onFieldInput('receiverPostalCode')"
+          [class.input-invalid]="!!getFieldError('receiverPostalCode')" />
+        @if (getFieldError('receiverPostalCode')) {
+        <small class="field-error">{{ getFieldError('receiverPostalCode') }}</small>
+        }
+      </div>
+    </div>
+    }
+
+    <!-- Step 3: Package -->
+    @if (currentStep === 3) {
+    <h2 class="section-title">Package Information</h2>
+    <div class="fields">
+      <div class="field full">
+        <label class="field-label">Service Type <span class="required">*</span></label>
+        <select [(ngModel)]="serviceType" (ngModelChange)="onFieldInput('serviceType')"
+          [class.input-invalid]="!!getFieldError('serviceType')">
+          <option value="Standard">Standard Delivery</option>
+          <option value="Express">Express Delivery</option>
+          <option value="Economy">Economy Delivery</option>
+        </select>
+        @if (getFieldError('serviceType')) {
+        <small class="field-error">{{ getFieldError('serviceType') }}</small>
+        }
+      </div>
+      <div class="field full">
+        <label class="field-label">Package Type <span class="required">*</span></label>
+        <select [(ngModel)]="packageType" (ngModelChange)="onFieldInput('packageType')"
+          [class.input-invalid]="!!getFieldError('packageType')">
+          <option value="Box">Box</option>
+          <option value="Envelope">Envelope</option>
+          <option value="Pallet">Pallet</option>
+          <option value="Tube">Tube</option>
+        </select>
+        @if (getFieldError('packageType')) {
+        <small class="field-error">{{ getFieldError('packageType') }}</small>
+        }
+      </div>
+      <div class="field full">
+        <label class="field-label">Weight (kg) <span class="required">*</span></label>
+        <input type="number" [(ngModel)]="pkg.weight" placeholder="Weight (kg)" min="0.1" step="0.1"
+          (ngModelChange)="onFieldInput('weight')" [class.input-invalid]="!!getFieldError('weight')" />
+        @if (getFieldError('weight')) {
+        <small class="field-error">{{ getFieldError('weight') }}</small>
+        }
+      </div>
+      <div class="field-row">
+        <div class="field full">
+          <label class="field-label">Length (cm) <span class="required">*</span></label>
+          <input type="number" [(ngModel)]="pkg.length" placeholder="Length (cm)" min="0.1"
+            (ngModelChange)="onFieldInput('length')" [class.input-invalid]="!!getFieldError('length')" />
+          @if (getFieldError('length')) {
+          <small class="field-error">{{ getFieldError('length') }}</small>
+          }
+        </div>
+        <div class="field full">
+          <label class="field-label">Width (cm) <span class="required">*</span></label>
+          <input type="number" [(ngModel)]="pkg.width" placeholder="Width (cm)" min="0.1"
+            (ngModelChange)="onFieldInput('width')" [class.input-invalid]="!!getFieldError('width')" />
+          @if (getFieldError('width')) {
+          <small class="field-error">{{ getFieldError('width') }}</small>
+          }
+        </div>
+      </div>
+      <div class="field full">
+        <label class="field-label">Height (cm) <span class="required">*</span></label>
+        <input type="number" [(ngModel)]="pkg.height" placeholder="Height (cm)" min="0.1"
+          (ngModelChange)="onFieldInput('height')" [class.input-invalid]="!!getFieldError('height')" />
+        @if (getFieldError('height')) {
+        <small class="field-error">{{ getFieldError('height') }}</small>
+        }
+      </div>
+      <div class="field full">
+        <label class="field-label">Package Description <span class="required">*</span></label>
+        <textarea [(ngModel)]="pkg.description" placeholder="Package Description" rows="3"
+          (ngModelChange)="onFieldInput('description')"
+          [class.input-invalid]="!!getFieldError('description')"></textarea>
+        @if (getFieldError('description')) {
+        <small class="field-error">{{ getFieldError('description') }}</small>
+        }
+      </div>
+    </div>
+    }
+
+    <!-- Step 4: Review -->
+    @if (currentStep === 4) {
+    <h2 class="section-title">Review Your Shipment</h2>
+    <div class="review-section">
+      <div class="review-card">
+        <h3>Sender</h3>
+        <p class="review-name">{{ senderName || 'Not provided' }}</p>
+        <p class="review-detail">{{ senderAddress.street || 'Address not provided' }}</p>
+        <p class="review-detail">{{ senderAddress.city || 'City' }}/{{ senderAddress.state || 'State not provided' }}
+        </p>
+      </div>
+      <div class="review-card">
+        <h3>Receiver</h3>
+        <p class="review-name">{{ receiverName || 'Not provided' }}</p>
+        <p class="review-detail">{{ receiverAddress.street || 'Address not provided' }}</p>
+        <p class="review-detail">{{ receiverAddress.city || 'City' }}/{{ receiverAddress.state || 'State not provided'
+          }}</p>
+      </div>
+      <div class="review-card">
+        <h3>Package Details</h3>
+        <div class="review-grid">
+          <div><span class="review-label">Service Type:</span><br /><strong>{{ serviceType }}</strong></div>
+          <div><span class="review-label">Package Type:</span><br /><strong>{{ packageType }}</strong></div>
+          <div><span class="review-label">Weight:</span><br /><strong>{{ pkg.weight }} kg</strong></div>
+          <div><span class="review-label">Dimensions:</span><br /><strong>{{ pkg.length }} × {{ pkg.width }} × {{
+              pkg.height }} cm</strong></div>
+        </div>
+      </div>
+      <div class="cost-card">
+        <div>
+          <strong>Estimated Cost:</strong><br />
+          <span class="cost-note">{{ estimatedDeliveryText }}</span>
+          @if (rateErrorMessage) {
+          <br />
+          <span class="cost-note">{{ rateErrorMessage }}</span>
+          }
+        </div>
+        <span class="cost-value">
+          @if (isRateLoading) {
+          Calculating...
+          } @else if (estimatedCost !== null) {
+          ₹{{ estimatedCost.toFixed(2) }}
+          } @else {
+          --
+          }
+        </span>
+      </div>
+    </div>
+    }
+
+    <!-- Navigation -->
+    <div class="form-nav">
+      <button class="btn-prev" (click)="prevStep()" [disabled]="currentStep === 1">
+        ‹ Previous
+      </button>
+      @if (currentStep < totalSteps) { <button class="btn-next" (click)="nextStep()">Next ›</button>
+        } @else {
+        <button class="btn-submit" (click)="onSubmit()" [disabled]="isLoading">
+          {{ isLoading ? 'Submitting...' : '✓ Submit Shipment' }}
+        </button>
+        }
+    </div>
+
+    @if (errorMessage) {
+    <small class="field-error form-error">{{ errorMessage }}</small>
+    }
+  </div>
+</div>

@@ -1,0 +1,79 @@
+<nav class="navbar">
+  <div class="navbar-left">
+    <a routerLink="/" class="logo">
+      <div
+        style="display: flex; align-items: center; justify-content: center; height: 40px; width: 40px; background-color: #ffffff; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); margin-right: 12px; overflow: hidden; flex-shrink: 0;">
+        <img src="/logo.png" alt="SmartShip Logo" style="height: 150%; width: 150%; object-fit: contain;">
+      </div>
+      <span class="logo-text">SmartShip</span>
+    </a>
+  </div>
+
+  <div class="navbar-center">
+    @if (authService.isLoggedIn()) {
+    <div class="nav-links" [class.open]="mobileMenuOpen">
+      @if (isAdmin()) {
+      <a routerLink="/admin/dashboard" routerLinkActive="active" class="nav-item" (click)="closeMobileMenu()">
+        <span class="material-icons nav-icon">dashboard</span>Dashboard
+      </a>
+      <a routerLink="/admin/shipments" routerLinkActive="active" class="nav-item" (click)="closeMobileMenu()">
+        <span class="material-icons nav-icon">local_shipping</span>Shipments
+      </a>
+      <a routerLink="/admin/hubs" routerLinkActive="active" class="nav-item" (click)="closeMobileMenu()">
+        <span class="material-icons nav-icon">warehouse</span>Hubs
+      </a>
+      <a routerLink="/admin/users" routerLinkActive="active" class="nav-item" (click)="closeMobileMenu()">
+        <span class="material-icons nav-icon">group</span>Users
+      </a>
+      <a routerLink="/admin/issues" routerLinkActive="active" class="nav-item" (click)="closeMobileMenu()">
+        <span class="material-icons nav-icon">warning</span>Issues
+      </a>
+      <a routerLink="/admin/documents" routerLinkActive="active" class="nav-item" (click)="closeMobileMenu()">
+        <span class="material-icons nav-icon">folder</span>Documents
+      </a>
+      <a routerLink="/admin/reports" routerLinkActive="active" class="nav-item" (click)="closeMobileMenu()">
+        <span class="material-icons nav-icon">analytics</span>Reports
+      </a>
+      } @else {
+      <a routerLink="/customer/dashboard" routerLinkActive="active" class="nav-item" (click)="closeMobileMenu()">
+        <span class="material-icons nav-icon-svg">dashboard</span>Dashboard
+      </a>
+      <a routerLink="/shipment/create" routerLinkActive="active" class="nav-item create-nav-link"
+        (click)="closeMobileMenu()">
+        <span class="material-icons create-plus-icon">add_box</span>Create Shipment
+      </a>
+      }
+
+      <!-- Profile and Logout for mobile/tablet only -->
+      <div class="nav-divider"></div>
+      <a routerLink="/profile" class="nav-item nav-profile" (click)="closeMobileMenu()">
+        <span class="material-icons nav-icon">person</span>Profile
+      </a>
+      <button class="nav-item nav-logout" (click)="onLogout()">
+        <span class="material-icons nav-icon">logout</span>Logout
+      </button>
+    </div>
+    }
+  </div>
+
+  <div class="navbar-right">
+    @if (authService.isLoggedIn()) {
+    <span class="user-name">{{ authService.user()?.name | titlecase }}</span>
+    <a routerLink="/profile" class="nav-item btn-settings">
+      <span class="material-icons nav-icon">person</span>Profile
+    </a>
+    <button class="btn-logout" (click)="onLogout()">
+      <span class="material-icons nav-icon">logout</span>Logout
+    </button>
+
+    <button type="button" class="menu-toggle" (click)="toggleMobileMenu()" [attr.aria-expanded]="mobileMenuOpen"
+      aria-label="Toggle navigation menu">
+      <span class="material-icons nav-icon">{{ mobileMenuOpen ? 'close' : 'menu' }}</span>
+      {{ mobileMenuOpen ? 'Close' : getCurrentNavLabel() }}
+    </button>
+    } @else {
+    <a routerLink="/auth/login" class="btn-login">Login</a>
+    <a routerLink="/auth/signup" class="btn-signup">Sign Up</a>
+    }
+  </div>
+</nav>

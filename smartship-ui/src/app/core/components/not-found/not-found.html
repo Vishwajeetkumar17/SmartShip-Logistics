@@ -1,0 +1,36 @@
+<div class="nf-container" (mousemove)="onMouseMove($event)">
+  <!-- Background Elements -->
+  <div class="nf-glow glow-1"></div>
+  <div class="nf-glow glow-2"></div>
+  <div class="nf-glow glow-3"></div>
+
+  <!-- Sparkle effect canvas -->
+  <canvas #sparkleCanvas class="nf-canvas"></canvas>
+
+  <div class="nf-content">
+    <div class="nf-brand">
+      <div class="nf-logo-box">
+        <img src="/logo.png" alt="SmartShip Logo">
+      </div>
+      <span class="nf-brand-name">SmartShip</span>
+    </div>
+    
+    <div class="nf-404-wrapper">
+      <h1 class="nf-giant-text">404</h1>
+      <div class="nf-404-shadow">404</div>
+    </div>
+    
+    <div class="nf-text-content">
+      <h2>Whoops! You're off the delivery grid.</h2>
+      <p>Our fleet has scanned every hub, but the route to <strong>{{ currentUrl }}</strong> is missing. Let's get you safely back on track.</p>
+    </div>
+    
+    <div class="nf-actions">
+      <button class="btn btn-secondary" (click)="goBack()">Go Back</button>
+      <a routerLink="/" class="btn btn-primary">
+        <span>Back to Home</span>
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path></svg>
+      </a>
+    </div>
+  </div>
+</div>

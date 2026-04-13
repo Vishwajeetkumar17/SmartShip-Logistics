@@ -1,0 +1,134 @@
+<div class="dashboard-page">
+  <!-- Page Header -->
+  <div class="page-header-container">
+    <div class="page-header">
+      <h1>Dashboard</h1>
+      <p class="subtitle">Welcome back! Here's your shipment overview.</p>
+    </div>
+    <a routerLink="/shipment/create" class="btn-create">
+      + Create Shipment
+    </a>
+  </div>
+
+  <!-- Loading State: Skeleton Loaders -->
+  @if (isLoading) {
+  <div class="kpi-grid-premium" style="margin-bottom:20px">
+    @for (i of [1,2,3,4]; track i) {
+    <div class="ss-skeleton" style="height:110px;border-radius:16px"></div>
+    }
+  </div>
+  <div class="table-card">
+    <div class="ss-skeleton" style="height:320px;border-radius:16px"></div>
+  </div>
+  } @else {
+
+  <!-- Error State -->
+  @if (errorMessage) {
+  <div class="ss-alert ss-alert-error">
+    <span class="material-icons">error_outline</span>
+    <div class="alert-content">
+      <p class="alert-message">{{ errorMessage }}</p>
+      <button type="button" class="btn-retry" (click)="retryLoad()">Retry</button>
+    </div>
+  </div>
+  } @else {
+
+  <!-- KPI Cards Grid -->
+  <div class="kpi-grid-premium">
+    <div class="kpi-card kpi-card-indigo">
+      <div class="kpi-top">
+        <div class="kpi-icon kpi-icon-indigo"><span class="material-icons">inventory_2</span></div>
+      </div>
+      <div class="kpi-value">{{ stats.totalShipments | number }}</div>
+      <div class="kpi-label">Total Shipments</div>
+    </div>
+
+    <div class="kpi-card kpi-card-blue">
+      <div class="kpi-top">
+        <div class="kpi-icon kpi-icon-blue"><span class="material-icons">local_shipping</span></div>
+      </div>
+      <div class="kpi-value">{{ stats.inTransit | number }}</div>
+      <div class="kpi-label">In Transit</div>
+    </div>
+
+    <div class="kpi-card kpi-card-green">
+      <div class="kpi-top">
+        <div class="kpi-icon kpi-icon-green"><span class="material-icons">task_alt</span></div>
+      </div>
+      <div class="kpi-value">{{ stats.delivered | number }}</div>
+      <div class="kpi-label">Delivered</div>
+    </div>
+
+    <div class="kpi-card kpi-card-red">
+      <div class="kpi-top">
+        <div class="kpi-icon kpi-icon-red"><span class="material-icons">schedule</span></div>
+      </div>
+      <div class="kpi-value">{{ stats.pending | number }}</div>
+      <div class="kpi-label">Pending</div>
+    </div>
+  </div>
+
+  <!-- Recent Shipments Card -->
+  <div class="table-card">
+    <h2 class="recent-header">Recent Shipments</h2>
+
+    <!-- Empty State -->
+    @if (recentShipments.length === 0) {
+    <div class="empty-state">
+      <span class="material-icons empty-icon">inventory_2</span>
+      <h3 class="empty-heading">No shipments yet</h3>
+      <p class="empty-text">Create your first shipment to get started with tracking and management.</p>
+      <a routerLink="/shipment/create" class="btn-create">
+        Create Shipment
+      </a>
+    </div>
+    } @else {
+
+    <!-- Shipments Table -->
+    <div class="table-scroll">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Tracking #</th>
+            <th>Destination</th>
+            <th>Service</th>
+            <th>Status</th>
+            <th>Est. Delivery</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (shipment of recentShipments; track shipment.shipmentId) {
+          <tr>
+            <td>
+              <div class="tracking-main">{{ shipment.trackingNumber }}</div>
+            </td>
+            <td>
+              <div class="route-to">{{ shipment.receiverAddress.city }}, {{ shipment.receiverAddress.state }}</div>
+            </td>
+            <td>
+              <div class="general-text">{{ shipment.serviceType || 'Standard' }}</div>
+            </td>
+            <td>
+              <span class="status-badge" [ngClass]="'status-' + (shipment.status.toString() || '').toLowerCase()">
+                {{ shipment.status | statusBadge }}
+              </span>
+            </td>
+            <td>
+              <div class="general-text">{{ getEstimatedDeliveryDate(shipment) ? (getEstimatedDeliveryDate(shipment)! |
+                date:'mediumDate') : '--' }}</div>
+            </td>
+            <td>
+              <a [routerLink]="['/customer/tracking']" [queryParams]="{track: shipment.trackingNumber}"
+                class="btn-view">Track</a>
+            </td>
+          </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+    }
+  </div>
+  }
+  }
+</div>

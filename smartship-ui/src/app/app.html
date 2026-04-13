@@ -1,0 +1,59 @@
+@if (isAuthenticatedPage) {
+<div class="ss-shell">
+  <app-sidebar></app-sidebar>
+  <div class="ss-content">
+    <header class="ss-topbar">
+      <span class="ss-topbar-title">{{ pageTitle }}</span>
+      @if (isAdmin) {
+      <div class="ss-topbar-search">
+        <span class="material-icons search-icon">search</span>
+        <form (ngSubmit)="onSearch($event)" style="display: flex; flex: 1;">
+          <input type="text" placeholder="Search shipments by ID..." [(ngModel)]="searchQuery" name="searchQuery" />
+        </form>
+      </div>
+      }
+      <div class="ss-topbar-actions">
+        <div class="notifications-wrapper" style="position: relative;">
+          <button class="ss-topbar-icon-btn" title="Notifications" (click)="toggleNotifications()">
+            <span class="material-icons">notifications_none</span>
+            @if (appNotifications.length > 0) {
+            <span class="badge">{{ appNotifications.length }}</span>
+            }
+          </button>
+          @if (showNotifications) {
+          <div class="notifications-dropdown">
+            <div class="notifications-header">
+              <h4>Notifications</h4>
+              <button class="btn-clear" (click)="clearNotifications()">Clear</button>
+            </div>
+            <div class="notifications-body">
+              @if (appNotifications.length === 0) {
+              <div class="no-notifications">
+                <p>No new notifications</p>
+              </div>
+              }
+              @for (notif of appNotifications; track notif.id) {
+              <div class="notification-item" (click)="showNotifications = false" [routerLink]="notif.route"
+                [queryParams]="notif.queryParams || null">
+                <span class="material-icons" [style.color]="notif.iconColor">{{ notif.icon }}</span>
+                <div class="notification-content">
+                  <p>{{ notif.title }}</p>
+                  <small>{{ notif.message }}</small>
+                </div>
+              </div>
+              }
+            </div>
+          </div>
+          }
+        </div>
+        <a routerLink="/profile" class="ss-avatar" [title]="userInitial">{{ userInitial }}</a>
+      </div>
+    </header>
+    <main class="ss-page">
+      <router-outlet></router-outlet>
+    </main>
+  </div>
+</div>
+} @else {
+<router-outlet></router-outlet>
+}

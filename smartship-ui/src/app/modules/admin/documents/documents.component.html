@@ -1,0 +1,266 @@
+<div class="admin-page">
+  <div class="page-header">
+    <div>
+      <h1>Document Management</h1>
+      <p class="subtitle">Upload, manage, and view shipment documents</p>
+    </div>
+    <div class="header-actions">
+      <button class="btn btn-secondary" (click)="toggleProofForm()">
+        <span class="material-icons">verified</span>
+        {{ showProofForm ? 'Cancel Proof' : 'Delivery Proof' }}
+      </button>
+      <button class="btn btn-primary" (click)="toggleUploadForm()">
+        <span class="material-icons">upload</span>
+        {{ showUploadForm ? 'Cancel Upload' : 'Upload Document' }}
+      </button>
+    </div>
+  </div>
+
+  @if (error) { <div class="alert alert-error">{{ error }}</div> }
+  @if (success) { <div class="alert alert-success">{{ success }}</div> }
+
+  <!-- Upload Form -->
+  @if (showUploadForm) {
+  <div class="form-card">
+    <h2>Upload Document</h2>
+    <div class="form-grid">
+      <div class="form-group full-width">
+        <label>Shipment <span class="required">*</span></label>
+        <div class="autocomplete-wrap">
+          <input type="text" [(ngModel)]="uploadShipmentQuery" (ngModelChange)="onUploadShipmentQueryChange($event)"
+            (focus)="showUploadShipmentSuggestionsOnFocus()" (blur)="hideUploadShipmentSuggestions()"
+            placeholder="Search shipment ID, tracking, or customer"
+            [class.input-invalid]="!!uploadFieldErrors['shipment']" />
+          <button type="button" class="combo-toggle" (mousedown)="$event.preventDefault()"
+            (click)="toggleUploadShipmentSuggestions()" aria-label="Toggle shipment options">
+            <span class="material-icons">arrow_drop_down</span>
+          </button>
+          @if (showUploadShipmentSuggestions) {
+          <div class="autocomplete-menu">
+            @for (shipment of filteredUploadShipmentOptions; track shipment.shipmentId) {
+            <button type="button" class="autocomplete-item" (click)="selectUploadShipment(shipment)">
+              SH{{ shipment.shipmentId }} • {{ shipment.trackingNumber }} • Customer {{ shipment.customerId }}
+            </button>
+            }
+          </div>
+          }
+        </div>
+        @if (uploadFieldErrors['shipment']) {
+        <small class="field-error">{{ uploadFieldErrors['shipment'] }}</small>
+        }
+      </div>
+      <div class="form-group">
+        <label>Document Type</label>
+        <select [(ngModel)]="uploadType">
+          <option value="general">General</option>
+          <option value="invoice">Invoice</option>
+          <option value="label">Label</option>
+          <option value="customs">Customs</option>
+        </select>
+      </div>
+      <div class="form-group full-width">
+        <label>File <span class="required">*</span></label>
+        <input type="file" (change)="onFileSelected($event)" class="file-input"
+          [class.input-invalid]="!!uploadFieldErrors['file']" />
+        @if (uploadFieldErrors['file']) {
+        <small class="field-error">{{ uploadFieldErrors['file'] }}</small>
+        }
+      </div>
+    </div>
+    <div class="form-actions">
+      <button class="btn btn-secondary" (click)="toggleUploadForm()">Cancel</button>
+      <button class="btn btn-primary" (click)="submitUpload()"
+        [disabled]="isUploading || !selectedFile || !uploadShipmentId">
+        <span class="material-icons">cloud_upload</span>
+        {{ isUploading ? 'Uploading...' : 'Upload' }}
+      </button>
+    </div>
+  </div>
+  }
+
+  <!-- Delivery Proof Form -->
+  @if (showProofForm) {
+  <div class="form-card">
+    <h2>Upload Delivery Proof</h2>
+    <div class="form-grid">
+      <div class="form-group full-width">
+        <label>Shipment <span class="required">*</span></label>
+        <div class="autocomplete-wrap">
+          <input type="text" [(ngModel)]="proofShipmentQuery" (ngModelChange)="onProofShipmentQueryChange($event)"
+            (focus)="showProofShipmentSuggestionsOnFocus()" (blur)="hideProofShipmentSuggestions()"
+            placeholder="Search shipment ID, tracking, or customer"
+            [class.input-invalid]="!!proofFieldErrors['shipment']" />
+          <button type="button" class="combo-toggle" (mousedown)="$event.preventDefault()"
+            (click)="toggleProofShipmentSuggestions()" aria-label="Toggle shipment options">
+            <span class="material-icons">arrow_drop_down</span>
+          </button>
+          @if (showProofShipmentSuggestions) {
+          <div class="autocomplete-menu">
+            @for (shipment of filteredProofShipmentOptions; track shipment.shipmentId) {
+            <button type="button" class="autocomplete-item" (click)="selectProofShipment(shipment)">
+              SH{{ shipment.shipmentId }} • {{ shipment.trackingNumber }} • Customer {{ shipment.customerId }}
+            </button>
+            }
+          </div>
+          }
+        </div>
+        @if (proofFieldErrors['shipment']) {
+        <small class="field-error">{{ proofFieldErrors['shipment'] }}</small>
+        }
+      </div>
+      <div class="form-group">
+        <label>Signer Name <span class="required">*</span></label>
+        <input type="text" [ngModel]="proofSignerName" (ngModelChange)="onProofSignerNameChange($event)"
+          placeholder="Name of person who signed" required [class.input-invalid]="!!proofFieldErrors['signerName']" />
+        @if (proofFieldErrors['signerName']) {
+        <small class="field-error">{{ proofFieldErrors['signerName'] }}</small>
+        }
+      </div>
+      <div class="form-group full-width">
+        <label>Notes</label>
+        <textarea [(ngModel)]="proofNotes" placeholder="Any additional notes..." rows="2"></textarea>
+      </div>
+      <div class="form-group full-width">
+        <label>Proof Photo/File <span class="required">*</span></label>
+        <input type="file" (change)="onProofFileSelected($event)" class="file-input"
+          [class.input-invalid]="!!proofFieldErrors['proofFile']" />
+        @if (proofFieldErrors['proofFile']) {
+        <small class="field-error">{{ proofFieldErrors['proofFile'] }}</small>
+        }
+      </div>
+    </div>
+    <div class="form-actions">
+      <button class="btn btn-secondary" (click)="toggleProofForm()">Cancel</button>
+      <button class="btn btn-primary" (click)="submitDeliveryProof()"
+        [disabled]="isUploading || !proofFile || !proofShipmentId || !proofSignerName">
+        <span class="material-icons">cloud_upload</span>
+        {{ isUploading ? 'Uploading...' : 'Upload Proof' }}
+      </button>
+    </div>
+  </div>
+  }
+
+  <!-- Search Bar -->
+  <div class="search-card">
+    <div class="search-row">
+      <select [(ngModel)]="searchMode" class="search-select">
+        <option value="shipment">By Shipment ID</option>
+        <option value="customer">By Customer ID</option>
+      </select>
+      @if (searchMode === 'shipment') {
+      <div class="autocomplete-wrap search-combo">
+        <input type="text" [(ngModel)]="searchShipmentQuery" (ngModelChange)="onSearchShipmentQueryChange($event)"
+          (focus)="showSearchShipmentSuggestionsOnFocus()" (blur)="hideSearchShipmentSuggestions()"
+          placeholder="Search shipment ID or tracking" />
+        <button type="button" class="combo-toggle" (mousedown)="$event.preventDefault()"
+          (click)="toggleSearchShipmentSuggestions()" aria-label="Toggle shipment suggestions">
+          <span class="material-icons">arrow_drop_down</span>
+        </button>
+        @if (showSearchShipmentSuggestions) {
+        <div class="autocomplete-menu">
+          @for (shipment of filteredShipmentOptions; track shipment.shipmentId) {
+          <button type="button" class="autocomplete-item" (click)="selectSearchShipment(shipment)">
+            SH{{ shipment.shipmentId }} • {{ shipment.trackingNumber }}
+          </button>
+          }
+        </div>
+        }
+      </div>
+      } @else {
+      <div class="autocomplete-wrap search-combo">
+        <input type="text" [(ngModel)]="searchCustomerQuery" (ngModelChange)="onSearchCustomerQueryChange($event)"
+          (focus)="showSearchCustomerSuggestionsOnFocus()" (blur)="hideSearchCustomerSuggestions()"
+          placeholder="Search customer ID or name" />
+        <button type="button" class="combo-toggle" (mousedown)="$event.preventDefault()"
+          (click)="toggleSearchCustomerSuggestions()" aria-label="Toggle customer suggestions">
+          <span class="material-icons">arrow_drop_down</span>
+        </button>
+        @if (showSearchCustomerSuggestions) {
+        <div class="autocomplete-menu">
+          @for (customer of filteredCustomerOptions; track customer.id) {
+          <button type="button" class="autocomplete-item" (click)="selectSearchCustomer(customer)">
+            {{ customer.id }} • {{ customer.name }}
+          </button>
+          }
+        </div>
+        }
+      </div>
+      }
+      <button class="btn btn-primary" (click)="searchDocuments()" [disabled]="isLoading">
+        <span class="material-icons">search</span>
+        {{ isLoading ? 'Searching...' : 'Search' }}
+      </button>
+    </div>
+  </div>
+
+  <!-- Results -->
+  <div class="results-card">
+    @if (isLoading) {
+    <div class="loading-state"><span class="loader"></span>
+      <p>Loading documents...</p>
+    </div>
+    } @else if (documents.length > 0) {
+    <div class="docs-grid">
+      @for (doc of documents; track doc.documentId) {
+      <div class="doc-card">
+        <div class="doc-icon">{{ getTypeIcon(doc.documentType) }}</div>
+        <div class="doc-info">
+          <div class="doc-name">{{ doc.fileName }}</div>
+          <div class="doc-meta">
+            <span class="doc-type">{{ doc.documentType }}</span>
+            <span>•</span>
+            <span>{{ doc.uploadedAt | date:'mediumDate' }}</span>
+          </div>
+          <div class="doc-meta">Shipment: {{ doc.shipmentId }} • Customer: {{ doc.customerId }}</div>
+        </div>
+        <div class="doc-actions">
+          <a [href]="doc.fileUrl" target="_blank" class="btn-xs btn-view">
+            <span class="material-icons">visibility</span> Open
+          </a>
+          <button class="btn-xs btn-delete" (click)="deleteDocument(doc.documentId)">
+            <span class="material-icons">delete_outline</span> Delete
+          </button>
+        </div>
+      </div>
+      }
+    </div>
+    } @else if ((searchMode === 'shipment' && searchShipmentId) || (searchMode === 'customer' && searchCustomerId)) {
+    <div class="empty-state">
+      <span class="material-icons empty-icon">folder_open</span>
+      <h3>No Documents Found</h3>
+      <p>No documents exist for this search criteria</p>
+    </div>
+    }
+
+    @if (searchMode === 'shipment' && totalPages > 1) {
+    <div class="table-footer pagination-footer">
+      <div class="pagination-summary">Showing {{ documents.length }} on page {{ pageNumber }} of {{ totalPages }}
+        (Total: {{ totalItems }})</div>
+      <div class="pagination-controls">
+        <button type="button" class="pagination-button" (click)="goToPage(pageNumber - 1)"
+          [disabled]="!hasPreviousPage">Previous</button>
+        <span class="pagination-summary">Page {{ pageNumber }} / {{ totalPages }}</span>
+        <button type="button" class="pagination-button" (click)="goToPage(pageNumber + 1)"
+          [disabled]="!hasNextPage">Next</button>
+      </div>
+    </div>
+    }
+
+    <!-- Delivery Proof Section -->
+    @if (deliveryProof) {
+    <div class="proof-card">
+      <h3><span class="material-icons">verified_user</span> Delivery Proof</h3>
+      <div class="proof-details">
+        <p><strong>Signer:</strong> {{ deliveryProof.signerName }}</p>
+        <p><strong>Notes:</strong> {{ deliveryProof.notes || '—' }}</p>
+        <p><strong>Timestamp:</strong> {{ deliveryProof.timestamp | date:'medium' }}</p>
+        @if (deliveryProof.fileUrl) {
+        <a [href]="deliveryProof.fileUrl" target="_blank" class="btn btn-secondary">
+          <span class="material-icons">open_in_new</span> View Proof File
+        </a>
+        }
+      </div>
+    </div>
+    }
+  </div>
+</div>

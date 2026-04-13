@@ -1,0 +1,70 @@
+<div class="details-container">
+  <div class="top-nav">
+    <a routerLink="/customer/dashboard" class="btn-back">
+      <span class="material-icons">arrow_back</span>
+      Back to Dashboard
+    </a>
+  </div>
+
+  @if (isLoading) {
+  <div class="loading">Loading shipment details...</div>
+  } @else if (errorMessage || !shipment) {
+  <div class="not-found">
+    <span class="material-icons not-found-icon">inventory_2</span>
+    <h2>{{ errorMessage || 'Shipment Not Found' }}</h2>
+    <p>The shipment you're looking for doesn't exist</p>
+    <button type="button" class="btn btn-primary" (click)="retryLoad()">Retry</button>
+    <a routerLink="/customer/shipments" class="btn btn-primary">Back to Shipments</a>
+  </div>
+  } @else {
+  <div class="page-header">
+    <div>
+      <h1>Shipment Details</h1>
+      <p class="tracking-number">{{ shipment.trackingNumber }}</p>
+    </div>
+    <span class="badge" [class]="shipment.status | statusBadge:'class'">{{ shipment.status | statusBadge }}</span>
+  </div>
+
+  <div class="details-grid">
+    <div class="detail-card">
+      <h3><span class="material-icons">outbox</span>Sender</h3>
+      <p>{{ shipment.senderAddress.street }}</p>
+      <p>{{ shipment.senderAddress.city }}, {{ shipment.senderAddress.state }}</p>
+      <p>{{ shipment.senderAddress.country }} - {{ shipment.senderAddress.postalCode }}</p>
+    </div>
+
+    <div class="detail-card">
+      <h3><span class="material-icons">inbox</span>Receiver</h3>
+      <p>{{ shipment.receiverAddress.street }}</p>
+      <p>{{ shipment.receiverAddress.city }}, {{ shipment.receiverAddress.state }}</p>
+      <p>{{ shipment.receiverAddress.country }} - {{ shipment.receiverAddress.postalCode }}</p>
+    </div>
+
+    <div class="detail-card">
+      <h3><span class="material-icons">inventory_2</span>Packages ({{ shipment.packages.length }})</h3>
+      @for (pkg of shipment.packages; track $index; let i = $index) {
+      <div class="package-info">
+        <p><strong>Package {{ i + 1 }}:</strong> {{ pkg.weight }} kg</p>
+        <p>{{ pkg.length }} × {{ pkg.width }} × {{ pkg.height }} cm</p>
+        @if (pkg.description) {
+        <p class="desc">{{ pkg.description }}</p>
+        }
+      </div>
+      }
+      <p class="total-weight"><strong>Total Weight:</strong> {{ shipment.totalWeight }} kg</p>
+    </div>
+
+    <div class="detail-card">
+      <h3><span class="material-icons">event_note</span>Timeline</h3>
+      <p><strong>Created:</strong> {{ shipment.createdAt | date:'medium' }}</p>
+      <p><strong>Status:</strong> {{ shipment.status | statusBadge }}</p>
+      @if (shipment.pickupSchedule) {
+      <p><strong>Pickup Date:</strong> {{ shipment.pickupSchedule.pickupDate | date:'mediumDate' }}</p>
+      @if (shipment.pickupSchedule.notes) {
+      <p><strong>Notes:</strong> {{ shipment.pickupSchedule.notes }}</p>
+      }
+      }
+    </div>
+  </div>
+  }
+</div>

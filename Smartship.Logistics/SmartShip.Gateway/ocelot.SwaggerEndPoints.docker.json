@@ -1,0 +1,57 @@
+{
+  "SwaggerEndPoints": [
+    {
+      "Key": "identity",
+      "Config": [
+        {
+          "Name": "Identity Service",
+          "Version": "v1",
+          "Url": "http://identity-service:5001/swagger/v1/swagger.json"
+        }
+      ]
+    },
+    {
+      "Key": "shipment",
+      "Config": [
+        {
+          "Name": "Shipment Service",
+          "Version": "v1",
+          "Url": "http://shipment-service:5002/swagger/v1/swagger.json"
+        }
+      ]
+    },
+    {
+      "Key": "tracking",
+      "Config": [
+        {
+          "Name": "Tracking Service",
+          "Version": "v1",
+          "Url": "http://tracking-service:5003/swagger/v1/swagger.json"
+        }
+      ]
+    },
+    {
+      "Key": "document",
+      "Config": [
+        {
+          "Name": "Document Service",
+          "Version": "v1",
+          "Url": "http://document-service:5004/swagger/v1/swagger.json"
+        }
+      ]
+    },
+    {
+      "Key": "admin",
+      "Config": [
+        {
+          "Name": "Admin Service",
+          "Version": "v1",
+          "Url": "http://admin-service:5005/swagger/v1/swagger.json"
+        }
+      ]
+    }
+  ],
+  "GlobalConfiguration": {
+    "BaseUrl": "http://localhost:5000"
+  }
+}

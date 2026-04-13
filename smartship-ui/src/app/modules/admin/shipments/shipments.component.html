@@ -1,0 +1,111 @@
+<div class="admin-page">
+  <div class="page-header">
+    <h1>Shipment Monitoring</h1>
+    <p class="subtitle">Monitor and manage all shipments across the system</p>
+  </div>
+
+  <!-- Toolbar Card -->
+  <div class="toolbar-card">
+    <div class="search-box">
+      <span class="material-icons search-icon">search</span>
+      <input type="text" placeholder="Search by tracking number, sender, or receiver" [(ngModel)]="searchQuery"
+        (input)="applyFilters()" />
+    </div>
+    <div class="filter-box">
+      <span class="material-icons filter-icon">filter_alt</span>
+      <select [(ngModel)]="statusFilter" (change)="applyFilters()">
+        <option value="">All Statuses</option>
+        @for (status of statuses; track status) {
+        <option [value]="status">{{ formatStatus(status) }}</option>
+        }
+      </select>
+    </div>
+    <button class="btn-export" (click)="exportReport()">
+      <span class="material-icons">download</span> Export Report
+    </button>
+  </div>
+
+  <!-- Table Card -->
+  <div class="table-card">
+    @if (isLoading) {
+    <app-loader [visible]="true" message="Loading shipments..."></app-loader>
+    } @else if (error) {
+    <div class="error-state">
+      <p>{{ error }}</p>
+      <button class="btn-retry" (click)="loadShipments()">Retry</button>
+    </div>
+    } @else {
+    <div class="table-scroll">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Tracking #</th>
+            <th>Sender</th>
+            <th>Receiver</th>
+            <th>Route</th>
+            <th>Service</th>
+            <th>Status</th>
+            <th>Current Location</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (s of filteredShipments; track s.shipmentId) {
+          <tr>
+            <td>
+              <div class="tracking-main">{{ s.trackingNumber }}</div>
+              <div class="sub-text">ID: SH{{ s.shipmentId.toString().padStart(3, '0') }}</div>
+            </td>
+            <td>
+              <div class="name-text">{{ getSenderName(s) }}</div>
+            </td>
+            <td>
+              <div class="name-text">{{ getReceiverName(s) }}</div>
+            </td>
+            <td>
+              <div class="route-from">{{ s.senderAddress.state || 'Unknown' }}</div>
+              <div class="route-to">→ {{ s.receiverAddress.state || 'Unknown' }}
+              </div>
+            </td>
+            <td>
+              <div class="service-type">{{ getServiceType(s) }}</div>
+            </td>
+            <td>
+              <span class="status-badge" [ngClass]="getStatusClass(s.status)">
+                {{ formatStatus(s.status) }}
+              </span>
+            </td>
+            <td>
+              <div class="location-text">{{ getCurrentLocation(s) }}</div>
+            </td>
+            <td>
+              <a [routerLink]="['/admin/shipments', s.shipmentId]" class="btn-view">
+                <span class="material-icons">visibility</span> View
+              </a>
+            </td>
+          </tr>
+          }
+          @if (filteredShipments.length === 0) {
+          <tr>
+            <td colspan="8" class="empty-row">No shipments found matching your criteria.</td>
+          </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+    <div class="table-footer pagination-footer">
+      <div class="pagination-summary">Showing {{ filteredShipments.length }} on page {{ pageNumber }} of {{ totalPages
+        || 1 }} (Total: {{ totalItems }})</div>
+      @if (totalPages > 1) {
+      <div class="pagination-controls">
+        <button type="button" class="pagination-button" (click)="goToPage(pageNumber - 1)"
+          [disabled]="!hasPreviousPage">Previous</button>
+        <span class="pagination-summary">Page {{ pageNumber }} / {{ totalPages }}</span>
+        <button type="button" class="pagination-button" (click)="goToPage(pageNumber + 1)"
+          [disabled]="!hasNextPage">Next</button>
+      </div>
+      }
+    </div>
+    }
+  </div>
+</div>

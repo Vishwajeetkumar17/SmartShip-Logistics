@@ -1,0 +1,413 @@
+<div class="admin-page">
+  <div class="page-top-nav">
+    <a routerLink="/admin/shipments" class="btn-back">
+      <span class="material-icons">arrow_back</span> Back to Shipments
+    </a>
+  </div>
+
+  @if (isLoading) {
+  <div class="loading-state">
+    <span class="loader"></span>
+    <p>Loading shipment details...</p>
+  </div>
+  } @else if (error && !shipment) {
+  <div class="error-state">
+    <p>{{ error }}</p>
+    <button class="btn btn-primary" (click)="loadShipmentData()">Retry</button>
+  </div>
+  } @else if (shipment) {
+
+  <div class="page-header">
+    <div>
+      <h1>{{ shipment.trackingNumber }}</h1>
+      <p class="subtitle">ID: SH{{ shipment.shipmentId.toString().padStart(3, '0') }} &bull; Created: {{
+        shipment.createdAt | date:'mediumDate' }}</p>
+    </div>
+    <span class="status-badge" [ngClass]="getStatusClass(shipment.status)">
+      {{ normalizeStatus(shipment.status) }}
+    </span>
+  </div>
+
+  @if (error) { <div class="alert alert-error">{{ error }}</div> }
+  @if (success) { <div class="alert alert-success">{{ success }}</div> }
+
+  <div class="detail-grid">
+
+    <!-- LEFT: Status + Route -->
+    <div class="col-left">
+
+      <!-- Update Status -->
+      <div class="info-card">
+        <div class="card-header">
+          <h2>Update Status</h2>
+          <p class="card-sub">Move shipment to the next stage. Updates reflect on the shipments list.</p>
+        </div>
+        <div class="card-body">
+          <div class="booking-hub-row">
+            <label for="bookingHub">Operational Hub</label>
+            <div class="hub-combobox">
+              <div class="hub-combobox-input-wrap">
+                <span class="material-icons hub-search-icon">search</span>
+                <input id="bookingHub" type="text" class="hub-combobox-input"
+                  placeholder="Search by hub name or location" [ngModel]="hubSearchText"
+                  (ngModelChange)="onHubSearchTextChange($event)" (focus)="openHubDropdown()"
+                  (blur)="closeHubDropdownSoon()" (keydown)="onHubInputKeydown($event)"
+                  [disabled]="isHubSelectionDisabled" />
+                @if (hubSearchText && !isHubSelectionDisabled) {
+                <button type="button" class="hub-clear-btn" (mousedown)="$event.preventDefault()"
+                  (click)="clearHubSearch()">
+                  <span class="material-icons">close</span>
+                </button>
+                }
+              </div>
+
+              @if (isHubDropdownOpen && !isHubSelectionDisabled) {
+              <ul class="hub-options-list">
+                @if (filteredHubs.length === 0) {
+                <li class="hub-option-item hub-option-empty">No hubs found for this search.</li>
+                } @else {
+                @for (hub of filteredHubs; track hub.hubId; let idx = $index) {
+                <li class="hub-option-item" [class.selected]="selectedHubId === hub.hubId"
+                  [class.highlighted]="highlightedHubIndex === idx" (mousedown)="$event.preventDefault()"
+                  (click)="selectHub(hub)">
+                  {{ getHubDisplayText(hub) }}
+                </li>
+                }
+                }
+              </ul>
+              }
+            </div>
+            @if (currentShipmentStatus === 'Delivered') {
+            <div class="hub-delivered-note">
+              * Hub selection is locked because this shipment is already Delivered.
+            </div>
+            }
+            @if (selectedHubDisplayText && currentShipmentStatus !== 'Delivered') {
+            <div class="hub-selected-preview">
+              Selected hub for next update: <strong>{{ selectedHubDisplayText }}</strong>
+            </div>
+            }
+            @if (currentStatusHubLocation) {
+            <div class="hub-current-status-preview">
+              Current stage ({{ normalizeStatus(currentShipmentStatus) }}) location: <strong>{{ currentStatusHubLocation
+                }}</strong>
+            </div>
+            }
+          </div>
+
+          <div class="status-pipeline">
+            <button class="pipeline-btn" [class.active]="currentShipmentStatus === 'Draft'"
+              [class.done]="isStatusDone('Draft')" (click)="updateState('book')"
+              [disabled]="isUpdatingStatus || !canBook()">
+              <span class="material-icons">bookmark</span>
+              Book
+            </button>
+            <span class="pipeline-arrow">&rarr;</span>
+            <button class="pipeline-btn" [class.active]="currentShipmentStatus === 'Booked'"
+              [class.done]="isStatusDone('Booked')" (click)="updateState('pickup')"
+              [disabled]="isUpdatingStatus || !canPickup()">
+              <span class="material-icons">inventory</span>
+              Picked Up
+            </button>
+            <span class="pipeline-arrow">&rarr;</span>
+            <button class="pipeline-btn"
+              [class.active]="currentShipmentStatus === 'PickedUp' || currentShipmentStatus === 'InTransit'"
+              [class.done]="isStatusDone('InTransit')" (click)="updateState('transit')"
+              [disabled]="isUpdatingStatus || !canTransit()">
+              <span class="material-icons">local_shipping</span>
+              In Transit
+            </button>
+            <span class="pipeline-arrow">&rarr;</span>
+            <button class="pipeline-btn" [class.active]="currentShipmentStatus === 'OutForDelivery'"
+              [class.done]="isStatusDone('OutForDelivery')" (click)="updateState('outfordelivery')"
+              [disabled]="isUpdatingStatus || !canOutForDelivery()">
+              <span class="material-icons">delivery_dining</span>
+              Out for Delivery
+            </button>
+            <span class="pipeline-arrow">&rarr;</span>
+            <button class="pipeline-btn" [class.active]="currentShipmentStatus === 'OutForDelivery'"
+              [class.done]="isStatusDone('Delivered')" (click)="updateState('deliver')"
+              [disabled]="isUpdatingStatus || !canDeliver()">
+              <span class="material-icons">check_circle</span>
+              Delivered
+            </button>
+          </div>
+          <div class="danger-zone">
+            <button class="btn btn-danger" (click)="deleteShipment()">
+              <span class="material-icons">delete</span> Delete Shipment
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="info-card">
+        <div class="card-header">
+          <h2>Shipment Update History</h2>
+          <p class="card-sub">Latest tracking updates across hubs and delivery stages.</p>
+          @if (isTimelineSyncing) {
+          <div class="sync-indicator" aria-live="polite">
+            <span class="sync-dot"></span>
+            Syncing latest updates...
+          </div>
+          }
+        </div>
+        <div class="card-body">
+          @if (trackingTimeline.length === 0) {
+          <p class="empty-text">No tracking history available yet.</p>
+          } @else {
+          <ul class="history-list">
+            @for (event of trackingTimeline; track event.eventId ?? $index) {
+            <li class="history-item">
+              <div class="history-top-row">
+                <span class="event-badge" [ngClass]="getEventBadgeClass(event.status)">{{ normalizeStatus(event.status)
+                  }}</span>
+                <span class="history-time">{{ event.timestamp | date:'yyyy-MM-dd hh:mm a' }}</span>
+              </div>
+              <div class="history-desc">{{ event.description || 'Shipment status updated' }}</div>
+              <div class="history-location">{{ getTimelineLocation(event) }}</div>
+            </li>
+            }
+          </ul>
+          }
+        </div>
+      </div>
+
+    </div>
+
+    <!-- RIGHT: Packages -->
+    <div class="col-right">
+      <div class="info-card">
+        <div class="card-header space-between">
+          <div>
+            <h2>Packages</h2>
+            <p class="card-sub">{{ packages.length }} package{{ packages.length === 1 ? '' : 's' }}</p>
+          </div>
+          <button class="btn btn-outline" (click)="toggleAddPackageForm()">
+            <span class="material-icons">add</span> Add Package
+          </button>
+        </div>
+        <div class="card-body">
+          @if (showAddPackageForm) {
+          <div class="add-package-form">
+            <div class="edit-section-title">New Package</div>
+            <div class="form-row">
+              <div class="form-group">
+                <label>Weight (kg) <span class="required">*</span></label>
+                <input type="number" [(ngModel)]="newPackage.weight" (ngModelChange)="onNewPackageFieldChange('weight')"
+                  placeholder="10.5" [class.input-invalid]="!!newPackageFieldErrors['weight']" />
+                @if (newPackageFieldErrors['weight']) {
+                <small class="field-error">{{ newPackageFieldErrors['weight'] }}</small>
+                }
+              </div>
+              <div class="form-group">
+                <label>Length (cm) <span class="required">*</span></label>
+                <input type="number" [(ngModel)]="newPackage.length" (ngModelChange)="onNewPackageFieldChange('length')"
+                  placeholder="20" [class.input-invalid]="!!newPackageFieldErrors['length']" />
+                @if (newPackageFieldErrors['length']) {
+                <small class="field-error">{{ newPackageFieldErrors['length'] }}</small>
+                }
+              </div>
+              <div class="form-group">
+                <label>Width (cm) <span class="required">*</span></label>
+                <input type="number" [(ngModel)]="newPackage.width" (ngModelChange)="onNewPackageFieldChange('width')"
+                  placeholder="15" [class.input-invalid]="!!newPackageFieldErrors['width']" />
+                @if (newPackageFieldErrors['width']) {
+                <small class="field-error">{{ newPackageFieldErrors['width'] }}</small>
+                }
+              </div>
+              <div class="form-group">
+                <label>Height (cm) <span class="required">*</span></label>
+                <input type="number" [(ngModel)]="newPackage.height" (ngModelChange)="onNewPackageFieldChange('height')"
+                  placeholder="10" [class.input-invalid]="!!newPackageFieldErrors['height']" />
+                @if (newPackageFieldErrors['height']) {
+                <small class="field-error">{{ newPackageFieldErrors['height'] }}</small>
+                }
+              </div>
+            </div>
+            <div class="form-group full">
+              <label>Description <span class="required">*</span></label>
+              <input type="text" [(ngModel)]="newPackage.description"
+                (ngModelChange)="onNewPackageFieldChange('description')" placeholder="Electronics, documents, etc."
+                [class.input-invalid]="!!newPackageFieldErrors['description']" />
+              @if (newPackageFieldErrors['description']) {
+              <small class="field-error">{{ newPackageFieldErrors['description'] }}</small>
+              }
+            </div>
+            <div class="form-actions right">
+              <button class="btn btn-outline" (click)="toggleAddPackageForm()"
+                [disabled]="isSubmittingPackage">Cancel</button>
+              <button class="btn btn-primary" (click)="submitNewPackage()"
+                [disabled]="isSubmittingPackage || newPackage.weight <= 0">
+                {{ isSubmittingPackage ? 'Saving...' : 'Save Package' }}
+              </button>
+            </div>
+          </div>
+          }
+          @if (packages.length === 0 && !showAddPackageForm) {
+          <p class="empty-text">No packages in this shipment.</p>
+          }
+          <ul class="package-list">
+            @for (pkg of packages; track pkg.id) {
+            <li class="package-item">
+              <div class="pkg-info">
+                <strong>{{ pkg.description || 'Package' }}</strong>
+                <span class="sub-text">{{ pkg.weight }}kg &bull; {{ pkg.length }}&times;{{ pkg.width }}&times;{{
+                  pkg.height }} cm</span>
+              </div>
+              @if (pkg.id) {
+              <button class="btn-icon-remove" title="Remove package" (click)="removePackage(pkg.id)"
+                [disabled]="isRemovingPackage">
+                <span class="material-icons">delete_outline</span>
+              </button>
+              }
+            </li>
+            }
+          </ul>
+        </div>
+      </div>
+
+      <div class="info-card">
+        <div class="card-header space-between">
+          <div>
+            <h2>Shipment Invoice</h2>
+            <p class="card-sub">Complete shipment order details</p>
+          </div>
+          <div class="invoice-actions" #invoiceActions>
+            <button class="btn btn-outline" (click)="toggleInvoiceMenu()" title="Print Invoice">
+              <span class="material-icons">more_vert</span>
+            </button>
+            @if (showInvoiceMenu) {
+            <div class="invoice-menu">
+              <button class="invoice-menu-item" (click)="printInvoice()">
+                <span class="material-icons">print</span>
+                Print Invoice
+              </button>
+            </div>
+            }
+          </div>
+        </div>
+        <div class="card-body" #invoiceContent>
+          <div class="invoice-doc">
+            <div class="invoice-doc-header">
+              <div>
+                <div class="invoice-company-name">SmartShip Logistics Pvt. Ltd.</div>
+                <div class="invoice-company-sub">Reliable Domestic & Express Shipping Services</div>
+              </div>
+              <div class="invoice-doc-title-wrap">
+                <div class="invoice-doc-title">Shipment Invoice</div>
+                <div class="invoice-doc-subtitle">Tax Invoice / Shipping Invoice</div>
+              </div>
+            </div>
+
+            <div class="invoice-meta-grid">
+              <div class="invoice-meta-item">
+                <div class="invoice-col-label">Invoice No</div>
+                <div class="invoice-col-value">INV-SH{{ shipment.shipmentId.toString().padStart(6, '0') }}</div>
+              </div>
+              <div class="invoice-meta-item">
+                <div class="invoice-col-label">Invoice Date</div>
+                <div class="invoice-col-value">{{ shipment.createdAt | date:'dd MMM yyyy' }}</div>
+              </div>
+              <div class="invoice-meta-item">
+                <div class="invoice-col-label">Tracking Number</div>
+                <div class="invoice-col-value">{{ shipment.trackingNumber }}</div>
+              </div>
+              <div class="invoice-meta-item">
+                <div class="invoice-col-label">Shipment Status</div>
+                <div class="invoice-col-value">{{ normalizeStatus(shipment.status) }}</div>
+              </div>
+            </div>
+
+            <div class="invoice-party-grid">
+              <div class="invoice-party-card">
+                <div class="invoice-label">Bill From (Sender)</div>
+                <div class="invoice-name">{{ shipment.senderName || 'Name not provided' }}</div>
+                @if (shipment.senderPhone) {
+                <div class="invoice-phone"><span class="material-icons invoice-icon">phone</span>{{ shipment.senderPhone
+                  }}</div>
+                }
+                <div class="invoice-address">{{ shipment.senderAddress.street || '—' }}</div>
+                <div class="invoice-address">{{ shipment.senderAddress.city }}, {{ shipment.senderAddress.state }}</div>
+                <div class="invoice-address">{{ shipment.senderAddress.postalCode }}</div>
+                <div class="invoice-address">{{ shipment.senderAddress.country }}</div>
+              </div>
+
+              <div class="invoice-party-card">
+                <div class="invoice-label">Bill To (Receiver)</div>
+                <div class="invoice-name">{{ shipment.receiverName || 'Name not provided' }}</div>
+                @if (shipment.receiverPhone) {
+                <div class="invoice-phone"><span class="material-icons invoice-icon">phone</span>{{
+                  shipment.receiverPhone }}</div>
+                }
+                <div class="invoice-address">{{ shipment.receiverAddress.street || '—' }}</div>
+                <div class="invoice-address">{{ shipment.receiverAddress.city }}, {{ shipment.receiverAddress.state }}
+                </div>
+                <div class="invoice-address">{{ shipment.receiverAddress.postalCode }}</div>
+                <div class="invoice-address">{{ shipment.receiverAddress.country }}</div>
+              </div>
+            </div>
+
+            <div class="invoice-table-wrap">
+              <table class="invoice-table">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Package Description</th>
+                    <th>Dimensions (cm)</th>
+                    <th>Weight (kg)</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  @if (packages.length > 0) {
+                  @for (pkg of packages; track pkg.id; let i = $index) {
+                  <tr>
+                    <td>{{ i + 1 }}</td>
+                    <td>{{ pkg.description || 'Package' }}</td>
+                    <td>{{ pkg.length }} × {{ pkg.width }} × {{ pkg.height }}</td>
+                    <td>{{ pkg.weight }}</td>
+                  </tr>
+                  }
+                  } @else {
+                  <tr>
+                    <td>1</td>
+                    <td>Shipment package</td>
+                    <td>—</td>
+                    <td>{{ shipment.totalWeight || 0 }}</td>
+                  </tr>
+                  }
+                </tbody>
+              </table>
+            </div>
+
+            <div class="invoice-summary-grid">
+              <div class="invoice-summary-item">
+                <span>Total Packages</span>
+                <strong>{{ packages.length || 1 }}</strong>
+              </div>
+              <div class="invoice-summary-item">
+                <span>Total Weight</span>
+                <strong>{{ shipment.totalWeight || 0 }} kg</strong>
+              </div>
+              <div class="invoice-summary-item total-amount">
+                <span>Estimated Amount</span>
+                <strong>
+                  @if (shipment.estimatedCost !== undefined && shipment.estimatedCost !== null && shipment.estimatedCost
+                  > 0) {
+                  ₹{{ shipment.estimatedCost | number:'1.2-2' }}
+                  } @else {
+                  ₹0.00
+                  }
+                </strong>
+              </div>
+            </div>
+
+            <div class="invoice-note">This is a system-generated shipment invoice for logistics and delivery reference.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  }
+</div>

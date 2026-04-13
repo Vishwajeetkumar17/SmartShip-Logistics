@@ -1,0 +1,448 @@
+{
+  "Routes": [
+    {
+      "UpstreamPathTemplate": "/identity/auth/{everything}",
+      "DownstreamPathTemplate": "/auth/{everything}",
+      "UpstreamHttpMethod": [
+        "POST",
+        "OPTIONS"
+      ],
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "identity-service",
+          "Port": 5001
+        }
+      ],
+      "RateLimitOptions": {
+        "EnableRateLimiting": true,
+        "Period": "1m",
+        "PeriodTimespan": 60,
+        "Limit": 120,
+        "ClientIdHeader": "User-Agent",
+        "QuotaExceededMessage": "Too many requests for Identity Auth API."
+      },
+      "QoSOptions": {
+        "ExceptionsAllowedBeforeBreaking": 5,
+        "DurationOfBreak": 5000,
+        "TimeoutValue": 30000
+      },
+      "HttpHandlerOptions": {
+        "AllowAutoRedirect": false,
+        "UseCookieContainer": false,
+        "UseTracing": true
+      },
+      "DangerousAcceptAnyServerCertificateValidator": true,
+      "RequestIdKey": "X-Correlation-ID",
+      "Key": "identity-auth"
+    },
+    {
+      "UpstreamPathTemplate": "/auth/{everything}",
+      "DownstreamPathTemplate": "/auth/{everything}",
+      "UpstreamHttpMethod": [
+        "GET",
+        "POST",
+        "PUT",
+        "DELETE",
+        "PATCH",
+        "OPTIONS"
+      ],
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "identity-service",
+          "Port": 5001
+        }
+      ],
+      "RateLimitOptions": {
+        "EnableRateLimiting": true,
+        "Period": "1m",
+        "PeriodTimespan": 60,
+        "Limit": 120,
+        "ClientIdHeader": "User-Agent",
+        "QuotaExceededMessage": "Too many requests for Identity Auth API."
+      },
+      "QoSOptions": {
+        "ExceptionsAllowedBeforeBreaking": 5,
+        "DurationOfBreak": 5000,
+        "TimeoutValue": 30000
+      },
+      "HttpHandlerOptions": {
+        "AllowAutoRedirect": false,
+        "UseCookieContainer": false,
+        "UseTracing": true
+      },
+      "DangerousAcceptAnyServerCertificateValidator": true,
+      "RequestIdKey": "X-Correlation-ID",
+      "Key": "auth-direct"
+    },
+    {
+      "UpstreamPathTemplate": "/identity/{everything}",
+      "DownstreamPathTemplate": "/{everything}",
+      "UpstreamHttpMethod": [
+        "GET",
+        "POST",
+        "PUT",
+        "DELETE",
+        "PATCH",
+        "OPTIONS"
+      ],
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "identity-service",
+          "Port": 5001
+        }
+      ],
+      "RateLimitOptions": {
+        "EnableRateLimiting": true,
+        "Period": "1m",
+        "PeriodTimespan": 60,
+        "Limit": 80,
+        "ClientIdHeader": "User-Agent",
+        "QuotaExceededMessage": "Too many requests for Identity API."
+      },
+      "QoSOptions": {
+        "ExceptionsAllowedBeforeBreaking": 3,
+        "DurationOfBreak": 5000,
+        "TimeoutValue": 15000
+      },
+      "LoadBalancerOptions": {
+        "Type": "RoundRobin"
+      },
+      "HttpHandlerOptions": {
+        "AllowAutoRedirect": false,
+        "UseCookieContainer": false,
+        "UseTracing": true
+      },
+      "DangerousAcceptAnyServerCertificateValidator": true,
+      "RequestIdKey": "X-Correlation-ID",
+      "SwaggerKey": "identity",
+      "Key": "identity"
+    },
+    {
+      "UpstreamPathTemplate": "/shipment/swagger/{everything}",
+      "DownstreamPathTemplate": "/swagger/{everything}",
+      "UpstreamHttpMethod": [
+        "GET"
+      ],
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "shipment-service",
+          "Port": 5002
+        }
+      ],
+      "RateLimitOptions": {
+        "EnableRateLimiting": false
+      },
+      "DangerousAcceptAnyServerCertificateValidator": true,
+      "RequestIdKey": "X-Correlation-ID",
+      "Key": "shipment-swagger"
+    },
+    {
+      "UpstreamPathTemplate": "/tracking/swagger/{everything}",
+      "DownstreamPathTemplate": "/swagger/{everything}",
+      "UpstreamHttpMethod": [
+        "GET"
+      ],
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "tracking-service",
+          "Port": 5003
+        }
+      ],
+      "RateLimitOptions": {
+        "EnableRateLimiting": false
+      },
+      "DangerousAcceptAnyServerCertificateValidator": true,
+      "RequestIdKey": "X-Correlation-ID",
+      "Key": "tracking-swagger"
+    },
+    {
+      "UpstreamPathTemplate": "/document/swagger/{everything}",
+      "DownstreamPathTemplate": "/swagger/{everything}",
+      "UpstreamHttpMethod": [
+        "GET"
+      ],
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "document-service",
+          "Port": 5004
+        }
+      ],
+      "RateLimitOptions": {
+        "EnableRateLimiting": false
+      },
+      "DangerousAcceptAnyServerCertificateValidator": true,
+      "RequestIdKey": "X-Correlation-ID",
+      "Key": "document-swagger"
+    },
+    {
+      "UpstreamPathTemplate": "/admin/swagger/{everything}",
+      "DownstreamPathTemplate": "/swagger/{everything}",
+      "UpstreamHttpMethod": [
+        "GET"
+      ],
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "admin-service",
+          "Port": 5005
+        }
+      ],
+      "RateLimitOptions": {
+        "EnableRateLimiting": false
+      },
+      "DangerousAcceptAnyServerCertificateValidator": true,
+      "RequestIdKey": "X-Correlation-ID",
+      "Key": "admin-swagger"
+    },
+    {
+      "UpstreamPathTemplate": "/identity/swagger/{everything}",
+      "DownstreamPathTemplate": "/swagger/{everything}",
+      "UpstreamHttpMethod": [
+        "GET"
+      ],
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "identity-service",
+          "Port": 5001
+        }
+      ],
+      "RateLimitOptions": {
+        "EnableRateLimiting": false
+      },
+      "DangerousAcceptAnyServerCertificateValidator": true,
+      "RequestIdKey": "X-Correlation-ID",
+      "Key": "identity-swagger"
+    },
+    {
+      "UpstreamPathTemplate": "/shipment/{everything}",
+      "DownstreamPathTemplate": "/{everything}",
+      "UpstreamHttpMethod": [
+        "GET",
+        "POST",
+        "PUT",
+        "DELETE",
+        "PATCH",
+        "OPTIONS"
+      ],
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "shipment-service",
+          "Port": 5002
+        }
+      ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "GatewayJwt"
+      },
+      "RateLimitOptions": {
+        "EnableRateLimiting": true,
+        "Period": "1m",
+        "PeriodTimespan": 60,
+        "Limit": 100,
+        "ClientIdHeader": "User-Agent",
+        "QuotaExceededMessage": "Too many requests for Shipment API."
+      },
+      "FileCacheOptions": {
+        "TtlSeconds": 30,
+        "Region": "shipment"
+      },
+      "QoSOptions": {
+        "ExceptionsAllowedBeforeBreaking": 3,
+        "DurationOfBreak": 5000,
+        "TimeoutValue": 10000
+      },
+      "LoadBalancerOptions": {
+        "Type": "RoundRobin"
+      },
+      "HttpHandlerOptions": {
+        "AllowAutoRedirect": false,
+        "UseCookieContainer": false,
+        "UseTracing": true
+      },
+      "DangerousAcceptAnyServerCertificateValidator": true,
+      "RequestIdKey": "X-Correlation-ID",
+      "SwaggerKey": "shipment",
+      "Key": "shipment"
+    },
+    {
+      "UpstreamPathTemplate": "/tracking/{everything}",
+      "DownstreamPathTemplate": "/{everything}",
+      "UpstreamHttpMethod": [
+        "GET",
+        "POST",
+        "PUT",
+        "DELETE",
+        "PATCH",
+        "OPTIONS"
+      ],
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "tracking-service",
+          "Port": 5003
+        }
+      ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "GatewayJwt"
+      },
+      "RateLimitOptions": {
+        "EnableRateLimiting": true,
+        "Period": "1m",
+        "PeriodTimespan": 60,
+        "Limit": 100,
+        "ClientIdHeader": "User-Agent",
+        "QuotaExceededMessage": "Too many requests for Tracking API."
+      },
+      "FileCacheOptions": {
+        "TtlSeconds": 30,
+        "Region": "tracking"
+      },
+      "QoSOptions": {
+        "ExceptionsAllowedBeforeBreaking": 3,
+        "DurationOfBreak": 5000,
+        "TimeoutValue": 10000
+      },
+      "LoadBalancerOptions": {
+        "Type": "RoundRobin"
+      },
+      "HttpHandlerOptions": {
+        "AllowAutoRedirect": false,
+        "UseCookieContainer": false,
+        "UseTracing": true
+      },
+      "DangerousAcceptAnyServerCertificateValidator": true,
+      "RequestIdKey": "X-Correlation-ID",
+      "SwaggerKey": "tracking",
+      "Key": "tracking"
+    },
+    {
+      "UpstreamPathTemplate": "/document/{everything}",
+      "DownstreamPathTemplate": "/{everything}",
+      "UpstreamHttpMethod": [
+        "GET",
+        "POST",
+        "PUT",
+        "DELETE",
+        "PATCH",
+        "OPTIONS"
+      ],
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "document-service",
+          "Port": 5004
+        }
+      ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "GatewayJwt"
+      },
+      "RateLimitOptions": {
+        "EnableRateLimiting": true,
+        "Period": "1m",
+        "PeriodTimespan": 60,
+        "Limit": 100,
+        "ClientIdHeader": "User-Agent",
+        "QuotaExceededMessage": "Too many requests for Document API."
+      },
+      "FileCacheOptions": {
+        "TtlSeconds": 30,
+        "Region": "document"
+      },
+      "QoSOptions": {
+        "ExceptionsAllowedBeforeBreaking": 3,
+        "DurationOfBreak": 5000,
+        "TimeoutValue": 10000
+      },
+      "LoadBalancerOptions": {
+        "Type": "RoundRobin"
+      },
+      "HttpHandlerOptions": {
+        "AllowAutoRedirect": false,
+        "UseCookieContainer": false,
+        "UseTracing": true
+      },
+      "DangerousAcceptAnyServerCertificateValidator": true,
+      "RequestIdKey": "X-Correlation-ID",
+      "SwaggerKey": "document",
+      "Key": "document"
+    },
+    {
+      "UpstreamPathTemplate": "/admin/{everything}",
+      "DownstreamPathTemplate": "/{everything}",
+      "UpstreamHttpMethod": [
+        "GET",
+        "POST",
+        "PUT",
+        "DELETE",
+        "PATCH",
+        "OPTIONS"
+      ],
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "admin-service",
+          "Port": 5005
+        }
+      ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "GatewayJwt"
+      },
+      "RateLimitOptions": {
+        "EnableRateLimiting": true,
+        "Period": "1m",
+        "PeriodTimespan": 60,
+        "Limit": 100,
+        "ClientIdHeader": "User-Agent",
+        "QuotaExceededMessage": "Too many requests for Admin API."
+      },
+      "FileCacheOptions": {
+        "TtlSeconds": 30,
+        "Region": "admin"
+      },
+      "QoSOptions": {
+        "ExceptionsAllowedBeforeBreaking": 3,
+        "DurationOfBreak": 5000,
+        "TimeoutValue": 10000
+      },
+      "LoadBalancerOptions": {
+        "Type": "RoundRobin"
+      },
+      "HttpHandlerOptions": {
+        "AllowAutoRedirect": false,
+        "UseCookieContainer": false,
+        "UseTracing": true
+      },
+      "DangerousAcceptAnyServerCertificateValidator": true,
+      "RequestIdKey": "X-Correlation-ID",
+      "SwaggerKey": "admin",
+      "Key": "admin"
+    }
+  ],
+  "GlobalConfiguration": {
+    "RequestIdKey": "X-Correlation-ID",
+    "ServiceDiscoveryProvider": {
+      "Type": "PollConsul",
+      "PollingInterval": 100,
+      "Namespace": "smartship"
+    },
+    "RateLimitOptions": {
+      "ClientIdHeader": "User-Agent",
+      "QuotaExceededMessage": "Too many requests.",
+      "RateLimitCounterPrefix": "smartship-rl-",
+      "DisableRateLimitHeaders": false,
+      "HttpStatusCode": 429
+    },
+    "HttpHandlerOptions": {
+      "AllowAutoRedirect": false,
+      "UseCookieContainer": false,
+      "UseTracing": true
+    }
+  }
+}

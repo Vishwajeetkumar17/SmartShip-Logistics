@@ -1,0 +1,92 @@
+<div class="profile-page">
+  <div class="page-header">
+    <div>
+      <h1>Account Settings</h1>
+      <p class="subtitle">Manage your profile and security settings</p>
+    </div>
+    <div class="page-chip">
+      <span class="material-icons">verified_user</span>
+      {{ formatRole(user$()?.role) }} Account
+    </div>
+  </div>
+
+  <div class="profile-grid">
+    <div class="settings-card">
+      <div class="card-header">
+        <div class="card-title-wrap">
+          <span class="card-icon material-icons">person</span>
+          <div>
+            <h2>Profile Information</h2>
+            <p class="card-subtitle">Update your public account details</p>
+          </div>
+        </div>
+      </div>
+      @if (profileSuccess) { <div class="alert alert-success">{{ profileSuccess }}</div> }
+
+      <form (ngSubmit)="onUpdateProfile()">
+        <div class="profile-summary">
+          <div class="avatar-badge">{{ (profileData.name || user$()?.name || 'A').charAt(0) | uppercase }}</div>
+          <div>
+            <div class="summary-name">{{ profileData.name || (user$()?.name | titlecase) }}</div>
+            <div class="summary-email">{{ user$()?.email }}</div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Email Address</label>
+          <input type="text" [value]="user$()?.email" disabled class="disabled-input" />
+          <span class="field-hint">Email cannot be changed</span>
+        </div>
+        <div class="form-group">
+          <label>Role</label>
+          <input type="text" [value]="formatRole(user$()?.role)" disabled class="disabled-input" />
+        </div>
+        <div class="form-group">
+          <label>Full Name <span class="required">*</span></label>
+          <input type="text" [(ngModel)]="profileData.name" name="name" required
+            (ngModelChange)="onProfileFieldChange('name')" [class.input-invalid]="!!profileFieldErrors['name']" />
+          @if (profileFieldErrors['name']) {
+          <small class="field-error">{{ profileFieldErrors['name'] }}</small>
+          }
+        </div>
+        <div class="form-group">
+          <label>Phone Number <span class="required">*</span></label>
+          <input type="tel" [(ngModel)]="profileData.phone" name="phone" required
+            (ngModelChange)="onProfileFieldChange('phone')" [class.input-invalid]="!!profileFieldErrors['phone']" />
+          @if (profileFieldErrors['phone']) {
+          <small class="field-error">{{ profileFieldErrors['phone'] }}</small>
+          }
+        </div>
+        <button type="submit" class="btn btn-primary" [disabled]="isUpdatingProfile">
+          {{ isUpdatingProfile ? 'Saving...' : 'Save Profile' }}
+        </button>
+        @if (profileError) {
+        <small class="field-error form-error">{{ profileError }}</small>
+        }
+      </form>
+    </div>
+
+    <div class="settings-card security-card">
+      <div class="card-header">
+        <div class="card-title-wrap">
+          <span class="card-icon material-icons">lock</span>
+          <div>
+            <h2>Security</h2>
+            <p class="card-subtitle">Update your password and keep your account protected</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="security-panel">
+        <div class="security-row">
+          <span class="security-label">Password</span>
+          <span class="security-value">Last set for this account</span>
+        </div>
+        <p class="security-note">Use a strong password with at least 8 characters and avoid reusing old passwords.</p>
+        <a routerLink="/change-password" class="btn btn-secondary btn-inline">
+          <span class="material-icons">password</span>
+          Change Password
+        </a>
+      </div>
+    </div>
+  </div>
+</div>

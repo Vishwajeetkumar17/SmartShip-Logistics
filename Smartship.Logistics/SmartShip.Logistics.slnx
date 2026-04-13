@@ -1,0 +1,24 @@
+<Solution>
+  <Folder Name="/gateway/">
+    <Project Path="SmartShip.Gateway/SmartShip.Gateway.csproj" />
+  </Folder>
+  <Folder Name="/Services/">
+    <Project Path="SmartShip.AdminService/SmartShip.AdminService.csproj" />
+    <Project Path="SmartShip.DocumentService/SmartShip.DocumentService.csproj" />
+    <Project Path="SmartShip.IdentityService/SmartShip.IdentityService.csproj" />
+    <Project Path="SmartShip.NotificationService/SmartShip.NotificationService.csproj" />
+    <Project Path="SmartShip.ShipmentService/SmartShip.ShipmentService.csproj" />
+    <Project Path="SmartShip.TrackingService/SmartShip.TrackingService.csproj" />
+  </Folder>
+  <Folder Name="/Shared/">
+    <Project Path="SmartShip.Shared.Common/SmartShip.Shared.Common.csproj" />
+    <Project Path="SmartShip.Shared.DTOs/SmartShip.Shared.DTOs.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/SmartShip.AdminService.UnitTests/SmartShip.AdminService.UnitTests.csproj" />
+    <Project Path="tests/SmartShip.DocumentService.UnitTests/SmartShip.DocumentService.UnitTests.csproj" />
+    <Project Path="tests/SmartShip.IdentityService.UnitTests/SmartShip.IdentityService.UnitTests.csproj" />
+    <Project Path="tests/SmartShip.ShipmentService.UnitTests/SmartShip.ShipmentService.UnitTests.csproj" />
+    <Project Path="tests/SmartShip.TrackingService.UnitTests/SmartShip.TrackingService.UnitTests.csproj" />
+  </Folder>
+</Solution>

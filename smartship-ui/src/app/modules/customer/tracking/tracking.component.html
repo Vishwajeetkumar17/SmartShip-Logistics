@@ -1,0 +1,279 @@
+<div class="tracking-container">
+  <div class="page-header-container">
+    <div class="page-header">
+      <h1>Track Shipment</h1>
+      <p>Real-time tracking information for your package</p>
+    </div>
+    <div class="top-nav">
+      <a routerLink="/customer/dashboard" class="btn-back">
+        <span class="material-icons">arrow_back</span>
+        Back to Dashboard
+      </a>
+    </div>
+  </div>
+
+  <!-- Search -->
+  <div class="tracking-search">
+    <div class="search-box">
+      <input type="text" [(ngModel)]="trackingNumber" placeholder="Enter tracking number (e.g. SMRT1234567890)"
+        (keyup.enter)="onTrack()" />
+      <button class="btn-track" (click)="onTrack()" [disabled]="!trackingNumber.trim() || isLoading">
+        {{ isLoading ? 'Tracking...' : 'Track' }}
+      </button>
+    </div>
+  </div>
+
+  @if (errorMessage) {
+  <div class="error-banner">{{ errorMessage }}</div>
+  }
+
+  @if (successMessage) {
+  <div class="success-banner">{{ successMessage }}</div>
+  }
+
+  @if (isLoading) {
+  <div class="loading-state">
+    <div class="spinner"></div>
+    <span>Fetching tracking information…</span>
+  </div>
+  }
+
+  @if (searched && !isLoading && !errorMessage) {
+  @if (!trackingData) {
+  <div class="empty-state">
+    <span class="material-icons empty-icon">search_off</span>
+    <h3>No Results Found</h3>
+    <p>Please check your tracking number and try again.</p>
+  </div>
+  } @else {
+
+  <!-- Shipment Info Card -->
+  <div class="card shipment-card">
+    <div class="card-header-row">
+      <div>
+        <div class="tracking-label">Tracking Number</div>
+        <div class="tracking-num">{{ trackingData.trackingNumber }}</div>
+      </div>
+      <span class="status-badge" [ngClass]="statusClass">{{ trackingData.currentStatus }}</span>
+    </div>
+
+    <hr class="divider" />
+
+    <div class="shipment-meta">
+      <div class="meta-col">
+        <div class="meta-label">From</div>
+        @if (shipmentData) {
+        <div class="meta-value">{{ shipmentData.senderAddress.city }}, {{ shipmentData.senderAddress.state }}</div>
+        } @else {
+        <div class="meta-value">—</div>
+        }
+      </div>
+      <div class="meta-divider"></div>
+      <div class="meta-col">
+        <div class="meta-label">To</div>
+        @if (shipmentData) {
+        <div class="meta-value">{{ shipmentData.receiverAddress.city }}, {{ shipmentData.receiverAddress.state }}</div>
+        } @else {
+        <div class="meta-value">—</div>
+        }
+      </div>
+      <div class="meta-divider"></div>
+      <div class="meta-col">
+        <div class="meta-label">Service</div>
+        @if (shipmentData) {
+        <div class="meta-value">{{ serviceType }}</div>
+        <div class="meta-sub">Weight: {{ shipmentData.totalWeight }} kg</div>
+        } @else {
+        <div class="meta-value">—</div>
+        }
+      </div>
+    </div>
+
+    <hr class="divider" />
+
+    <div class="shipment-footer">
+      <div class="footer-item">
+        <span class="material-icons footer-icon">schedule</span>
+        <div>
+          <div class="footer-label">Estimated Delivery</div>
+          <div class="footer-value">{{ estimatedDeliveryDate }}</div>
+        </div>
+      </div>
+      <div class="footer-item">
+        <span class="material-icons footer-icon">location_on</span>
+        <div>
+          <div class="footer-label">Current Location</div>
+          <div class="footer-value">{{ trackingData.currentLocation || 'N/A' }}</div>
+        </div>
+      </div>
+      <div class="footer-item">
+        <span class="material-icons footer-icon">payments</span>
+        <div>
+          <div class="footer-label">Estimated Cost</div>
+          <div class="footer-value">
+            @if (shipmentData?.estimatedCost !== undefined && shipmentData?.estimatedCost !== null) {
+            ₹{{ shipmentData!.estimatedCost! | number:'1.2-2' }}
+            } @else {
+            N/A
+            }
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Current Status Summary -->
+  <div class="card status-summary-card">
+    <h2 class="section-title">Current Status</h2>
+    <div class="status-row">
+      <span class="status-badge" [ngClass]="statusClass">{{ trackingData.currentStatus }}</span>
+      <span class="status-updated">Updated at: <span class="status-timestamp">{{ trackingData.latestEventTimestamp |
+          date:'yyyy-MM-dd hh:mm a' }}</span></span>
+    </div>
+    <div class="shipment-actions">
+      <button class="btn-invoice-download" (click)="downloadInvoice()"
+        [disabled]="!shipmentData || deleting || isLoading">
+        Print Invoice
+      </button>
+      <button class="btn-raise-issue" (click)="openIssuePanel()"
+        [disabled]="!shipmentData || issueSubmitting || deleting">
+        Raise Issue
+      </button>
+      <button class="btn-delete-shipment" (click)="onDeleteShipment()" [disabled]="!canDeleteShipment || deleting">
+        {{ deleting ? 'Deleting...' : 'Delete Shipment' }}
+      </button>
+      @if (!canDeleteShipment) {
+      <span class="shipment-action-note">Shipment is already booked by admin and cannot be deleted.</span>
+      }
+    </div>
+
+    @if (issuePanelOpen) {
+    <div class="issue-panel">
+      <div class="issue-panel-header">
+        <h3>Raise Shipment Issue</h3>
+        <button class="issue-close" (click)="closeIssuePanel()" aria-label="Close raise issue form">
+          <span class="material-icons">close</span>
+        </button>
+      </div>
+      <p class="issue-subtitle">Raise delay, cancellation, or delivery concerns. Our support team will assist you for
+        your concerns.
+      </p>
+      <div class="issue-form-grid">
+        <div class="issue-form-group">
+          <label>Issue Type</label>
+          <div class="custom-dropdown">
+            <button type="button" class="dropdown-button" (click)="toggleIssueTypeDropdown()">
+              {{ issueType }}
+              <span class="material-icons dropdown-icon">expand_more</span>
+            </button>
+            @if (issueTypeDropdownOpen) {
+            <div class="dropdown-menu">
+              <button type="button" class="dropdown-item" (click)="setIssueType('Delay')"
+                [class.selected]="issueType === 'Delay'">Delay</button>
+              <button type="button" class="dropdown-item" (click)="setIssueType('Cancellation')"
+                [class.selected]="issueType === 'Cancellation'">Cancellation</button>
+              <button type="button" class="dropdown-item" (click)="setIssueType('General')"
+                [class.selected]="issueType === 'General'">General Query</button>
+            </div>
+            }
+          </div>
+        </div>
+        <div class="issue-form-group issue-full-width">
+          <label>Description</label>
+          <textarea [ngModel]="issueDescription" (ngModelChange)="setIssueDescription($event)" rows="3"
+            placeholder="Explain the issue with your shipment"></textarea>
+        </div>
+      </div>
+      @if (issueError) {
+      <div class="issue-error">{{ issueError }}</div>
+      }
+      <div class="issue-actions">
+        <button class="btn-cancel-issue" (click)="closeIssuePanel()" [disabled]="issueSubmitting">Cancel</button>
+        <button class="btn-submit-issue" (click)="submitIssue()"
+          [disabled]="issueSubmitting || !issueDescription.trim()">
+          {{ issueSubmitting ? 'Submitting...' : 'Submit Issue' }}
+        </button>
+      </div>
+    </div>
+    }
+  </div>
+
+  <div class="card timeline-card">
+    <h2 class="section-title">Shipment Update History</h2>
+    @if (!trackingData.timeline || trackingData.timeline.length === 0) {
+    <p class="docs-empty">No update history available yet.</p>
+    } @else {
+    @for (event of trackingData.timeline; track event.eventId ?? $index; let i = $index) {
+    <div class="timeline-item">
+      <div class="timeline-left">
+        <div class="timeline-dot" [ngClass]="getDotClass(i, trackingData.timeline.length)">
+          <span class="material-icons">check</span>
+        </div>
+        @if (i < trackingData.timeline.length - 1) { <div class="timeline-connector">
+      </div>
+      }
+    </div>
+    <div class="timeline-body">
+      <div class="timeline-top-row">
+        <span class="event-badge" [ngClass]="getEventBadgeClass(event.status)">{{ event.status }}</span>
+        <span class="event-time">{{ event.timestamp | date:'yyyy-MM-dd hh:mm a' }}</span>
+      </div>
+      <div class="event-desc">{{ event.description || 'Shipment status updated' }}</div>
+      <div class="event-location">
+        <span class="material-icons">place</span>
+        <span>{{ getTimelineLocation(event) }}</span>
+      </div>
+    </div>
+  </div>
+  }
+  }
+</div>
+
+<!-- Documents + Upload row -->
+<div class="docs-row">
+  <!-- Documents Card -->
+  <div class="card docs-card">
+    <div class="docs-card-header">
+      <span class="material-icons docs-header-icon">description</span>
+      <h3>Documents</h3>
+    </div>
+    @if (documents.length === 0) {
+    <p class="docs-empty">No documents available.</p>
+    } @else {
+    <div class="docs-list">
+      @for (doc of documents; track doc.documentId) {
+      <div class="doc-item">
+        <span class="doc-name">{{ doc.fileName }}</span>
+        <button class="btn-download" (click)="downloadDocument(doc.fileUrl, doc.fileName)">Download</button>
+      </div>
+      }
+    </div>
+    }
+  </div>
+
+  <!-- Upload Card -->
+  <div class="card upload-card">
+    <div class="docs-card-header">
+      <span class="material-icons docs-header-icon">upload_file</span>
+      <h3>Upload Documents</h3>
+    </div>
+    <div class="upload-zone" [class.drag-over]="isDragOver" (dragover)="onDragOver($event)" (dragleave)="onDragLeave()"
+      (drop)="onDrop($event)" (click)="fileInput.click()" role="button" tabindex="0"
+      (keydown.enter)="fileInput.click()">
+      <input #fileInput type="file" hidden accept=".pdf,.png,.jpg,.jpeg" (change)="onFileSelected($event)" />
+      <span class="material-icons upload-zone-icon">cloud_upload</span>
+      @if (uploading) {
+      <p class="upload-hint">Uploading…</p>
+      } @else {
+      <p class="upload-hint">Click to upload or drag and drop</p>
+      <p class="upload-subhint">PDF, PNG, JPG up to 10MB</p>
+      }
+    </div>
+    @if (uploadError) {
+    <div class="upload-error">{{ uploadError }}</div>
+    }
+  </div>
+</div>
+}
+}
+</div>

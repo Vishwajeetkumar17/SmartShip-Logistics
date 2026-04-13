@@ -1,0 +1,16 @@
+:host {
+  display: block;
+}
+
+/* All styling handled by global styles.css:
+   - .kpi-grid-premium, .kpi-card, .kpi-card-* — KPI cards with colored top bars
+   - .kpi-top, .kpi-icon, .kpi-icon-* — icon boxes
+   - .kpi-trend, .kpi-trend-up, .kpi-trend-down — trend badges
+   - .kpi-value, .kpi-label — values/labels
+   - .kpi-secondary, .kpi-sec-card — secondary KPI row
+   - .charts-grid, .charts-grid-full — chart layouts
+   - .chart-card, .chart-header, .chart-body, .chart-wrap — chart containers
+   - .ss-page-header — page header
+   - .ss-alert, .ss-alert-error — alerts
+   - .ss-skeleton — skeleton loaders
+*/

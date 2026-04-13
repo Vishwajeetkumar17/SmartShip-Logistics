@@ -1,0 +1,122 @@
+# Global ignores
+*.user
+*.suo
+*.DS_Store
+*.env
+*.env.*
+!*.env.example
+*.log
+*.tmp
+*.swp
+*.bak
+*.lock
+*.vscode/
+*.idea/
+*.vs/
+
+# Frontend (Angular)
+smartship-ui/node_modules/
+smartship-ui/dist/
+smartship-ui/build/
+smartship-ui/.angular/
+smartship-ui/.env
+smartship-ui/.env.*
+smartship-ui/.cache/
+smartship-ui/.npm/
+smartship-ui/.yarn/
+smartship-ui/.next/
+smartship-ui/.turbo/
+smartship-ui/.coverage/
+smartship-ui/.eslintcache
+smartship-ui/public/*.log
+smartship-ui/public/*.tmp
+
+# Backend (.NET)
+SmartShip.Logistics/**/bin/
+SmartShip.Logistics/**/obj/
+SmartShip.Logistics/**/*.user
+SmartShip.Logistics/**/*.suo
+SmartShip.Logistics/**/*.log
+SmartShip.Logistics/**/*.tmp
+SmartShip.Logistics/**/*.bak
+SmartShip.Logistics/**/*.lock
+SmartShip.Logistics/**/TestResults/
+SmartShip.Logistics/**/publish/
+SmartShip.Logistics/**/wwwroot/*.log
+SmartShip.Logistics/**/wwwroot/*.tmp
+SmartShip.Logistics/**/Migrations/
+SmartShip.Logistics/**/Properties/launchSettings.json
+SmartShip.Logistics/Logs/
+SmartShip.Logistics/**/Logs/*.txt
+scripts/
+
+# Misc
+*.pdb
+*.mdb
+*.db
+*.sqlite
+*.sqlite3
+*.tgz
+*.tar
+*.zip
+*.7z
+*.rar
+*.exe
+*.dll
+*.out
+*.class
+*.jar
+*.pyc
+*.ipynb
+
+# Ignore coverage and test artifacts
+coverage/
+*.coverage
+*.testresults
+
+# Ignore local settings
+local.settings.json
+
+# Ignore package lock files
+package-lock.json
+yarn.lock
+
+# Ignore IDE and editor folders
+.idea/
+.vscode/
+.vs/
+
+# Ignore Docker artifacts
+Dockerfile*
+.docker/
+
+# Ignore Azure artifacts
+*.azure/
+
+# Ignore temporary files
+~*
+*.tmp
+*.temp
+*.bak
+*.swp
+*.swo
+*.orig
+
+# Ignore by pattern
+!src/**/appsettings.json
+!src/**/appsettings.Development.json
+
+# Project documentation folder
+project_documentation/
+
+# Sensitive/local root files
+SMARTSHIP_BACKEND_INVENTORY.txt
+docker-manage.ps1
+docker-manage.sh
+Logs/
+docs/
+*.log
+*.tmp
+*.yml
+*.yaml
+# End of .gitignore

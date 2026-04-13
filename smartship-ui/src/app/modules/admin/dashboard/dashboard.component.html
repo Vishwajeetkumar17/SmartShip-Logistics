@@ -1,0 +1,132 @@
+<div class="ss-page-header">
+  <div>
+    <h1>Admin Dashboard</h1>
+    <p>Overview of logistics operations and performance metrics</p>
+  </div>
+</div>
+
+@if (isLoading) {
+<div class="kpi-grid-premium" style="margin-bottom:20px">
+  @for (i of [1,2,3,4]; track i) {
+  <div class="ss-skeleton" style="height:110px;border-radius:16px"></div>
+  }
+</div>
+<div class="charts-grid">
+  <div class="ss-skeleton" style="height:320px;border-radius:16px"></div>
+  <div class="ss-skeleton" style="height:320px;border-radius:16px"></div>
+</div>
+} @else if (error) {
+<div class="ss-alert ss-alert-error">
+  <span class="material-icons">error_outline</span>
+  {{ error }}
+</div>
+} @else if (metrics) {
+
+<!-- Premium KPI Cards -->
+<div class="kpi-grid-premium">
+  <div class="kpi-card kpi-card-indigo">
+    <div class="kpi-top">
+      <div class="kpi-icon kpi-icon-indigo"><span class="material-icons">inventory_2</span></div>
+      <span class="kpi-trend kpi-trend-up">
+        <span class="material-icons">trending_up</span>
+        {{ formatTrend(metrics.totalShipments.percentageChange) }}
+      </span>
+    </div>
+    <div class="kpi-value">{{ metrics.totalShipments.count | number }}</div>
+    <div class="kpi-label">Total Shipments</div>
+  </div>
+
+  <div class="kpi-card kpi-card-blue">
+    <div class="kpi-top">
+      <div class="kpi-icon kpi-icon-blue"><span class="material-icons">local_shipping</span></div>
+      <span class="kpi-trend kpi-trend-up">
+        <span class="material-icons">trending_up</span>
+        {{ formatTrend(metrics.inTransit.percentageChange) }}
+      </span>
+    </div>
+    <div class="kpi-value">{{ metrics.inTransit.count | number }}</div>
+    <div class="kpi-label">In Transit</div>
+  </div>
+
+  <div class="kpi-card kpi-card-green">
+    <div class="kpi-top">
+      <div class="kpi-icon kpi-icon-green"><span class="material-icons">task_alt</span></div>
+      <span class="kpi-trend kpi-trend-up">
+        <span class="material-icons">trending_up</span>
+        {{ formatTrend(metrics.delivered.percentageChange) }}
+      </span>
+    </div>
+    <div class="kpi-value">{{ metrics.delivered.count | number }}</div>
+    <div class="kpi-label">Delivered</div>
+  </div>
+
+  <div class="kpi-card kpi-card-red">
+    <div class="kpi-top">
+      <div class="kpi-icon kpi-icon-red"><span class="material-icons">warning_amber</span></div>
+      <span class="kpi-trend kpi-trend-down">
+        <span class="material-icons">trending_down</span>
+        {{ formatTrend(metrics.exceptions.percentageChange) }}
+      </span>
+    </div>
+    <div class="kpi-value">{{ metrics.exceptions.count | number }}</div>
+    <div class="kpi-label">Issues</div>
+  </div>
+</div>
+
+<!-- Secondary KPIs -->
+<div class="kpi-secondary">
+  <div class="kpi-sec-card">
+    <div class="kpi-sec-icon"><span class="material-icons">trending_up</span></div>
+    <div>
+      <div class="kpi-sec-label">On-Time Delivery Rate</div>
+      <div class="kpi-sec-value">{{ metrics.onTimeDeliveryPercent }}%</div>
+    </div>
+  </div>
+  <div class="kpi-sec-card">
+    <div class="kpi-sec-icon"><span class="material-icons">schedule</span></div>
+    <div>
+      <div class="kpi-sec-label">Avg Delivery Time</div>
+      <div class="kpi-sec-value">{{ metrics.avgDeliveryTimeDays }} days</div>
+    </div>
+  </div>
+</div>
+
+<!-- Charts Row 1 -->
+<div class="charts-grid">
+  <div class="chart-card">
+    <div class="chart-header">
+      <span class="chart-title">Daily Shipments</span>
+    </div>
+    <div class="chart-body">
+      <div class="chart-wrap">
+        <canvas baseChart [type]="lineChartType" [data]="lineChartData" [options]="lineChartOptions"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <div class="chart-card">
+    <div class="chart-header">
+      <span class="chart-title">Status Distribution</span>
+    </div>
+    <div class="chart-body">
+      <div class="chart-wrap">
+        <canvas baseChart [type]="pieChartType" [data]="pieChartData" [options]="pieChartOptions"></canvas>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Charts Row 2 -->
+<div class="charts-grid-full">
+  <div class="chart-card">
+    <div class="chart-header">
+      <span class="chart-title">Delivery Performance Trend</span>
+    </div>
+    <div class="chart-body">
+      <div class="chart-wrap tall">
+        <canvas baseChart [type]="barChartType" [data]="barChartData" [options]="barChartOptions"></canvas>
+      </div>
+    </div>
+  </div>
+</div>
+}

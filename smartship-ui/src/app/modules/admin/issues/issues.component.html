@@ -1,0 +1,213 @@
+<div class="admin-page">
+  <div class="page-header">
+    <div>
+      <h1>Issue Management</h1>
+      <p class="subtitle">Monitor and resolve shipment issues</p>
+    </div>
+    <button class="btn btn-primary" (click)="toggleCreateForm()">
+      <span class="material-icons">{{ showCreateForm ? 'close' : 'report_problem' }}</span>
+      {{ showCreateForm ? 'Cancel' : 'Report Issue' }}
+    </button>
+  </div>
+
+  @if (error) { <div class="alert alert-error">{{ error }}</div> }
+  @if (success) { <div class="alert alert-success">{{ success }}</div> }
+
+  @if (showCreateForm) {
+  <div class="form-card">
+    <div class="form-card-header">
+      <div>
+        <h2>Report a Shipment Issue</h2>
+        <p class="card-subtitle">Create a delay or return issue for a shipment</p>
+      </div>
+    </div>
+    <div class="form-grid">
+      <div class="form-group">
+        <label>Shipment ID <span class="required">*</span></label>
+        <div class="shipment-autocomplete">
+          <input type="text" [ngModel]="shipmentSearchQuery" (ngModelChange)="onShipmentQueryInput($event)"
+            (focus)="showShipmentSuggestions = true; filterShipmentOptions()" placeholder="Search shipment ID"
+            autocomplete="off" [class.input-invalid]="!!createFieldErrors['shipmentId']" />
+          <button class="combo-toggle" type="button" (click)="toggleShipmentSuggestions()"
+            aria-label="Toggle shipment dropdown">
+            <span class="material-icons">{{ showShipmentSuggestions ? 'expand_less' : 'expand_more' }}</span>
+          </button>
+
+          @if (showShipmentSuggestions) {
+          <div class="autocomplete-menu">
+            @if (filteredShipmentIds.length > 0) {
+            @for (shipmentId of filteredShipmentIds; track shipmentId) {
+            <button class="autocomplete-item" type="button" (click)="selectShipmentId(shipmentId)">
+              SH{{ shipmentId.toString().padStart(3, '0') }}
+            </button>
+            }
+            } @else {
+            <div class="autocomplete-empty">No matching shipment IDs</div>
+            }
+          </div>
+          }
+        </div>
+        @if (createFieldErrors['shipmentId']) {
+        <small class="field-error">{{ createFieldErrors['shipmentId'] }}</small>
+        }
+      </div>
+      <div class="form-group">
+        <label>Issue Type</label>
+        <select [(ngModel)]="newExceptionType">
+          <option value="delay">Delay</option>
+          <option value="return">Return</option>
+        </select>
+      </div>
+      <div class="form-group full-width">
+        <label>Reason <span class="required">*</span></label>
+        <textarea [ngModel]="newReason" (ngModelChange)="onNewReasonInput($event)"
+          placeholder="Describe the reason for this issue..." rows="2"
+          [class.input-invalid]="!!createFieldErrors['reason']"></textarea>
+        @if (createFieldErrors['reason']) {
+        <small class="field-error">{{ createFieldErrors['reason'] }}</small>
+        }
+      </div>
+    </div>
+    <div class="form-actions">
+      <button class="btn btn-secondary" (click)="toggleCreateForm()">Cancel</button>
+      <button class="btn btn-primary" (click)="submitNewException()"
+        [disabled]="isPerformingAction || !newShipmentId || !newReason">
+        <span class="material-icons">send</span>
+        {{ isPerformingAction ? 'Submitting...' : 'Submit Issue' }}
+      </button>
+    </div>
+  </div>
+  }
+
+  <!-- Action Modal -->
+  @if (actionType) {
+  <div class="action-overlay">
+    <div class="action-modal">
+      <div class="modal-header">
+        <h3>{{ actionType === 'resolve' ? 'Resolve Issue' : actionType === 'delay' ? 'Mark Delayed' : 'Mark Return'
+          }}</h3>
+        <button class="modal-close" (click)="cancelAction()" aria-label="Close action modal">
+          <span class="material-icons">close</span>
+        </button>
+      </div>
+      <p class="modal-sub">Shipment ID: <strong>{{ actionShipmentId }}</strong></p>
+      <div class="form-group">
+        <label>{{ actionType === 'resolve' ? 'Resolution Notes' : 'Reason' }} <span class="required">*</span></label>
+        <textarea [ngModel]="actionReason" (ngModelChange)="onActionReasonInput($event)" placeholder="Enter details..."
+          rows="3" [class.input-invalid]="!!actionFieldError"></textarea>
+        @if (actionFieldError) {
+        <small class="field-error">{{ actionFieldError }}</small>
+        }
+      </div>
+      <div class="modal-actions">
+        <button class="btn btn-secondary" (click)="cancelAction()">Cancel</button>
+        <button class="btn btn-primary" (click)="performAction()"
+          [disabled]="isPerformingAction || !actionReason.trim()">
+          <span class="material-icons">task_alt</span>
+          {{ isPerformingAction ? 'Processing...' : 'Confirm' }}
+        </button>
+      </div>
+    </div>
+  </div>
+  }
+
+  @if (!isLoading && recentResolvedIssues.length > 0) {
+  <div class="table-card resolved-card">
+    <div class="section-header">
+      <h2>Recently Resolved</h2>
+      <span class="section-subtitle">Latest {{ recentResolvedIssues.length }} closed issues</span>
+    </div>
+    <div class="table-scroll">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Shipment</th>
+            <th>Type</th>
+            <th>Description</th>
+            <th>Status</th>
+            <th>Created</th>
+            <th>Resolved</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (ex of recentResolvedIssues; track ex.exceptionId) {
+          <tr>
+            <td><span class="id-pill">{{ ex.exceptionId }}</span></td>
+            <td><strong class="shipment-code">SH{{ ex.shipmentId.toString().padStart(3, '0') }}</strong></td>
+            <td><span class="type-badge" [ngClass]="getTypeClass(ex.exceptionType)">{{
+                formatExceptionType(ex.exceptionType) }}</span></td>
+            <td class="desc-cell">{{ ex.description }}</td>
+            <td><span class="status-badge" [ngClass]="getStatusClass(ex.status)">Closed</span></td>
+            <td>{{ ex.createdAt | date:'mediumDate' }}</td>
+            <td>{{ ex.resolvedAt ? (ex.resolvedAt | date:'mediumDate') : '—' }}</td>
+          </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </div>
+  }
+
+  <div class="table-card">
+    <div class="section-header">
+      <h2>Open Issues</h2>
+      <span class="section-subtitle">Issues that still require action</span>
+    </div>
+    @if (isLoading) {
+    <div class="loading-state">
+      <span class="loader"></span>
+      <p>Loading issues...</p>
+    </div>
+    } @else {
+    <div class="table-scroll">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Shipment</th>
+            <th>Type</th>
+            <th>Description</th>
+            <th>Status</th>
+            <th>Created</th>
+            <th>Resolved</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (ex of issues; track ex.exceptionId) {
+          <tr>
+            <td><span class="id-pill">{{ ex.exceptionId }}</span></td>
+            <td><strong class="shipment-code">SH{{ ex.shipmentId.toString().padStart(3, '0') }}</strong></td>
+            <td><span class="type-badge" [ngClass]="getTypeClass(ex.exceptionType)">{{
+                formatExceptionType(ex.exceptionType) }}</span></td>
+            <td class="desc-cell">{{ ex.description }}</td>
+            <td><span class="status-badge" [ngClass]="getStatusClass(ex.status)">{{ ex.status }}</span></td>
+            <td>{{ ex.createdAt | date:'mediumDate' }}</td>
+            <td>{{ ex.resolvedAt ? (ex.resolvedAt | date:'mediumDate') : '—' }}</td>
+            <td class="actions-cell">
+              @if (ex.status === 'Open') {
+              <button class="btn-xs btn-resolve" (click)="openAction('resolve', ex.shipmentId)">
+                <span class="material-icons">task_alt</span>
+                Resolve
+              </button>
+              } @else {
+              <span class="resolved-tag"><span class="material-icons">check_circle</span> Resolved</span>
+              }
+            </td>
+          </tr>
+          }
+          @if (issues.length === 0) {
+          <tr>
+            <td colspan="8" class="empty-state">No open issues found.</td>
+          </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+    <div class="table-footer">
+      Showing {{ issues.length }} open issues
+    </div>
+    }
+  </div>
+</div>

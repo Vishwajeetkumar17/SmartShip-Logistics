@@ -1,0 +1,61 @@
+<!-- Mobile overlay -->
+@if (mobileOpen()) {
+<div class="sidebar-overlay" (click)="closeMobile()"></div>
+}
+
+<!-- Sidebar -->
+<aside class="sidebar" [class.collapsed]="collapsed()" [class.mobile-open]="mobileOpen()">
+  <!-- Brand -->
+  <div class="sidebar-brand">
+    <div class="brand-logo">
+      <img src="/logo.png" alt="SmartShip Logo">
+    </div>
+    @if (!collapsed()) {
+    <div class="brand-text-container">
+      <span class="brand-name">SmartShip</span>
+    </div>
+    }
+    <button class="collapse-btn" (click)="toggleCollapse()" title="Toggle sidebar">
+      <span class="material-icons">{{ collapsed() ? 'chevron_right' : 'chevron_left' }}</span>
+    </button>
+  </div>
+
+  <!-- Nav -->
+  <nav class="sidebar-nav">
+    <div class="nav-section-label" [class.hidden]="collapsed()">
+      {{ isAdmin() ? 'ADMIN' : 'MENU' }}
+    </div>
+    @for (item of navItems; track item.route) {
+    <a [routerLink]="item.route" class="nav-item" [class.active]="isActive(item.route)" [title]="item.label">
+      <span class="material-icons nav-icon">{{ item.icon }}</span>
+      @if (!collapsed()) {
+      <span class="nav-label">{{ item.label }}</span>
+      }
+    </a>
+    }
+  </nav>
+
+  <!-- Bottom: Profile + Logout -->
+  <div class="sidebar-footer">
+    <a routerLink="/profile" class="nav-item profile-item" [title]="'Profile'">
+      <div class="user-avatar">{{ userInitial }}</div>
+      @if (!collapsed()) {
+      <div class="user-info">
+        <span class="user-name">{{ userName | titlecase }}</span>
+        <span class="user-role">{{ userRole }}</span>
+      </div>
+      }
+    </a>
+    <button class="logout-btn" (click)="onLogout()" [title]="'Logout'">
+      <span class="material-icons">logout</span>
+      @if (!collapsed()) {
+      <span>Logout</span>
+      }
+    </button>
+  </div>
+</aside>
+
+<!-- Mobile hamburger (shown in topbar via CSS) -->
+<button class="mobile-menu-btn" (click)="toggleMobile()" aria-label="Open menu">
+  <span class="material-icons">menu</span>
+</button>

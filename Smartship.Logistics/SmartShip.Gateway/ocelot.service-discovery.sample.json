@@ -1,0 +1,40 @@
+{
+    "Routes": [
+        {
+            "UpstreamPathTemplate": "/shipment/{everything}",
+            "DownstreamPathTemplate": "/{everything}",
+            "UpstreamHttpMethod": [
+                "GET",
+                "POST",
+                "PUT",
+                "DELETE",
+                "PATCH",
+                "OPTIONS"
+            ],
+            "ServiceName": "smartship-shipment-service",
+            "UseServiceDiscovery": true,
+            "AuthenticationOptions": {
+                "AuthenticationProviderKey": "GatewayJwt"
+            },
+            "LoadBalancerOptions": {
+                "Type": "LeastConnection"
+            },
+            "QoSOptions": {
+                "ExceptionsAllowedBeforeBreaking": 3,
+                "DurationOfBreak": 20,
+                "TimeoutValue": 5000
+            },
+            "SwaggerKey": "shipment",
+            "Key": "shipment"
+        }
+    ],
+    "GlobalConfiguration": {
+        "BaseUrl": "https://localhost:7000",
+        "ServiceDiscoveryProvider": {
+            "Host": "localhost",
+            "Port": 8500,
+            "Type": "Consul",
+            "PollingInterval": 10000
+        }
+    }
+}

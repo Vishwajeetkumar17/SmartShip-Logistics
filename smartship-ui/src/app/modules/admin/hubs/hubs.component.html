@@ -1,0 +1,140 @@
+<div class="hubs-container">
+  <div class="page-header">
+    <div>
+      <h1>Hub Management</h1>
+      <p class="subtitle">Create, update, and manage your logistics hub network</p>
+    </div>
+    <button class="btn btn-primary" (click)="showForm ? cancelForm() : openCreateForm()">
+      <span class="material-icons">{{ showForm ? 'close' : 'add_business' }}</span>
+      {{ showForm ? 'Cancel' : 'Add Hub' }}
+    </button>
+  </div>
+
+  @if (showForm) {
+  <div class="form-card">
+    <div class="form-card-header">
+      <div>
+        <h2>{{ editingHubId ? 'Edit Hub' : 'Create New Hub' }}</h2>
+        <p class="card-subtitle">
+          {{ editingHubId ? 'Update the selected hub details below.' : 'Add a new hub to your logistics network.' }}
+        </p>
+      </div>
+      @if (editingHubId) {
+      <div class="edit-pill">
+        <span class="material-icons">edit</span>
+        Editing Hub
+      </div>
+      }
+    </div>
+    <div class="form-grid">
+      <div class="form-group">
+        <label>Hub Name <span class="required">*</span></label>
+        <input type="text" [(ngModel)]="hubForm.name" placeholder="Hub name" required (blur)="markFieldTouched('name')"
+          [class.input-invalid]="showFieldError('name')" />
+        @if (showFieldError('name')) {
+        <small class="field-error">{{ getFieldError('name') }}</small>
+        }
+      </div>
+      <div class="form-group">
+        <label>Manager Name <span class="required">*</span></label>
+        <input type="text" [(ngModel)]="hubForm.managerName" placeholder="Manager name" maxlength="100"
+          (blur)="markFieldTouched('managerName')" [class.input-invalid]="showFieldError('managerName')" />
+        @if (showFieldError('managerName')) {
+        <small class="field-error">{{ getFieldError('managerName') }}</small>
+        }
+      </div>
+      <div class="form-group full-width">
+        <label>Address <span class="required">*</span></label>
+        <input type="text" [(ngModel)]="hubForm.address" placeholder="Hub address" required
+          (blur)="markFieldTouched('address')" [class.input-invalid]="showFieldError('address')" />
+        @if (showFieldError('address')) {
+        <small class="field-error">{{ getFieldError('address') }}</small>
+        }
+      </div>
+      <div class="form-group">
+        <label>Contact Number <span class="required">*</span></label>
+        <input type="tel" [ngModel]="hubForm.contactNumber" (ngModelChange)="onPhoneInput($event)"
+          placeholder="10-digit phone number" maxlength="10" inputmode="numeric"
+          (blur)="markFieldTouched('contactNumber')" [class.input-invalid]="showFieldError('contactNumber')" />
+        <small class="field-hint">Must be exactly 10 digits</small>
+        @if (showFieldError('contactNumber')) {
+        <small class="field-error">{{ getFieldError('contactNumber') }}</small>
+        }
+      </div>
+      <div class="form-group">
+        <label>Email Address <span class="required">*</span></label>
+        <input type="email" [(ngModel)]="hubForm.email" placeholder="manager@hub.com" maxlength="150"
+          (blur)="markFieldTouched('email')" [class.input-invalid]="showFieldError('email')" />
+        <small class="field-hint">Enter a valid email address</small>
+        @if (showFieldError('email')) {
+        <small class="field-error">{{ getFieldError('email') }}</small>
+        }
+      </div>
+      <div class="form-group">
+        <label class="checkbox-label">
+          <input type="checkbox" [(ngModel)]="hubForm.isActive" />
+          Active
+        </label>
+      </div>
+    </div>
+    <div class="form-actions">
+      <button class="btn btn-secondary" (click)="cancelForm()">Cancel</button>
+      <button class="btn btn-primary" (click)="saveHub()" [disabled]="!isHubFormValid()">
+        <span class="material-icons">{{ editingHubId ? 'save' : 'add_business' }}</span>
+        {{ editingHubId ? 'Update Hub' : 'Create Hub' }}
+      </button>
+    </div>
+    @if (errorMessage) {
+    <small class="field-error">{{ errorMessage }}</small>
+    }
+  </div>
+  }
+
+  @if (isLoading) {
+  <app-loader [visible]="true" message="Loading hubs..."></app-loader>
+  } @else if (hubs.length === 0 && !showForm) {
+  <div class="empty-state">
+    <span class="material-icons empty-icon">warehouse</span>
+    <h3>No Hubs Configured</h3>
+    <p>Add your first hub to start managing the logistics network</p>
+  </div>
+  } @else if (!showForm) {
+  <div class="hubs-grid">
+    @for (hub of hubs; track hub.hubId) {
+    <div class="hub-card">
+      <div class="hub-header">
+        <div>
+          <h3>{{ hub.name }}</h3>
+          <p class="hub-subtitle">Hub ID: {{ hub.hubId }}</p>
+        </div>
+        <div class="hub-status" [class.active]="hub.isActive" [class.inactive]="!hub.isActive">
+          {{ hub.isActive ? 'Active' : 'Inactive' }}
+        </div>
+      </div>
+      <div class="hub-details">
+        <p><span class="material-icons detail-icon">location_on</span> {{ hub.address }}</p>
+        @if (hub.contactNumber) {
+        <p><span class="material-icons detail-icon">phone</span> {{ hub.contactNumber }}</p>
+        }
+        @if (hub.managerName) {
+        <p><span class="material-icons detail-icon">person</span> {{ hub.managerName }}</p>
+        }
+        @if (hub.email) {
+        <p><span class="material-icons detail-icon">email</span> {{ hub.email }}</p>
+        }
+      </div>
+      <div class="hub-actions">
+        <button class="btn-sm btn-edit" (click)="openEditForm(hub)">
+          <span class="material-icons">edit</span>
+          Edit
+        </button>
+        <button class="btn-sm btn-delete" (click)="deleteHub(hub.hubId)">
+          <span class="material-icons">delete_outline</span>
+          Delete
+        </button>
+      </div>
+    </div>
+    }
+  </div>
+  }
+</div>

@@ -1,0 +1,140 @@
+.details-container {
+  padding: 2rem 2.5rem;
+  max-width: 1100px;
+  margin: 0 auto;
+  min-height: calc(100vh - 56px);
+}
+
+.top-nav {
+  margin-bottom: 0.75rem;
+}
+
+.btn-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  text-decoration: none;
+  color: #64748b;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.btn-back .material-icons {
+  font-size: 1em;
+  line-height: 1;
+}
+
+.btn-back:hover {
+  color: #334155;
+}
+
+.loading { text-align: center; padding: 3rem; color: #94a3b8; }
+
+.not-found {
+  text-align: center;
+  padding: 4rem 2rem;
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 14px;
+  max-width: 440px;
+  margin: 0 auto;
+}
+
+.not-found span { font-size: 2.5rem; display: block; margin-bottom: 0.75rem; }
+.not-found .not-found-icon {
+  color: #94a3b8;
+}
+.not-found h2 { color: #0f172a; margin: 0 0 0.35rem; }
+.not-found p { color: #64748b; margin: 0 0 1.5rem; }
+
+.btn-primary {
+  display: inline-block;
+  padding: 0.65rem 1.5rem;
+  background: #2563eb;
+  color: #fff;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.88rem;
+  border-radius: 10px;
+}
+
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.page-header h1 { font-size: 1.6rem; font-weight: 700; color: #0f172a; margin: 0; }
+
+.tracking-number {
+  color: #64748b;
+  font-size: 0.9rem;
+  font-family: 'Consolas', 'Courier New', monospace;
+  margin: 0.2rem 0 0;
+}
+
+.badge {
+  display: inline-block;
+  padding: 0.3rem 0.85rem;
+  border-radius: 20px;
+  font-size: 0.82rem;
+  font-weight: 600;
+}
+
+.badge-secondary { background: #f1f5f9; color: #64748b; }
+.badge-info { background: #eff6ff; color: #2563eb; }
+.badge-primary { background: #dbeafe; color: #1d4ed8; }
+.badge-accent { background: #fef3c7; color: #d97706; }
+.badge-success { background: #dcfce7; color: #16a34a; }
+
+.details-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.25rem;
+}
+
+.detail-card {
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 14px;
+  padding: 1.5rem;
+}
+
+.detail-card h3 {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: 1rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 0 0 0.75rem;
+}
+.detail-card h3 .material-icons {
+  font-size: 1.1em;
+  line-height: 1;
+  color: #64748b;
+}
+.detail-card p { color: #475569; font-size: 0.88rem; margin: 0.2rem 0; }
+
+.package-info {
+  border-bottom: 1px solid #f1f5f9;
+  padding-bottom: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.package-info:last-of-type { border-bottom: none; padding-bottom: 0; margin-bottom: 0; }
+.package-info .desc { color: #94a3b8; font-style: italic; }
+
+.total-weight {
+  margin-top: 0.75rem;
+  padding-top: 0.5rem;
+  border-top: 1px solid #e2e8f0;
+  font-size: 0.88rem;
+  color: #0f172a;
+}
+
+@media (max-width: 700px) {
+  .details-grid { grid-template-columns: 1fr; }
+  .details-container { padding: 1.5rem; }
+}

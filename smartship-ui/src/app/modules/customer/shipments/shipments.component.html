@@ -1,0 +1,81 @@
+<div class="customer-page">
+  <div class="page-header-container">
+    <h1>My Shipments</h1>
+    <a routerLink="/shipment/create" class="btn-create">
+      + New Shipment
+    </a>
+  </div>
+
+  @if (isLoading) {
+  <div class="table-card">
+    <div style="padding: 2rem; text-align: center; color: #6B7280;">Loading your shipments...</div>
+  </div>
+  } @else if (shipments.length === 0) {
+  <div class="empty-state">
+    <span class="material-icons empty-icon">inbox</span>
+    <h3>No Shipments Yet</h3>
+    <p>Create your first shipment to get started</p>
+    <a routerLink="/shipment/create" class="btn-create">Create Shipment</a>
+  </div>
+  } @else {
+  <!-- Table Card -->
+  <div class="table-card">
+    <div class="table-scroll">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Tracking #</th>
+            <th>Destination</th>
+            <th>Status</th>
+            <th>Weight</th>
+            <th>Date</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (shipment of shipments; track shipment.shipmentId) {
+          <tr>
+            <td>
+              <div class="tracking-main">{{ shipment.trackingNumber }}</div>
+            </td>
+            <td>
+              <div class="route-to">{{ shipment.receiverAddress.city }}, {{ shipment.receiverAddress.state }}</div>
+            </td>
+            <td>
+              <span class="status-badge" [ngClass]="'status-' + (shipment.status.toString() || '').toLowerCase()">
+                {{ shipment.status | statusBadge }}
+              </span>
+            </td>
+            <td>
+              <div class="general-text">{{ shipment.totalWeight }} kg</div>
+            </td>
+            <td>
+              <div class="general-text">{{ shipment.createdAt | istDate:'mediumDate' }}</div>
+            </td>
+            <td>
+              <a [routerLink]="['/shipment', shipment.shipmentId]" class="btn-view">
+                View Details
+              </a>
+            </td>
+          </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+    @if (totalPages >= 1) {
+    <div class="table-footer pagination-footer">
+      <div class="pagination-summary">Showing {{ shipments.length }} on page {{ pageNumber }} of {{ totalPages || 1 }}
+        (Total:
+        {{ totalItems }})</div>
+      <div class="pagination-controls">
+        <button type="button" class="pagination-button" (click)="goToPage(pageNumber - 1)"
+          [disabled]="!hasPreviousPage">Previous</button>
+        <span class="pagination-summary">Page {{ pageNumber }} / {{ totalPages }}</span>
+        <button type="button" class="pagination-button" (click)="goToPage(pageNumber + 1)"
+          [disabled]="!hasNextPage">Next</button>
+      </div>
+    </div>
+    }
+  </div>
+  }
+</div>
