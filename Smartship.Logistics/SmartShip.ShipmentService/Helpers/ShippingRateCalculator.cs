@@ -12,7 +12,7 @@ namespace SmartShip.ShipmentService.Helpers;
 public static class ShippingRateCalculator
 {
     /// <summary>
-    /// Executes Calculate.
+    /// Executes the Calculate operation.
     /// </summary>
     public static decimal Calculate(RateRequestDTO dto)
     {

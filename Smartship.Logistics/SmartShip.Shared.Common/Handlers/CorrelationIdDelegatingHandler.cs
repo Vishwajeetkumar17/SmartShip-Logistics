@@ -18,6 +18,9 @@ public sealed class CorrelationIdDelegatingHandler : DelegatingHandler
     private readonly ILogger<CorrelationIdDelegatingHandler> _logger;
     private const string CorrelationIdHeaderName = "X-Correlation-ID";
 
+    /// <summary>
+    /// Initializes a new instance of the correlation id delegating handler class.
+    /// </summary>
     public CorrelationIdDelegatingHandler(
         ICorrelationIdService correlationIdService,
         ILogger<CorrelationIdDelegatingHandler> logger)

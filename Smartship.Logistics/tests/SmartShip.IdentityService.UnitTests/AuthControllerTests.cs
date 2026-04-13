@@ -15,7 +15,10 @@ using SmartShip.Shared.DTOs;
 
 namespace SmartShip.IdentityService.UnitTests;
 
-[TestFixture]
+/// <summary>
+    /// Represents the auth controller tests entity or configuration model.
+    /// </summary>
+    [TestFixture]
 /// <summary>
 /// Represents AuthControllerTests.
 /// </summary>
@@ -23,18 +26,24 @@ public class AuthControllerTests
 {
     private Mock<IAuthService> _authServiceMock = null!;
 
+    /// <summary>
+    /// Asynchronously handles the set up process.
+    /// </summary>
     [SetUp]
     /// <summary>
-    /// Executes SetUp.
+    /// Executes the SetUp operation.
     /// </summary>
     public void SetUp()
     {
         _authServiceMock = new Mock<IAuthService>(MockBehavior.Strict);
     }
 
+    /// <summary>
+    /// Asynchronously handles the logout_when user id claim missing_returns unauthorized process.
+    /// </summary>
     [Test]
     /// <summary>
-    /// Executes Logout_WhenUserIdClaimMissing_ReturnsUnauthorized.
+    /// Executes the Logout_WhenUserIdClaimMissing_ReturnsUnauthorized operation.
     /// </summary>
     public async Task Logout_WhenUserIdClaimMissing_ReturnsUnauthorized()
     {
@@ -47,9 +56,12 @@ public class AuthControllerTests
         _authServiceMock.VerifyNoOtherCalls();
     }
 
+    /// <summary>
+    /// Asynchronously handles the logout_when user id present_calls service and returns ok process.
+    /// </summary>
     [Test]
     /// <summary>
-    /// Executes Logout_WhenUserIdPresent_CallsServiceAndReturnsOk.
+    /// Executes the Logout_WhenUserIdPresent_CallsServiceAndReturnsOk operation.
     /// </summary>
     public async Task Logout_WhenUserIdPresent_CallsServiceAndReturnsOk()
     {
@@ -63,9 +75,12 @@ public class AuthControllerTests
         _authServiceMock.Verify(s => s.LogoutAsync(14), Times.Once);
     }
 
+    /// <summary>
+    /// Asynchronously handles the profile_when user id missing_returns unauthorized process.
+    /// </summary>
     [Test]
     /// <summary>
-    /// Executes Profile_WhenUserIdMissing_ReturnsUnauthorized.
+    /// Executes the Profile_WhenUserIdMissing_ReturnsUnauthorized operation.
     /// </summary>
     public async Task Profile_WhenUserIdMissing_ReturnsUnauthorized()
     {
@@ -77,9 +92,12 @@ public class AuthControllerTests
         Assert.That(result, Is.TypeOf<UnauthorizedResult>());
     }
 
+    /// <summary>
+    /// Asynchronously handles the request signup otp_calls service and returns ok process.
+    /// </summary>
     [Test]
     /// <summary>
-    /// Executes RequestSignupOtp_CallsServiceAndReturnsOk.
+    /// Executes the RequestSignupOtp_CallsServiceAndReturnsOk operation.
     /// </summary>
     public async Task RequestSignupOtp_CallsServiceAndReturnsOk()
     {
@@ -92,9 +110,12 @@ public class AuthControllerTests
         _authServiceMock.Verify(s => s.RequestSignupOtpAsync(It.IsAny<RegisterDTO>()), Times.Once);
     }
 
+    /// <summary>
+    /// Asynchronously handles the get user contact internal_when api key config missing_returns500 process.
+    /// </summary>
     [Test]
     /// <summary>
-    /// Executes GetUserContactInternal_WhenApiKeyConfigMissing_Returns500.
+    /// Executes the GetUserContactInternal_WhenApiKeyConfigMissing_Returns500 operation.
     /// </summary>
     public async Task GetUserContactInternal_WhenApiKeyConfigMissing_Returns500()
     {
@@ -107,9 +128,12 @@ public class AuthControllerTests
         Assert.That(objectResult!.StatusCode, Is.EqualTo(StatusCodes.Status500InternalServerError));
     }
 
+    /// <summary>
+    /// Asynchronously handles the get user contact internal_when api key invalid_returns unauthorized process.
+    /// </summary>
     [Test]
     /// <summary>
-    /// Executes GetUserContactInternal_WhenApiKeyInvalid_ReturnsUnauthorized.
+    /// Executes the GetUserContactInternal_WhenApiKeyInvalid_ReturnsUnauthorized operation.
     /// </summary>
     public async Task GetUserContactInternal_WhenApiKeyInvalid_ReturnsUnauthorized()
     {
@@ -120,9 +144,12 @@ public class AuthControllerTests
         Assert.That(result, Is.TypeOf<UnauthorizedResult>());
     }
 
+    /// <summary>
+    /// Asynchronously handles the get user contact internal_when api key valid_returns mapped contact process.
+    /// </summary>
     [Test]
     /// <summary>
-    /// Executes GetUserContactInternal_WhenApiKeyValid_ReturnsMappedContact.
+    /// Executes the GetUserContactInternal_WhenApiKeyValid_ReturnsMappedContact operation.
     /// </summary>
     public async Task GetUserContactInternal_WhenApiKeyValid_ReturnsMappedContact()
     {
@@ -145,9 +172,12 @@ public class AuthControllerTests
         Assert.That(contact.Name, Is.EqualTo("Priya Sharma"));
     }
 
+    /// <summary>
+    /// Asynchronously handles the assign role_calls service and returns ok process.
+    /// </summary>
     [Test]
     /// <summary>
-    /// Executes AssignRole_CallsServiceAndReturnsOk.
+    /// Executes the AssignRole_CallsServiceAndReturnsOk operation.
     /// </summary>
     public async Task AssignRole_CallsServiceAndReturnsOk()
     {
@@ -160,9 +190,12 @@ public class AuthControllerTests
         _authServiceMock.Verify(s => s.AssignRoleAsync(8, 3), Times.Once);
     }
 
+    /// <summary>
+    /// Asynchronously handles the get users_when called_returns paginated users process.
+    /// </summary>
     [Test]
     /// <summary>
-    /// Executes GetUsers_WhenCalled_ReturnsPaginatedUsers.
+    /// Executes the GetUsers_WhenCalled_ReturnsPaginatedUsers operation.
     /// </summary>
     public async Task GetUsers_WhenCalled_ReturnsPaginatedUsers()
     {
@@ -200,9 +233,12 @@ public class AuthControllerTests
         Assert.That(returned.HasNextPage, Is.True);
     }
 
+    /// <summary>
+    /// Asynchronously handles the get roles_when called_returns paginated roles process.
+    /// </summary>
     [Test]
     /// <summary>
-    /// Executes GetRoles_WhenCalled_ReturnsPaginatedRoles.
+    /// Executes the GetRoles_WhenCalled_ReturnsPaginatedRoles operation.
     /// </summary>
     public async Task GetRoles_WhenCalled_ReturnsPaginatedRoles()
     {

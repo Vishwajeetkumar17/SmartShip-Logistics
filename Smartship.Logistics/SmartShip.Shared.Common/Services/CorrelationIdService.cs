@@ -8,7 +8,10 @@ using Microsoft.Extensions.Logging;
 
 namespace SmartShip.Shared.Common.Services;
 
-public interface ICorrelationIdService
+/// <summary>
+    /// Defines the contract for the correlation id service structure.
+    /// </summary>
+    public interface ICorrelationIdService
 {
     string GetCorrelationId();
     void SetCorrelationId(string correlationId);
@@ -25,12 +28,18 @@ public sealed class CorrelationIdService : ICorrelationIdService
     private const string CorrelationIdHeaderName = "X-Correlation-ID";
     private const string CorrelationIdContextKey = "CorrelationId";
 
+    /// <summary>
+    /// Initializes a new instance of the correlation id service class.
+    /// </summary>
     public CorrelationIdService(IHttpContextAccessor httpContextAccessor, ILogger<CorrelationIdService> logger)
     {
         _httpContextAccessor = httpContextAccessor ?? throw new ArgumentNullException(nameof(httpContextAccessor));
         _logger = logger ?? throw new ArgumentNullException(nameof(logger));
     }
 
+    /// <summary>
+    /// Asynchronously handles the get correlation id process.
+    /// </summary>
     public string GetCorrelationId()
     {
         var httpContext = _httpContextAccessor.HttpContext;
@@ -65,6 +74,9 @@ public sealed class CorrelationIdService : ICorrelationIdService
         return newId;
     }
 
+    /// <summary>
+    /// Asynchronously handles the set correlation id process.
+    /// </summary>
     public void SetCorrelationId(string correlationId)
     {
         var httpContext = _httpContextAccessor.HttpContext;

@@ -9,10 +9,25 @@ namespace SmartShip.EventBus.Contracts;
 /// </summary>
 public abstract record ShipmentEventBase
 {
+    /// <summary>
+    /// Gets or sets the shipment id.
+    /// </summary>
     public int ShipmentId { get; init; }
+    /// <summary>
+    /// Gets or sets the tracking number.
+    /// </summary>
     public string TrackingNumber { get; init; } = string.Empty;
+    /// <summary>
+    /// Gets or sets the customer id.
+    /// </summary>
     public int CustomerId { get; init; }
+    /// <summary>
+    /// Gets or sets the timestamp.
+    /// </summary>
     public DateTime Timestamp { get; init; }
+    /// <summary>
+    /// Gets or sets the hub location.
+    /// </summary>
     public string? HubLocation { get; init; }
 }
 
@@ -46,9 +61,21 @@ public sealed record ShipmentDeliveredEvent : ShipmentEventBase;
 /// </summary>
 public sealed record ShipmentExceptionEvent : ShipmentEventBase
 {
+    /// <summary>
+    /// Gets or sets the exception type.
+    /// </summary>
     public string ExceptionType { get; init; } = string.Empty;
+    /// <summary>
+    /// Gets or sets the description.
+    /// </summary>
     public string Description { get; init; } = string.Empty;
+    /// <summary>
+    /// Gets or sets the source.
+    /// </summary>
     public string Source { get; init; } = "System";
+    /// <summary>
+    /// Gets or sets the raised by user id.
+    /// </summary>
     public int? RaisedByUserId { get; init; }
 }
 

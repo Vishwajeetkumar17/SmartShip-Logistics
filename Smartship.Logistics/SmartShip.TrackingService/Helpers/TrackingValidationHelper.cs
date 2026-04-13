@@ -16,7 +16,7 @@ using SmartShip.Shared.Common.Helpers;
 public static class TrackingValidationHelper
 {
     /// <summary>
-    /// Executes NormalizeTrackingNumber.
+    /// Executes the NormalizeTrackingNumber operation.
     /// </summary>
     public static string NormalizeTrackingNumber(string trackingNumber)
     {
@@ -29,7 +29,7 @@ public static class TrackingValidationHelper
     }
 
     /// <summary>
-    /// Executes ValidateEvent.
+    /// Executes the ValidateEvent operation.
     /// </summary>
     public static void ValidateEvent(TrackingEventDTO dto)
     {
@@ -42,7 +42,7 @@ public static class TrackingValidationHelper
     }
 
     /// <summary>
-    /// Executes ValidateLocation.
+    /// Executes the ValidateLocation operation.
     /// </summary>
     public static void ValidateLocation(LocationUpdateDTO dto)
     {
@@ -53,7 +53,7 @@ public static class TrackingValidationHelper
     }
 
     /// <summary>
-    /// Executes ValidateStatus.
+    /// Executes the ValidateStatus operation.
     /// </summary>
     public static void ValidateStatus(StatusUpdateDTO dto, string trackingNumber)
     {

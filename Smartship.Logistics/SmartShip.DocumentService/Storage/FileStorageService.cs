@@ -15,13 +15,16 @@ public class FileStorageService : IFileStorageService
 {
     private readonly IWebHostEnvironment _env;
 
+    /// <summary>
+    /// Initializes a new instance of the file storage service class.
+    /// </summary>
     public FileStorageService(IWebHostEnvironment env)
     {
         _env = env;
     }
 
     /// <summary>
-    /// Executes SaveFileAsync.
+    /// Executes the SaveFileAsync operation.
     /// </summary>
     public async Task<string> SaveFileAsync(IFormFile file, string subFolder)
     {
@@ -46,7 +49,7 @@ public class FileStorageService : IFileStorageService
     }
 
     /// <summary>
-    /// Executes DeleteFileAsync.
+    /// Executes the DeleteFileAsync operation.
     /// </summary>
     public Task DeleteFileAsync(string filePath)
     {
@@ -65,7 +68,7 @@ public class FileStorageService : IFileStorageService
     }
 
     /// <summary>
-    /// Executes FileExists.
+    /// Executes the FileExists operation.
     /// </summary>
     public bool FileExists(string filePath)
     {

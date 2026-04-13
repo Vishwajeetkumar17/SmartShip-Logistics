@@ -16,7 +16,7 @@ namespace SmartShip.DocumentService.Middleware;
 public static class ExceptionHandlingMiddleware
 {
     /// <summary>
-    /// Executes UseGlobalExceptionHandling.
+    /// Executes the UseGlobalExceptionHandling operation.
     /// </summary>
     public static void UseGlobalExceptionHandling(this IApplicationBuilder app)
     {
@@ -42,6 +42,8 @@ public static class ExceptionHandlingMiddleware
                 {
                     NotFoundException => StatusCodes.Status404NotFound,
                     RequestValidationException => StatusCodes.Status400BadRequest,
+                    ConflictException => StatusCodes.Status409Conflict,
+                    UnauthorizedAccessException => StatusCodes.Status403Forbidden,
                     _ => StatusCodes.Status500InternalServerError
                 };
 
@@ -75,6 +77,8 @@ public static class ExceptionHandlingMiddleware
         {
             NotFoundException => "Resource Not Found",
             RequestValidationException => "Validation Error",
+            ConflictException => "Resource Conflict",
+            UnauthorizedAccessException => "Forbidden",
             _ => "Server Error"
         };
     }

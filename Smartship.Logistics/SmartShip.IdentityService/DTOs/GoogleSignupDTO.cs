@@ -11,6 +11,9 @@ namespace SmartShip.IdentityService.DTOs
     /// </summary>
     public class GoogleSignupDTO
     {
+        /// <summary>
+        /// Gets or sets the id token.
+        /// </summary>
         [Required]
         public string IdToken { get; set; } = string.Empty;
     }

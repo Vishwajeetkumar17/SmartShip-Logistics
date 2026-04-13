@@ -15,13 +15,16 @@ public class ShipmentRepository : IShipmentRepository
 {
     private readonly ShipmentDbContext _context;
 
+    /// <summary>
+    /// Initializes a new instance of the shipment repository class.
+    /// </summary>
     public ShipmentRepository(ShipmentDbContext context)
     {
         _context = context;
     }
 
     /// <summary>
-    /// Executes GetAllAsync.
+    /// Executes the GetAllAsync operation.
     /// </summary>
     public async Task<List<Shipment>> GetAllAsync()
     {
@@ -35,7 +38,7 @@ public class ShipmentRepository : IShipmentRepository
     }
 
     /// <summary>
-    /// Executes GetByIdAsync.
+    /// Executes the GetByIdAsync operation.
     /// </summary>
     public async Task<Shipment?> GetByIdAsync(int id)
     {
@@ -48,7 +51,7 @@ public class ShipmentRepository : IShipmentRepository
     }
 
     /// <summary>
-    /// Executes GetByTrackingNumberAsync.
+    /// Executes the GetByTrackingNumberAsync operation.
     /// </summary>
     public async Task<Shipment?> GetByTrackingNumberAsync(string trackingNumber)
     {
@@ -61,7 +64,7 @@ public class ShipmentRepository : IShipmentRepository
     }
 
     /// <summary>
-    /// Executes GetByCustomerAsync.
+    /// Executes the GetByCustomerAsync operation.
     /// </summary>
     public async Task<List<Shipment>> GetByCustomerAsync(int customerId)
     {
@@ -76,7 +79,7 @@ public class ShipmentRepository : IShipmentRepository
     }
 
     /// <summary>
-    /// Executes CreateAsync.
+    /// Executes the CreateAsync operation.
     /// </summary>
     public async Task CreateAsync(Shipment shipment)
     {
@@ -85,7 +88,7 @@ public class ShipmentRepository : IShipmentRepository
     }
 
     /// <summary>
-    /// Executes UpdateAsync.
+    /// Executes the UpdateAsync operation.
     /// </summary>
     public async Task UpdateAsync(Shipment shipment)
     {
@@ -94,7 +97,7 @@ public class ShipmentRepository : IShipmentRepository
     }
 
     /// <summary>
-    /// Executes DeleteAsync.
+    /// Executes the DeleteAsync operation.
     /// </summary>
     public async Task DeleteAsync(Shipment shipment)
     {

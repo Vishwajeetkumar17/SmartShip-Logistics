@@ -14,7 +14,7 @@ namespace SmartShip.AdminService.Helpers;
 public static class AdminValidationHelper
 {
     /// <summary>
-    /// Executes ValidateHub.
+    /// Executes the ValidateHub operation.
     /// </summary>
     public static void ValidateHub(CreateHubDTO dto)
     {
@@ -28,7 +28,7 @@ public static class AdminValidationHelper
     }
 
     /// <summary>
-    /// Executes ValidateHub.
+    /// Executes the ValidateHub operation.
     /// </summary>
     public static void ValidateHub(UpdateHubDTO dto)
     {
@@ -42,7 +42,7 @@ public static class AdminValidationHelper
     }
 
     /// <summary>
-    /// Executes ValidateLocation.
+    /// Executes the ValidateLocation operation.
     /// </summary>
     public static void ValidateLocation(CreateLocationDTO dto)
     {
@@ -57,7 +57,7 @@ public static class AdminValidationHelper
     }
 
     /// <summary>
-    /// Executes ValidateLocation.
+    /// Executes the ValidateLocation operation.
     /// </summary>
     public static void ValidateLocation(UpdateLocationDTO dto)
     {
@@ -72,7 +72,7 @@ public static class AdminValidationHelper
     }
 
     /// <summary>
-    /// Executes NormalizeReason.
+    /// Executes the NormalizeReason operation.
     /// </summary>
     public static string NormalizeReason(string reason, string fieldName)
     {

@@ -22,12 +22,18 @@ public sealed class CorrelationIdMiddleware
     private const string CorrelationIdHeaderName = "X-Correlation-ID";
     private const string CorrelationIdContextKey = "CorrelationId";
 
+    /// <summary>
+    /// Initializes a new instance of the correlation id middleware class.
+    /// </summary>
     public CorrelationIdMiddleware(RequestDelegate next, ILogger<CorrelationIdMiddleware> logger)
     {
         _next = next;
         _logger = logger;
     }
 
+    /// <summary>
+    /// Asynchronously handles the invoke async process.
+    /// </summary>
     public async Task InvokeAsync(HttpContext context)
     {
         var correlationId = ExtractCorrelationId(context);

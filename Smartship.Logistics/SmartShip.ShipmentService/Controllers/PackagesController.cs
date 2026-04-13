@@ -117,3 +117,33 @@ public class PackagesController : ControllerBase
 }
 
 
+        return Ok();
+    }
+    #endregion
+
+    #region Internal Access Control
+
+    private async Task<IActionResult?> EnsureShipmentAccess(int shipmentId)
+    {
+        var shipment = await _shipmentService.GetShipment(shipmentId);
+        if (shipment == null)
+        {
+            return NotFound();
+        }
+
+        if (User.IsAdmin())
+        {
+            return null;
+        }
+
+        if (!User.TryGetCustomerId(out var customerId))
+        {
+            return Unauthorized();
+        }
+
+        return shipment.CustomerId == customerId ? null : Forbid();
+    }
+    #endregion
+}
+
+

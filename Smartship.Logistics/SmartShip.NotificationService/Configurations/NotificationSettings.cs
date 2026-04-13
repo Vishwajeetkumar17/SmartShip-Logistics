@@ -11,11 +11,17 @@ public sealed class NotificationSettings
 {
     public const string SectionName = "Notification";
 
+    /// <summary>
+    /// Gets or sets the internal api key.
+    /// </summary>
     public string InternalApiKey { get; init; } = string.Empty;
+    /// <summary>
+    /// Gets or sets the admin emails csv.
+    /// </summary>
     public string AdminEmailsCsv { get; init; } = string.Empty;
 
     /// <summary>
-    /// Executes GetAdminEmails.
+    /// Executes the GetAdminEmails operation.
     /// </summary>
     public IReadOnlyCollection<string> GetAdminEmails()
     {

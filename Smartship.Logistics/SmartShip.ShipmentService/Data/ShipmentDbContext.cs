@@ -12,17 +12,32 @@ namespace SmartShip.ShipmentService.Data;
 /// </summary>
 public class ShipmentDbContext : DbContext
 {
+    /// <summary>
+    /// Initializes a new instance of the shipment db context class.
+    /// </summary>
     public ShipmentDbContext(DbContextOptions<ShipmentDbContext> options)
         : base(options)
     {
     }
 
+    /// <summary>
+    /// Gets or sets the shipments.
+    /// </summary>
     public DbSet<Shipment> Shipments { get; set; }
 
+    /// <summary>
+    /// Gets or sets the packages.
+    /// </summary>
     public DbSet<Package> Packages { get; set; }
 
+    /// <summary>
+    /// Gets or sets the addresses.
+    /// </summary>
     public DbSet<Address> Addresses { get; set; }
 
+    /// <summary>
+    /// Gets or sets the pickup schedules.
+    /// </summary>
     public DbSet<PickupSchedule> PickupSchedules { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)

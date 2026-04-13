@@ -31,7 +31,7 @@ namespace SmartShip.DocumentService;
 public class Program
 {
     /// <summary>
-    /// Executes Main.
+    /// Executes the Main operation.
     /// </summary>
     public static void Main(string[] args)
     {

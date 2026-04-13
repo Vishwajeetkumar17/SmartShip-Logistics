@@ -15,13 +15,16 @@ public class DocumentRepository : IDocumentRepository
 {
     private readonly DocumentDbContext _context;
 
+    /// <summary>
+    /// Initializes a new instance of the document repository class.
+    /// </summary>
     public DocumentRepository(DocumentDbContext context)
     {
         _context = context;
     }
 
     /// <summary>
-    /// Executes GetDocumentByIdAsync.
+    /// Executes the GetDocumentByIdAsync operation.
     /// </summary>
     public async Task<Document?> GetDocumentByIdAsync(int documentId)
     {
@@ -29,7 +32,7 @@ public class DocumentRepository : IDocumentRepository
     }
 
     /// <summary>
-    /// Executes GetDocumentsByShipmentAsync.
+    /// Executes the GetDocumentsByShipmentAsync operation.
     /// </summary>
     public async Task<List<Document>> GetDocumentsByShipmentAsync(int shipmentId)
     {
@@ -41,7 +44,7 @@ public class DocumentRepository : IDocumentRepository
     }
 
     /// <summary>
-    /// Executes GetDocumentsByCustomerAsync.
+    /// Executes the GetDocumentsByCustomerAsync operation.
     /// </summary>
     public async Task<List<Document>> GetDocumentsByCustomerAsync(int customerId)
     {
@@ -53,7 +56,7 @@ public class DocumentRepository : IDocumentRepository
     }
 
     /// <summary>
-    /// Executes AddDocumentAsync.
+    /// Executes the AddDocumentAsync operation.
     /// </summary>
     public async Task AddDocumentAsync(Document document)
     {
@@ -62,7 +65,7 @@ public class DocumentRepository : IDocumentRepository
     }
 
     /// <summary>
-    /// Executes UpdateDocumentAsync.
+    /// Executes the UpdateDocumentAsync operation.
     /// </summary>
     public async Task UpdateDocumentAsync(Document document)
     {
@@ -71,7 +74,7 @@ public class DocumentRepository : IDocumentRepository
     }
 
     /// <summary>
-    /// Executes DeleteDocumentAsync.
+    /// Executes the DeleteDocumentAsync operation.
     /// </summary>
     public async Task DeleteDocumentAsync(Document document)
     {
@@ -80,7 +83,7 @@ public class DocumentRepository : IDocumentRepository
     }
 
     /// <summary>
-    /// Executes GetDeliveryProofAsync.
+    /// Executes the GetDeliveryProofAsync operation.
     /// </summary>
     public async Task<DeliveryProof?> GetDeliveryProofAsync(int shipmentId)
     {
@@ -90,7 +93,7 @@ public class DocumentRepository : IDocumentRepository
     }
 
     /// <summary>
-    /// Executes AddDeliveryProofAsync.
+    /// Executes the AddDeliveryProofAsync operation.
     /// </summary>
     public async Task AddDeliveryProofAsync(DeliveryProof proof)
     {

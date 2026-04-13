@@ -18,6 +18,7 @@ using SmartShip.IdentityService.Models;
 using SmartShip.IdentityService.Repositories;
 using SmartShip.IdentityService.Security;
 using SmartShip.Shared.Common.Extensions;
+using SmartShip.Shared.Common.Exceptions;
 using SmartShip.Shared.DTOs;
 using System.Security.Cryptography;
 
@@ -70,7 +71,7 @@ namespace SmartShip.IdentityService.Services
             var normalizedEmail = NormalizeEmail(dto.Email);
             var existingUser = await _repository.GetByEmailAsync(normalizedEmail);
             if (existingUser != null)
-                throw new InvalidOperationException("User already exists");
+                throw new ConflictException("User already exists");
 
             await EnsureRoleExistsAsync(dto.RoleId);
 
@@ -112,13 +113,13 @@ namespace SmartShip.IdentityService.Services
 
             if (!_memoryCache.TryGetValue(cacheKey, out PendingSignupOtp? pendingSignup) || pendingSignup == null)
             {
-                throw new InvalidOperationException("OTP is invalid or expired");
+                throw new RequestValidationException("OTP is invalid or expired");
             }
 
             if (pendingSignup.ExpiresAt < TimeZoneHelper.GetCurrentUtcTime())
             {
                 _memoryCache.Remove(cacheKey);
-                throw new InvalidOperationException("OTP is invalid or expired");
+                throw new RequestValidationException("OTP is invalid or expired");
             }
 
             var otpHash = TokenHasher.Hash(dto.Otp.Trim());
@@ -140,14 +141,14 @@ namespace SmartShip.IdentityService.Services
                         });
                 }
 
-                throw new InvalidOperationException("Invalid OTP");
+                throw new RequestValidationException("Invalid OTP");
             }
 
             var existingUser = await _repository.GetByEmailAsync(normalizedEmail);
             if (existingUser != null)
             {
                 _memoryCache.Remove(cacheKey);
-                throw new InvalidOperationException("User already exists");
+                throw new ConflictException("User already exists");
             }
 
             var user = new User
@@ -177,7 +178,7 @@ namespace SmartShip.IdentityService.Services
         /// </summary>
         public async Task<AuthDTO> RegisterAsync(RegisterDTO dto)
         {
-            throw new InvalidOperationException("Direct signup is disabled. Request OTP and verify OTP to create account.");
+            throw new RequestValidationException("Direct signup is disabled. Request OTP and verify OTP to create account.");
         }
         #endregion
         #region LoginAsync
@@ -190,10 +191,10 @@ namespace SmartShip.IdentityService.Services
             var user = await _repository.GetByEmailAsync(normalizedEmail);
 
             if (user == null)
-                throw new InvalidOperationException("User doesn't exist");
+                throw new NotFoundException("User doesn't exist");
 
             if (!PasswordHasher.Verify(dto.Password, user.PasswordHash))
-                throw new InvalidOperationException("Incorrect password");
+                throw new RequestValidationException("Incorrect password");
 
             var roleName = await GetRoleNameAsync(user.RoleId);
             var accessToken = _jwt.GenerateToken(user.UserId, user.Email, roleName);
@@ -209,7 +210,7 @@ namespace SmartShip.IdentityService.Services
         public async Task<AuthDTO> GoogleSignupAsync(GoogleSignupDTO dto)
         {
             if (string.IsNullOrWhiteSpace(dto.IdToken))
-                throw new InvalidOperationException("Google id token is required");
+                throw new RequestValidationException("Google id token is required");
 
             var clientId = _googleAuthSettings.ClientId?.Trim();
             if (string.IsNullOrWhiteSpace(clientId))
@@ -225,11 +226,11 @@ namespace SmartShip.IdentityService.Services
             }
             catch (InvalidJwtException)
             {
-                throw new InvalidOperationException("Invalid Google token");
+                throw new RequestValidationException("Invalid Google token");
             }
 
             if (string.IsNullOrWhiteSpace(payload.Email))
-                throw new InvalidOperationException("Google account email is not available");
+                throw new RequestValidationException("Google account email is not available");
 
             var normalizedEmail = NormalizeEmail(payload.Email);
             var user = await _repository.GetByEmailAsync(normalizedEmail);
@@ -290,7 +291,7 @@ namespace SmartShip.IdentityService.Services
             var user = await GetRequiredUserAsync(userId);
 
             if (!PasswordHasher.Verify(dto.OldPassword, user.PasswordHash))
-                throw new InvalidOperationException("Incorrect password");
+                throw new RequestValidationException("Incorrect password");
 
             user.PasswordHash = PasswordHasher.Hash(dto.NewPassword);
             await _repository.UpdateAsync(user);
@@ -374,7 +375,7 @@ namespace SmartShip.IdentityService.Services
             var normalizedEmail = NormalizeEmail(dto.Email);
             var existingUser = await _repository.GetByEmailAsync(normalizedEmail);
             if (existingUser != null)
-                throw new InvalidOperationException("User already exists");
+                throw new ConflictException("User already exists");
 
             await EnsureRoleExistsAsync(dto.RoleId);
 
@@ -420,7 +421,7 @@ namespace SmartShip.IdentityService.Services
             var existingWithEmail = await _repository.GetByEmailAsync(normalizedEmail);
 
             if (existingWithEmail != null && existingWithEmail.UserId != id)
-                throw new InvalidOperationException("Email is already in use");
+                throw new ConflictException("Email is already in use");
 
             user.Name = dto.Name.Trim();
             user.Email = normalizedEmail;
@@ -497,7 +498,7 @@ namespace SmartShip.IdentityService.Services
             var roleName = dto.RoleName.Trim().ToUpperInvariant();
             var exists = await _context.Roles.AnyAsync(x => x.RoleName == roleName);
             if (exists)
-                throw new InvalidOperationException("Role already exists");
+                throw new ConflictException("Role already exists");
 
             var role = new Role { RoleName = roleName };
             _context.Roles.Add(role);
@@ -520,12 +521,12 @@ namespace SmartShip.IdentityService.Services
         public async Task<AuthDTO> RefreshTokenAsync(string refreshToken)
         {
             if (string.IsNullOrWhiteSpace(refreshToken))
-                throw new InvalidOperationException("Refresh token is required");
+                throw new RequestValidationException("Refresh token is required");
 
             var tokenHash = TokenHasher.Hash(refreshToken);
             var token = await _context.RefreshTokens.FirstOrDefaultAsync(x => x.TokenHash == tokenHash);
             if (token == null || token.IsRevoked || token.ExpiresAt < TimeZoneHelper.GetCurrentUtcTime())
-                throw new InvalidOperationException("Invalid refresh token");
+                throw new RequestValidationException("Invalid refresh token");
 
             var user = await GetRequiredUserAsync(token.UserId);
             token.IsRevoked = true;
@@ -599,14 +600,14 @@ namespace SmartShip.IdentityService.Services
             var normalizedEmail = NormalizeEmail(dto.Email);
             var user = await _repository.GetByEmailAsync(normalizedEmail);
             if (user == null)
-                throw new InvalidOperationException("Invalid OTP");
+                throw new RequestValidationException("Invalid OTP");
 
             var tokenHash = TokenHasher.Hash(dto.Token);
             var token = await _context.PasswordResetTokens
                 .FirstOrDefaultAsync(x => x.UserId == user.UserId && x.TokenHash == tokenHash);
 
             if (token == null || token.IsUsed || token.ExpiresAt < TimeZoneHelper.GetCurrentUtcTime())
-                throw new InvalidOperationException("Invalid OTP");
+                throw new RequestValidationException("Invalid OTP");
 
             user.PasswordHash = PasswordHasher.Hash(dto.NewPassword);
             token.IsUsed = true;
@@ -625,7 +626,7 @@ namespace SmartShip.IdentityService.Services
         {
             var user = await _repository.GetByIdAsync(userId);
             if (user == null)
-                throw new KeyNotFoundException("User not found");
+                throw new NotFoundException("User not found");
 
             return user;
         }
@@ -641,7 +642,7 @@ namespace SmartShip.IdentityService.Services
         {
             var exists = await _context.Roles.AnyAsync(r => r.RoleId == roleId);
             if (!exists)
-                throw new KeyNotFoundException("Role not found");
+                throw new NotFoundException("Role not found");
         }
         #endregion
 
@@ -655,7 +656,7 @@ namespace SmartShip.IdentityService.Services
         {
             var role = await _context.Roles.FirstOrDefaultAsync(r => r.RoleId == roleId);
             if (role == null)
-                throw new KeyNotFoundException("Role not found");
+                throw new NotFoundException("Role not found");
 
             return role.RoleName;
         }
@@ -834,13 +835,37 @@ namespace SmartShip.IdentityService.Services
         /// </summary>
         private sealed class PendingSignupOtp
         {
+            /// <summary>
+            /// Gets or sets the name.
+            /// </summary>
             public string Name { get; init; } = string.Empty;
+            /// <summary>
+            /// Gets or sets the email.
+            /// </summary>
             public string Email { get; init; } = string.Empty;
+            /// <summary>
+            /// Gets or sets the phone.
+            /// </summary>
             public string Phone { get; init; } = string.Empty;
+            /// <summary>
+            /// Gets or sets the password hash.
+            /// </summary>
             public string PasswordHash { get; init; } = string.Empty;
+            /// <summary>
+            /// Gets or sets the role id.
+            /// </summary>
             public int RoleId { get; init; }
+            /// <summary>
+            /// Gets or sets the otp hash.
+            /// </summary>
             public string OtpHash { get; init; } = string.Empty;
+            /// <summary>
+            /// Gets or sets the expires at.
+            /// </summary>
             public DateTime ExpiresAt { get; init; }
+            /// <summary>
+            /// Gets or sets the remaining attempts.
+            /// </summary>
             public int RemainingAttempts { get; set; }
         }
         #endregion

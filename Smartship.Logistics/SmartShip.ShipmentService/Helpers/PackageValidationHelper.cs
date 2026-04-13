@@ -13,7 +13,7 @@ namespace SmartShip.ShipmentService.Helpers;
 public static class PackageValidationHelper
 {
     /// <summary>
-    /// Executes ValidatePackage.
+    /// Executes the ValidatePackage operation.
     /// </summary>
     public static void ValidatePackage(PackageDTO dto)
     {

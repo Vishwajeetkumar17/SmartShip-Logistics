@@ -14,7 +14,10 @@ using SmartShip.Shared.DTOs;
 
 namespace SmartShip.AdminService.UnitTests;
 
-[TestFixture]
+/// <summary>
+    /// Represents the admin controller tests entity or configuration model.
+    /// </summary>
+    [TestFixture]
 /// <summary>
 /// Represents AdminControllerTests.
 /// </summary>
@@ -24,9 +27,12 @@ public class AdminControllerTests
     private Mock<ILogger<AdminController>> _loggerMock = null!;
     private AdminController _controller = null!;
 
+    /// <summary>
+    /// Asynchronously handles the set up process.
+    /// </summary>
     [SetUp]
     /// <summary>
-    /// Executes SetUp.
+    /// Executes the SetUp operation.
     /// </summary>
     public void SetUp()
     {
@@ -36,9 +42,12 @@ public class AdminControllerTests
         SetUser(_controller, userId: 99);
     }
 
+    /// <summary>
+    /// Asynchronously handles the logging demo_calls service and returns ok process.
+    /// </summary>
     [Test]
     /// <summary>
-    /// Executes LoggingDemo_CallsServiceAndReturnsOk.
+    /// Executes the LoggingDemo_CallsServiceAndReturnsOk operation.
     /// </summary>
     public void LoggingDemo_CallsServiceAndReturnsOk()
     {
@@ -51,9 +60,12 @@ public class AdminControllerTests
         _serviceMock.Verify(s => s.LogLevelDemo("99", It.IsAny<string>(), true), Times.Once);
     }
 
+    /// <summary>
+    /// Asynchronously handles the get dashboard_returns ok process.
+    /// </summary>
     [Test]
     /// <summary>
-    /// Executes GetDashboard_ReturnsOk.
+    /// Executes the GetDashboard_ReturnsOk operation.
     /// </summary>
     public async Task GetDashboard_ReturnsOk()
     {
@@ -64,9 +76,12 @@ public class AdminControllerTests
         Assert.That(result, Is.TypeOf<OkObjectResult>());
     }
 
+    /// <summary>
+    /// Asynchronously handles the create hub_calls service and returns ok process.
+    /// </summary>
     [Test]
     /// <summary>
-    /// Executes CreateHub_CallsServiceAndReturnsOk.
+    /// Executes the CreateHub_CallsServiceAndReturnsOk operation.
     /// </summary>
     public async Task CreateHub_CallsServiceAndReturnsOk()
     {
@@ -79,9 +94,12 @@ public class AdminControllerTests
         _serviceMock.Verify(s => s.CreateHubAsync(dto), Times.Once);
     }
 
+    /// <summary>
+    /// Asynchronously handles the delete hub_calls service and returns ok process.
+    /// </summary>
     [Test]
     /// <summary>
-    /// Executes DeleteHub_CallsServiceAndReturnsOk.
+    /// Executes the DeleteHub_CallsServiceAndReturnsOk operation.
     /// </summary>
     public async Task DeleteHub_CallsServiceAndReturnsOk()
     {
@@ -93,9 +111,12 @@ public class AdminControllerTests
         _serviceMock.Verify(s => s.DeleteHubAsync(6), Times.Once);
     }
 
+    /// <summary>
+    /// Asynchronously handles the resolve exception_sets shipment id before calling service process.
+    /// </summary>
     [Test]
     /// <summary>
-    /// Executes ResolveException_SetsShipmentIdBeforeCallingService.
+    /// Executes the ResolveException_SetsShipmentIdBeforeCallingService operation.
     /// </summary>
     public async Task ResolveException_SetsShipmentIdBeforeCallingService()
     {
@@ -112,9 +133,12 @@ public class AdminControllerTests
         Assert.That(capturedDto!.ShipmentId, Is.EqualTo(10));
     }
 
+    /// <summary>
+    /// Asynchronously handles the delay shipment_passes reason to service process.
+    /// </summary>
     [Test]
     /// <summary>
-    /// Executes DelayShipment_PassesReasonToService.
+    /// Executes the DelayShipment_PassesReasonToService operation.
     /// </summary>
     public async Task DelayShipment_PassesReasonToService()
     {
@@ -128,9 +152,12 @@ public class AdminControllerTests
         _serviceMock.Verify(s => s.DelayShipmentAsync(12, "Weather delay"), Times.Once);
     }
 
+    /// <summary>
+    /// Asynchronously handles the get reports_returns ok process.
+    /// </summary>
     [Test]
     /// <summary>
-    /// Executes GetReports_ReturnsOk.
+    /// Executes the GetReports_ReturnsOk operation.
     /// </summary>
     public async Task GetReports_ReturnsOk()
     {
@@ -141,9 +168,12 @@ public class AdminControllerTests
         Assert.That(result, Is.TypeOf<OkObjectResult>());
     }
 
+    /// <summary>
+    /// Asynchronously handles the get all hubs_when called_returns paginated response process.
+    /// </summary>
     [Test]
     /// <summary>
-    /// Executes GetAllHubs_WhenCalled_ReturnsPaginatedResponse.
+    /// Executes the GetAllHubs_WhenCalled_ReturnsPaginatedResponse operation.
     /// </summary>
     public async Task GetAllHubs_WhenCalled_ReturnsPaginatedResponse()
     {
@@ -179,9 +209,12 @@ public class AdminControllerTests
         Assert.That(returned.HasNextPage, Is.True);
     }
 
+    /// <summary>
+    /// Asynchronously handles the get all locations_when page number2_returns second page process.
+    /// </summary>
     [Test]
     /// <summary>
-    /// Executes GetAllLocations_WhenPageNumber2_ReturnsSecondPage.
+    /// Executes the GetAllLocations_WhenPageNumber2_ReturnsSecondPage operation.
     /// </summary>
     public async Task GetAllLocations_WhenPageNumber2_ReturnsSecondPage()
     {
@@ -216,9 +249,12 @@ public class AdminControllerTests
         Assert.That(returned.HasPreviousPage, Is.True);
     }
 
+    /// <summary>
+    /// Asynchronously handles the get exceptions_when called_returns paginated exceptions process.
+    /// </summary>
     [Test]
     /// <summary>
-    /// Executes GetExceptions_WhenCalled_ReturnsPaginatedExceptions.
+    /// Executes the GetExceptions_WhenCalled_ReturnsPaginatedExceptions operation.
     /// </summary>
     public async Task GetExceptions_WhenCalled_ReturnsPaginatedExceptions()
     {

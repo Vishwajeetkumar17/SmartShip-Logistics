@@ -11,6 +11,9 @@ namespace SmartShip.ShipmentService.DTOs;
 /// </summary>
 public class UpdateShipmentDTO
 {
+    /// <summary>
+    /// Gets or sets the total weight.
+    /// </summary>
     [Range(0, 100000)]
     public decimal TotalWeight { get; set; }
 }

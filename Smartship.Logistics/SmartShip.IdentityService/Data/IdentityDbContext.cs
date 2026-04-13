@@ -12,14 +12,29 @@ namespace SmartShip.IdentityService.Data
     /// </summary>
     public class IdentityDbContext : DbContext
     {
+        /// <summary>
+        /// Initializes a new instance of the identity db context class.
+        /// </summary>
         public IdentityDbContext(DbContextOptions<IdentityDbContext> options)
             : base(options)
         {
         }
 
+        /// <summary>
+        /// Gets or sets the users.
+        /// </summary>
         public DbSet<User> Users { get; set; }
+        /// <summary>
+        /// Gets or sets the roles.
+        /// </summary>
         public DbSet<Role> Roles { get; set; }
+        /// <summary>
+        /// Gets or sets the refresh tokens.
+        /// </summary>
         public DbSet<RefreshToken> RefreshTokens { get; set; }
+        /// <summary>
+        /// Gets or sets the password reset tokens.
+        /// </summary>
         public DbSet<PasswordResetToken> PasswordResetTokens { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

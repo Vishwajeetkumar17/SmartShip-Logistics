@@ -19,13 +19,16 @@ namespace SmartShip.IdentityService.Security
         private const string SigningKeyId = "smartship-jwt-signing-key";
         private readonly JwtSettings _settings;
 
+        /// <summary>
+        /// Initializes a new instance of the jwt token generator class.
+        /// </summary>
         public JwtTokenGenerator(JwtSettings settings)
         {
             _settings = settings;
         }
 
         /// <summary>
-        /// Executes GenerateToken.
+        /// Executes the GenerateToken operation.
         /// </summary>
         public string GenerateToken(int userId, string email, string role)
         {

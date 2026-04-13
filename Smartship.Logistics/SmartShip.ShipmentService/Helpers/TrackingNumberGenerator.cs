@@ -12,7 +12,7 @@ using SmartShip.Shared.Common.Helpers;
 public static class TrackingNumberGenerator
 {
     /// <summary>
-    /// Executes GenerateTrackingNumber.
+    /// Executes the GenerateTrackingNumber operation.
     /// </summary>
     public static string GenerateTrackingNumber() => $"SS-{TimeZoneHelper.GetCurrentIstTime():yyyyMMdd}-{Guid.NewGuid().ToString("N")[..8].ToUpperInvariant()}";
 }

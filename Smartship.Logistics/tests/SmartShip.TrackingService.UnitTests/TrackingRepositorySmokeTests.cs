@@ -9,7 +9,10 @@ using SmartShip.TrackingService.Repositories;
 
 namespace SmartShip.TrackingService.UnitTests;
 
-[TestFixture]
+/// <summary>
+    /// Represents the tracking repository smoke tests entity or configuration model.
+    /// </summary>
+    [TestFixture]
 /// <summary>
 /// Represents TrackingRepositorySmokeTests.
 /// </summary>
@@ -25,9 +28,12 @@ public class TrackingRepositorySmokeTests
         return new TrackingRepository(context);
     }
 
+    /// <summary>
+    /// Asynchronously handles the add event async_should store all shipment stages including repeated transit process.
+    /// </summary>
     [Test]
     /// <summary>
-    /// Executes AddEventAsync_ShouldStoreAllShipmentStagesIncludingRepeatedTransit.
+    /// Executes the AddEventAsync_ShouldStoreAllShipmentStagesIncludingRepeatedTransit operation.
     /// </summary>
     public async Task AddEventAsync_ShouldStoreAllShipmentStagesIncludingRepeatedTransit()
     {
@@ -60,9 +66,12 @@ public class TrackingRepositorySmokeTests
         await context.DisposeAsync();
     }
 
+    /// <summary>
+    /// Asynchronously handles the add event async_should ignore near identical duplicate event process.
+    /// </summary>
     [Test]
     /// <summary>
-    /// Executes AddEventAsync_ShouldIgnoreNearIdenticalDuplicateEvent.
+    /// Executes the AddEventAsync_ShouldIgnoreNearIdenticalDuplicateEvent operation.
     /// </summary>
     public async Task AddEventAsync_ShouldIgnoreNearIdenticalDuplicateEvent()
     {

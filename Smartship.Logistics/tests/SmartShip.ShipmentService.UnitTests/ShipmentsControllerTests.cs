@@ -15,7 +15,10 @@ using SmartShip.Shared.DTOs;
 
 namespace SmartShip.ShipmentService.UnitTests;
 
-[TestFixture]
+/// <summary>
+    /// Represents the shipments controller tests entity or configuration model.
+    /// </summary>
+    [TestFixture]
 /// <summary>
 /// Represents ShipmentsControllerTests.
 /// </summary>
@@ -24,9 +27,12 @@ public class ShipmentsControllerTests
     private Mock<IShipmentService> _shipmentServiceMock = null!;
     private ShipmentsController _controller = null!;
 
+    /// <summary>
+    /// Asynchronously handles the set up process.
+    /// </summary>
     [SetUp]
     /// <summary>
-    /// Executes SetUp.
+    /// Executes the SetUp operation.
     /// </summary>
     public void SetUp()
     {
@@ -34,9 +40,12 @@ public class ShipmentsControllerTests
         _controller = new ShipmentsController(_shipmentServiceMock.Object);
     }
 
+    /// <summary>
+    /// Asynchronously handles the create_when customer claim missing_returns unauthorized process.
+    /// </summary>
     [Test]
     /// <summary>
-    /// Executes Create_WhenCustomerClaimMissing_ReturnsUnauthorized.
+    /// Executes the Create_WhenCustomerClaimMissing_ReturnsUnauthorized operation.
     /// </summary>
     public async Task Create_WhenCustomerClaimMissing_ReturnsUnauthorized()
     {
@@ -50,9 +59,12 @@ public class ShipmentsControllerTests
         _shipmentServiceMock.VerifyNoOtherCalls();
     }
 
+    /// <summary>
+    /// Asynchronously handles the create_when non admin_assigns customer id and returns ok process.
+    /// </summary>
     [Test]
     /// <summary>
-    /// Executes Create_WhenNonAdmin_AssignsCustomerIdAndReturnsOk.
+    /// Executes the Create_WhenNonAdmin_AssignsCustomerIdAndReturnsOk operation.
     /// </summary>
     public async Task Create_WhenNonAdmin_AssignsCustomerIdAndReturnsOk()
     {
@@ -70,9 +82,12 @@ public class ShipmentsControllerTests
         _shipmentServiceMock.Verify(s => s.CreateShipment(It.Is<CreateShipmentDTO>(x => x.CustomerId == 22)), Times.Once);
     }
 
+    /// <summary>
+    /// Asynchronously handles the get_when shipment not found_returns not found process.
+    /// </summary>
     [Test]
     /// <summary>
-    /// Executes Get_WhenShipmentNotFound_ReturnsNotFound.
+    /// Executes the Get_WhenShipmentNotFound_ReturnsNotFound operation.
     /// </summary>
     public async Task Get_WhenShipmentNotFound_ReturnsNotFound()
     {
@@ -85,9 +100,12 @@ public class ShipmentsControllerTests
         _shipmentServiceMock.Verify(s => s.GetShipment(777), Times.Once);
     }
 
+    /// <summary>
+    /// Asynchronously handles the get_when non admin accesses another customer_returns forbid process.
+    /// </summary>
     [Test]
     /// <summary>
-    /// Executes Get_WhenNonAdminAccessesAnotherCustomer_ReturnsForbid.
+    /// Executes the Get_WhenNonAdminAccessesAnotherCustomer_ReturnsForbid operation.
     /// </summary>
     public async Task Get_WhenNonAdminAccessesAnotherCustomer_ReturnsForbid()
     {
@@ -99,9 +117,12 @@ public class ShipmentsControllerTests
         Assert.That(result, Is.TypeOf<ForbidResult>());
     }
 
+    /// <summary>
+    /// Asynchronously handles the get_when non admin accesses own shipment_returns ok process.
+    /// </summary>
     [Test]
     /// <summary>
-    /// Executes Get_WhenNonAdminAccessesOwnShipment_ReturnsOk.
+    /// Executes the Get_WhenNonAdminAccessesOwnShipment_ReturnsOk operation.
     /// </summary>
     public async Task Get_WhenNonAdminAccessesOwnShipment_ReturnsOk()
     {
@@ -113,9 +134,12 @@ public class ShipmentsControllerTests
         Assert.That(result, Is.TypeOf<OkObjectResult>());
     }
 
+    /// <summary>
+    /// Asynchronously handles the schedule pickup_when shipment missing_returns not found process.
+    /// </summary>
     [Test]
     /// <summary>
-    /// Executes SchedulePickup_WhenShipmentMissing_ReturnsNotFound.
+    /// Executes the SchedulePickup_WhenShipmentMissing_ReturnsNotFound operation.
     /// </summary>
     public async Task SchedulePickup_WhenShipmentMissing_ReturnsNotFound()
     {
@@ -127,9 +151,12 @@ public class ShipmentsControllerTests
         Assert.That(result, Is.TypeOf<NotFoundResult>());
     }
 
+    /// <summary>
+    /// Asynchronously handles the schedule pickup_when non owner_returns forbid process.
+    /// </summary>
     [Test]
     /// <summary>
-    /// Executes SchedulePickup_WhenNonOwner_ReturnsForbid.
+    /// Executes the SchedulePickup_WhenNonOwner_ReturnsForbid operation.
     /// </summary>
     public async Task SchedulePickup_WhenNonOwner_ReturnsForbid()
     {
@@ -141,9 +168,12 @@ public class ShipmentsControllerTests
         Assert.That(result, Is.TypeOf<ForbidResult>());
     }
 
+    /// <summary>
+    /// Asynchronously handles the schedule pickup_when admin_calls service and returns ok process.
+    /// </summary>
     [Test]
     /// <summary>
-    /// Executes SchedulePickup_WhenAdmin_CallsServiceAndReturnsOk.
+    /// Executes the SchedulePickup_WhenAdmin_CallsServiceAndReturnsOk operation.
     /// </summary>
     public async Task SchedulePickup_WhenAdmin_CallsServiceAndReturnsOk()
     {
@@ -157,9 +187,12 @@ public class ShipmentsControllerTests
         _shipmentServiceMock.Verify(s => s.SchedulePickup(9, schedule), Times.Once);
     }
 
+    /// <summary>
+    /// Asynchronously handles the raise issue_when unauthenticated_returns unauthorized process.
+    /// </summary>
     [Test]
     /// <summary>
-    /// Executes RaiseIssue_WhenUnauthenticated_ReturnsUnauthorized.
+    /// Executes the RaiseIssue_WhenUnauthenticated_ReturnsUnauthorized operation.
     /// </summary>
     public async Task RaiseIssue_WhenUnauthenticated_ReturnsUnauthorized()
     {
@@ -170,9 +203,12 @@ public class ShipmentsControllerTests
         Assert.That(result, Is.TypeOf<UnauthorizedResult>());
     }
 
+    /// <summary>
+    /// Asynchronously handles the raise issue_when owner_calls service and returns ok process.
+    /// </summary>
     [Test]
     /// <summary>
-    /// Executes RaiseIssue_WhenOwner_CallsServiceAndReturnsOk.
+    /// Executes the RaiseIssue_WhenOwner_CallsServiceAndReturnsOk operation.
     /// </summary>
     public async Task RaiseIssue_WhenOwner_CallsServiceAndReturnsOk()
     {
@@ -188,9 +224,12 @@ public class ShipmentsControllerTests
         _shipmentServiceMock.Verify(s => s.RaiseIssueAsync(88, 3, It.IsAny<ShipmentIssueDTO>()), Times.Once);
     }
 
+    /// <summary>
+    /// Asynchronously handles the pickup_when called_uses picked up status process.
+    /// </summary>
     [Test]
     /// <summary>
-    /// Executes Pickup_WhenCalled_UsesPickedUpStatus.
+    /// Executes the Pickup_WhenCalled_UsesPickedUpStatus operation.
     /// </summary>
     public async Task Pickup_WhenCalled_UsesPickedUpStatus()
     {
@@ -203,9 +242,12 @@ public class ShipmentsControllerTests
         _shipmentServiceMock.Verify(s => s.UpdateStatus(4, ShipmentStatus.PickedUp, "DEL-HUB"), Times.Once);
     }
 
+    /// <summary>
+    /// Asynchronously handles the get all_when called_returns paginated response process.
+    /// </summary>
     [Test]
     /// <summary>
-    /// Executes GetAll_WhenCalled_ReturnsPaginatedResponse.
+    /// Executes the GetAll_WhenCalled_ReturnsPaginatedResponse operation.
     /// </summary>
     public async Task GetAll_WhenCalled_ReturnsPaginatedResponse()
     {
@@ -244,9 +286,12 @@ public class ShipmentsControllerTests
         Assert.That(returned.HasPreviousPage, Is.False);
     }
 
+    /// <summary>
+    /// Asynchronously handles the get all_when page number2_returns second page process.
+    /// </summary>
     [Test]
     /// <summary>
-    /// Executes GetAll_WhenPageNumber2_ReturnsSecondPage.
+    /// Executes the GetAll_WhenPageNumber2_ReturnsSecondPage operation.
     /// </summary>
     public async Task GetAll_WhenPageNumber2_ReturnsSecondPage()
     {
@@ -284,9 +329,12 @@ public class ShipmentsControllerTests
         Assert.That(returned.HasPreviousPage, Is.True);
     }
 
+    /// <summary>
+    /// Asynchronously handles the get all_when last page_verifies pagination metadata process.
+    /// </summary>
     [Test]
     /// <summary>
-    /// Executes GetAll_WhenLastPage_VerifiesPaginationMetadata.
+    /// Executes the GetAll_WhenLastPage_VerifiesPaginationMetadata operation.
     /// </summary>
     public async Task GetAll_WhenLastPage_VerifiesPaginationMetadata()
     {
@@ -323,9 +371,12 @@ public class ShipmentsControllerTests
         Assert.That(returned.PageNumber, Is.EqualTo(3));
     }
 
+    /// <summary>
+    /// Asynchronously handles the get all_when custom page size_returns smaller pages process.
+    /// </summary>
     [Test]
     /// <summary>
-    /// Executes GetAll_WhenCustomPageSize_ReturnsSmallerPages.
+    /// Executes the GetAll_WhenCustomPageSize_ReturnsSmallerPages operation.
     /// </summary>
     public async Task GetAll_WhenCustomPageSize_ReturnsSmallerPages()
     {

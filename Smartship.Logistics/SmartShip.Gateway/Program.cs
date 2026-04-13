@@ -30,7 +30,7 @@ namespace SmartShip.Gateway;
 public class Program
 {
     /// <summary>
-    /// Executes Main.
+    /// Executes the Main operation.
     /// </summary>
     public static async Task Main(string[] args)
     {

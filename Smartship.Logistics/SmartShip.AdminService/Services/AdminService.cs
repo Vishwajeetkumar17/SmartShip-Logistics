@@ -274,7 +274,7 @@ public class AdminService : IAdminService
 
         if (await _repository.HubNameExistsAsync(normalizedName))
         {
-            throw new RequestValidationException("Hub name already exists.");
+            throw new ConflictException("Hub name already exists.");
         }
 
         var hub = new Hub
@@ -312,7 +312,7 @@ public class AdminService : IAdminService
         var normalizedName = AdminValidationHelper.NormalizeReason(dto.Name, nameof(dto.Name));
         if (await _repository.HubNameExistsAsync(normalizedName, hubId))
         {
-            throw new RequestValidationException("Hub name already exists.");
+            throw new ConflictException("Hub name already exists.");
         }
 
         hub.Name = normalizedName;
@@ -385,7 +385,7 @@ public class AdminService : IAdminService
         var normalizedZipCode = AdminValidationHelper.NormalizeReason(dto.ZipCode, nameof(dto.ZipCode));
         if (await _repository.ZipCodeExistsAsync(normalizedZipCode))
         {
-            throw new RequestValidationException("ZipCode already exists.");
+            throw new ConflictException("ZipCode already exists.");
         }
 
         var location = new ServiceLocation
@@ -424,7 +424,7 @@ public class AdminService : IAdminService
         var normalizedZipCode = AdminValidationHelper.NormalizeReason(dto.ZipCode, nameof(dto.ZipCode));
         if (await _repository.ZipCodeExistsAsync(normalizedZipCode, locationId))
         {
-            throw new RequestValidationException("ZipCode already exists.");
+            throw new ConflictException("ZipCode already exists.");
         }
 
         location.HubId = dto.HubId;
@@ -514,7 +514,7 @@ public class AdminService : IAdminService
 
         if (await _repository.GetOpenExceptionByShipmentAndTypeAsync(shipmentId, "Delay") is not null)
         {
-            throw new RequestValidationException("An open delay exception already exists for this shipment.");
+            throw new ConflictException("An open delay exception already exists for this shipment.");
         }
 
         var record = new ExceptionRecord
@@ -523,7 +523,7 @@ public class AdminService : IAdminService
             ExceptionType = "Delay",
             Description = AdminValidationHelper.NormalizeReason(reason, nameof(reason)),
             Status = "Open",
-            CreatedAt = DateTime.Now
+            CreatedAt = TimeZoneHelper.GetCurrentUtcTime()
         };
 
         await _repository.AddExceptionRecordAsync(record);
@@ -545,7 +545,7 @@ public class AdminService : IAdminService
 
         if (await _repository.GetOpenExceptionByShipmentAndTypeAsync(shipmentId, "Return") is not null)
         {
-            throw new RequestValidationException("An open return exception already exists for this shipment.");
+            throw new ConflictException("An open return exception already exists for this shipment.");
         }
 
         var record = new ExceptionRecord
@@ -554,7 +554,7 @@ public class AdminService : IAdminService
             ExceptionType = "Return",
             Description = AdminValidationHelper.NormalizeReason(reason, nameof(reason)),
             Status = "Open",
-            CreatedAt = DateTime.Now
+            CreatedAt = TimeZoneHelper.GetCurrentUtcTime()
         };
 
         await _repository.AddExceptionRecordAsync(record);

@@ -15,13 +15,16 @@ public class PackageRepository : IPackageRepository
 {
     private readonly ShipmentDbContext _context;
 
+    /// <summary>
+    /// Initializes a new instance of the package repository class.
+    /// </summary>
     public PackageRepository(ShipmentDbContext context)
     {
         _context = context;
     }
 
     /// <summary>
-    /// Executes GetByShipmentIdAsync.
+    /// Executes the GetByShipmentIdAsync operation.
     /// </summary>
     public async Task<List<Package>> GetByShipmentIdAsync(int shipmentId)
     {
@@ -31,7 +34,7 @@ public class PackageRepository : IPackageRepository
     }
 
     /// <summary>
-    /// Executes GetByIdAsync.
+    /// Executes the GetByIdAsync operation.
     /// </summary>
     public async Task<Package?> GetByIdAsync(int packageId)
     {
@@ -39,7 +42,7 @@ public class PackageRepository : IPackageRepository
     }
 
     /// <summary>
-    /// Executes AddAsync.
+    /// Executes the AddAsync operation.
     /// </summary>
     public async Task AddAsync(Package package)
     {
@@ -48,7 +51,7 @@ public class PackageRepository : IPackageRepository
     }
 
     /// <summary>
-    /// Executes UpdateAsync.
+    /// Executes the UpdateAsync operation.
     /// </summary>
     public async Task UpdateAsync(Package package)
     {
@@ -57,7 +60,7 @@ public class PackageRepository : IPackageRepository
     }
 
     /// <summary>
-    /// Executes DeleteAsync.
+    /// Executes the DeleteAsync operation.
     /// </summary>
     public async Task DeleteAsync(Package package)
     {

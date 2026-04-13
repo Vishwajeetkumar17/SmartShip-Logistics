@@ -196,7 +196,7 @@ public class DocumentService : IDocumentService
         var existingProof = await _repository.GetDeliveryProofAsync(shipmentId);
         if (existingProof != null)
         {
-            throw new RequestValidationException($"Delivery proof for shipment {shipmentId} already exists.");
+            throw new ConflictException($"Delivery proof for shipment {shipmentId} already exists.");
         }
 
         var fileUrl = await _storageService.SaveFileAsync(dto.File!, "proofs");

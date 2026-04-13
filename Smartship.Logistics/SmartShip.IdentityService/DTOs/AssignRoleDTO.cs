@@ -11,6 +11,9 @@ namespace SmartShip.IdentityService.DTOs
     /// </summary>
     public class AssignRoleDTO
     {
+        /// <summary>
+        /// Gets or sets the role id.
+        /// </summary>
         [Range(1, int.MaxValue)]
         public int RoleId { get; set; }
     }

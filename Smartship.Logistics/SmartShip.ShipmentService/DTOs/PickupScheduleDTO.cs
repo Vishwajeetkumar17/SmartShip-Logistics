@@ -12,13 +12,19 @@ namespace SmartShip.ShipmentService.DTOs;
 /// </summary>
 public class PickupScheduleDTO : IValidatableObject
 {
+    /// <summary>
+    /// Gets or sets the pickup date.
+    /// </summary>
     public DateTime PickupDate { get; set; }
 
+    /// <summary>
+    /// Gets or sets the notes.
+    /// </summary>
     [MaxLength(1000)]
     public string Notes { get; set; } = string.Empty;
 
     /// <summary>
-    /// Executes Validate.
+    /// Executes the Validate operation.
     /// </summary>
     public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
     {

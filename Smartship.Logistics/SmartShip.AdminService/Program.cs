@@ -1,5 +1,6 @@
 /// <summary>
-/// Provides backend implementation for Program.
+/// Application entry point and service composition root for the Admin microservice.
+/// Configures authentication, database access, message bus consumers, and the HTTP pipeline.
 /// </summary>
 
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -27,13 +28,15 @@ using System.Text.Json.Serialization;
 namespace SmartShip.AdminService;
 
 /// <summary>
-/// Represents Program.
+/// Bootstrap class for the Admin microservice.
+/// Handles dependency injection, middleware pipeline, and application startup.
 /// </summary>
 public class Program
 {
     /// <summary>
-    /// Executes Main.
+    /// Application entry point. Configures and launches the Admin API server.
     /// </summary>
+    /// <param name="args">Command-line arguments.</param>
     public static void Main(string[] args)
     {
         // Load .env file for local development (values override appsettings.json via environment variables)
@@ -41,9 +44,15 @@ public class Program
 
         var builder = WebApplication.CreateBuilder(args);
 
-        // Configure Serilog
+        #region Logging Configuration
+
+        // Configure Serilog as the structured logging provider
         builder.Host.UseSerilog((context, loggerConfiguration) =>
             SmartShipSerilog.Configure(context.Configuration, loggerConfiguration, "SmartShip.AdminService"));
+
+        #endregion
+
+        #region Core Service Registration
 
         builder.Services.AddControllers()
             .AddJsonOptions(options =>
@@ -52,6 +61,11 @@ public class Program
             });
         builder.Services.AddProblemDetails();
         builder.Services.AddEndpointsApiExplorer();
+
+        #endregion
+
+        #region Swagger / OpenAPI Configuration
+
         builder.Services.AddSwaggerGen(options =>
         {
             options.SwaggerDoc("v1", new OpenApiInfo
@@ -87,6 +101,10 @@ public class Program
             });
         });
 
+        #endregion
+
+        #region Authentication & Authorization
+
         var jwtSettings = builder.Configuration.GetSection("JwtSettings").Get<JwtSettings>()
             ?? throw new InvalidOperationException("JwtSettings are missing in configuration.");
         jwtSettings.Validate();
@@ -114,16 +132,26 @@ public class Program
 
         builder.Services.AddAuthorization();
 
-        //  Correlation ID Service Registration
+        #endregion
+
+        #region Infrastructure & Data Access
+
+        // Correlation ID for distributed tracing
         builder.Services.AddScoped<ICorrelationIdService, CorrelationIdService>();
 
+        // Database context registration
         builder.Services.AddDbContext<AdminDbContext>(options =>
             options.UseSqlServer(builder.Configuration.GetConnectionString("SmartShipAdminServiceConnection")
                 ?? "Server=.;Database=SmartShipAdminDb;Trusted_Connection=True;MultipleActiveResultSets=true;Encrypt=False;TrustServerCertificate=True"));
 
+        // RabbitMQ event bus configuration
         builder.Services.Configure<RabbitMqOptions>(builder.Configuration.GetSection(RabbitMqOptions.SectionName));
         builder.Services.AddSingleton<RabbitMQConnectionManager>();
         builder.Services.AddSingleton<IEventConsumer, RabbitMQConsumer>();
+
+        #endregion
+
+        #region Inter-Service HTTP Communication
 
         var shipmentServiceUrl = builder.Configuration["ServiceUrls:ShipmentService"]
             ?? throw new InvalidOperationException("ServiceUrls:ShipmentService is required.");
@@ -136,8 +164,16 @@ public class Program
         })
         .AddHttpMessageHandler<CorrelationIdDelegatingHandler>();
 
+        #endregion
+
+        #region Application Services & Repositories
+
         builder.Services.AddScoped<IAdminRepository, AdminRepository>();
         builder.Services.AddScoped<IAdminService, global::SmartShip.AdminService.Services.AdminService>();
+
+        #endregion
+
+        #region Background Services
 
         builder.Services.AddHostedService<AdminShipmentExceptionConsumerService>();
         builder.Services.Configure<HostOptions>(options =>
@@ -145,8 +181,13 @@ public class Program
             options.BackgroundServiceExceptionBehavior = BackgroundServiceExceptionBehavior.Ignore;
         });
 
+        #endregion
+
         var app = builder.Build();
 
+        #region HTTP Pipeline Configuration
+
+        // Structured request logging via Serilog
         app.UseSerilogRequestLogging(options =>
         {
             options.MessageTemplate =
@@ -161,26 +202,31 @@ public class Program
             };
         });
 
-        // ✓ Correlation ID Middleware - Must be early in pipeline
+        // Correlation ID middleware — must be early in pipeline
         app.UseCorrelationId();
 
+        // Global exception handler
         app.UseGlobalExceptionHandling();
 
+        // Swagger UI (development & Docker environments only)
         if (app.Environment.IsDevelopment() || app.Environment.IsEnvironment("Docker"))
         {
             app.UseSwagger();
             app.UseSwaggerUI();
         }
 
+        // HTTPS redirection (skip in Docker to allow reverse proxy handling)
         if (!app.Environment.IsEnvironment("Docker"))
         {
             app.UseHttpsRedirection();
         }
+
         app.UseAuthentication();
         app.UseAuthorization();
         app.MapControllers();
+
+        #endregion
+
         app.Run();
     }
 }
-
-

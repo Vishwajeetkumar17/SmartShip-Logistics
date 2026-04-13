@@ -15,13 +15,16 @@ namespace SmartShip.IdentityService.Repositories
     {
         private readonly IdentityDbContext _context;
 
+        /// <summary>
+        /// Initializes a new instance of the user repository class.
+        /// </summary>
         public UserRepository(IdentityDbContext context)
         {
             _context = context;
         }
 
         /// <summary>
-        /// Executes GetByEmailAsync.
+        /// Executes the GetByEmailAsync operation.
         /// </summary>
         public async Task<User?> GetByEmailAsync(string email)
         {
@@ -29,7 +32,7 @@ namespace SmartShip.IdentityService.Repositories
         }
 
         /// <summary>
-        /// Executes GetByIdAsync.
+        /// Executes the GetByIdAsync operation.
         /// </summary>
         public async Task<User?> GetByIdAsync(int id)
         {
@@ -37,7 +40,7 @@ namespace SmartShip.IdentityService.Repositories
         }
 
         /// <summary>
-        /// Executes GetAllUsersAsync.
+        /// Executes the GetAllUsersAsync operation.
         /// </summary>
         public async Task<List<User>> GetAllUsersAsync()
         {
@@ -45,7 +48,7 @@ namespace SmartShip.IdentityService.Repositories
         }
 
         /// <summary>
-        /// Executes CreateAsync.
+        /// Executes the CreateAsync operation.
         /// </summary>
         public async Task CreateAsync(User user)
         {
@@ -54,7 +57,7 @@ namespace SmartShip.IdentityService.Repositories
         }
 
         /// <summary>
-        /// Executes UpdateAsync.
+        /// Executes the UpdateAsync operation.
         /// </summary>
         public async Task UpdateAsync(User user)
         {
@@ -63,7 +66,7 @@ namespace SmartShip.IdentityService.Repositories
         }
 
         /// <summary>
-        /// Executes DeleteAsync.
+        /// Executes the DeleteAsync operation.
         /// </summary>
         public async Task DeleteAsync(User user)
         {

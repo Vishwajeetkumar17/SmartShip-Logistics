@@ -13,7 +13,7 @@ namespace SmartShip.IdentityService.Helpers
     public static class TokenHasher
     {
         /// <summary>
-        /// Executes Hash.
+        /// Executes the Hash operation.
         /// </summary>
         public static string Hash(string value)
         {

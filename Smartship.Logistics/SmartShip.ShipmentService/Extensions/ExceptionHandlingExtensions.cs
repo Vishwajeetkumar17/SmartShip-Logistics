@@ -15,7 +15,7 @@ namespace SmartShip.ShipmentService.Extensions;
 public static class ExceptionHandlingExtensions
 {
     /// <summary>
-    /// Executes UseGlobalExceptionHandling.
+    /// Executes the UseGlobalExceptionHandling operation.
     /// </summary>
     public static void UseGlobalExceptionHandling(this WebApplication app)
     {
@@ -42,6 +42,7 @@ public static class ExceptionHandlingExtensions
                 {
                     NotFoundException => (StatusCodes.Status404NotFound, "Resource not found"),
                     RequestValidationException => (StatusCodes.Status400BadRequest, "Request validation failed"),
+                    ConflictException => (StatusCodes.Status409Conflict, "Resource conflict"),
                     UnauthorizedAccessException => (StatusCodes.Status401Unauthorized, "Unauthorized"),
                     _ => (StatusCodes.Status500InternalServerError, "An unexpected error occurred")
                 };

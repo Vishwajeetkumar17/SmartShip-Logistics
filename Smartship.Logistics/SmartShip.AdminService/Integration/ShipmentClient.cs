@@ -25,6 +25,9 @@ public class ShipmentClient : IShipmentClient
         Converters = { new JsonStringEnumConverter() }
     };
 
+    /// <summary>
+    /// Initializes a new instance of the shipment client class.
+    /// </summary>
     public ShipmentClient(HttpClient httpClient, IHttpContextAccessor httpContextAccessor)
     {
         _httpClient = httpClient;
@@ -32,7 +35,7 @@ public class ShipmentClient : IShipmentClient
     }
 
     /// <summary>
-    /// Executes GetAllShipmentsAsync.
+    /// Executes the GetAllShipmentsAsync operation.
     /// </summary>
     public async Task<List<ShipmentExternalDto>> GetAllShipmentsAsync()
     {
@@ -65,7 +68,7 @@ public class ShipmentClient : IShipmentClient
     }
 
     /// <summary>
-    /// Executes GetShipmentByIdAsync.
+    /// Executes the GetShipmentByIdAsync operation.
     /// </summary>
     public async Task<ShipmentExternalDto?> GetShipmentByIdAsync(int shipmentId)
     {

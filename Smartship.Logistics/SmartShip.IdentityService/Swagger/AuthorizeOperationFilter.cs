@@ -14,7 +14,7 @@ namespace SmartShip.IdentityService.Swagger
     public class AuthorizeOperationFilter : IOperationFilter
     {
         /// <summary>
-        /// Executes Apply.
+        /// Executes the Apply operation.
         /// </summary>
         public void Apply(OpenApiOperation operation, OperationFilterContext context)
         {

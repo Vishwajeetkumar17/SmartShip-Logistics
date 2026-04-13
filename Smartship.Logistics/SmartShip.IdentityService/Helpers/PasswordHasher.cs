@@ -13,7 +13,7 @@ namespace SmartShip.IdentityService.Helpers
     public class PasswordHasher
     {
         /// <summary>
-        /// Executes Hash.
+        /// Executes the Hash operation.
         /// </summary>
         public static string Hash(string password)
         {
@@ -24,7 +24,7 @@ namespace SmartShip.IdentityService.Helpers
             return Convert.ToBase64String(hash);
         }
         /// <summary>
-        /// Executes Verify.
+        /// Executes the Verify operation.
         /// </summary>
         public static bool Verify(string password, string hash)
         {

@@ -9,6 +9,9 @@ namespace SmartShip.IdentityService.Configurations
     /// </summary>
     public class GoogleAuthSettings
     {
+        /// <summary>
+        /// Gets or sets the client id.
+        /// </summary>
         public string ClientId { get; set; } = string.Empty;
     }
 }

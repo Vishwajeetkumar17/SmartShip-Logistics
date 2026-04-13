@@ -19,6 +19,9 @@ public sealed class RabbitMQConnectionManager : IDisposable
     private readonly SemaphoreSlim _connectionLock = new(1, 1);
     private IConnection? _connection;
 
+    /// <summary>
+    /// Initializes a new instance of the rabbit mqconnection manager class.
+    /// </summary>
     public RabbitMQConnectionManager(IOptions<RabbitMqOptions> options, ILogger<RabbitMQConnectionManager> logger)
     {
         _options = options.Value;
@@ -26,7 +29,7 @@ public sealed class RabbitMQConnectionManager : IDisposable
     }
 
     /// <summary>
-    /// Executes GetConnectionAsync.
+    /// Executes the GetConnectionAsync operation.
     /// </summary>
     public async Task<IConnection> GetConnectionAsync(CancellationToken cancellationToken = default)
     {
@@ -70,7 +73,7 @@ public sealed class RabbitMQConnectionManager : IDisposable
     }
 
     /// <summary>
-    /// Executes Dispose.
+    /// Executes the Dispose operation.
     /// </summary>
     public void Dispose()
     {

@@ -16,7 +16,7 @@ namespace SmartShip.ShipmentService.Helpers;
 public static class ShipmentValidationHelper
 {
     /// <summary>
-    /// Executes ValidateCreateRequest.
+    /// Executes the ValidateCreateRequest operation.
     /// </summary>
     public static void ValidateCreateRequest(CreateShipmentDTO dto)
     {
@@ -42,7 +42,7 @@ public static class ShipmentValidationHelper
     }
 
     /// <summary>
-    /// Executes ValidatePickupSchedule.
+    /// Executes the ValidatePickupSchedule operation.
     /// </summary>
     public static void ValidatePickupSchedule(PickupScheduleDTO dto)
     {
@@ -55,7 +55,7 @@ public static class ShipmentValidationHelper
     }
 
     /// <summary>
-    /// Executes EnsureShipmentCanBeModified.
+    /// Executes the EnsureShipmentCanBeModified operation.
     /// </summary>
     public static void EnsureShipmentCanBeModified(Shipment shipment)
     {
@@ -66,7 +66,7 @@ public static class ShipmentValidationHelper
     }
 
     /// <summary>
-    /// Executes CalculateTotalWeight.
+    /// Executes the CalculateTotalWeight operation.
     /// </summary>
     public static decimal CalculateTotalWeight(IEnumerable<PackageDTO> packages)
     {

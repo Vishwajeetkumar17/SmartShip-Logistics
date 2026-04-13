@@ -38,7 +38,7 @@ public static class DocumentValidationHelper
     ];
 
     /// <summary>
-    /// Executes ValidateUpload.
+    /// Executes the ValidateUpload operation.
     /// </summary>
     public static void ValidateUpload(UploadDocumentDTO dto, string documentType)
     {
@@ -54,7 +54,7 @@ public static class DocumentValidationHelper
     }
 
     /// <summary>
-    /// Executes ValidateDeliveryProof.
+    /// Executes the ValidateDeliveryProof operation.
     /// </summary>
     public static void ValidateDeliveryProof(int shipmentId, DeliveryProofDTO dto)
     {
@@ -74,7 +74,7 @@ public static class DocumentValidationHelper
     }
 
     /// <summary>
-    /// Executes NormalizeDocumentType.
+    /// Executes the NormalizeDocumentType operation.
     /// </summary>
     public static string NormalizeDocumentType(string documentType)
     {
@@ -83,7 +83,7 @@ public static class DocumentValidationHelper
     }
 
     /// <summary>
-    /// Executes NormalizeText.
+    /// Executes the NormalizeText operation.
     /// </summary>
     public static string NormalizeText(string value) => value?.Trim() ?? string.Empty;
 

@@ -19,6 +19,9 @@ public sealed class IdentityContactClient : IIdentityContactClient
     private readonly NotificationSettings _notificationSettings;
     private readonly ILogger<IdentityContactClient> _logger;
 
+    /// <summary>
+    /// Initializes a new instance of the identity contact client class.
+    /// </summary>
     public IdentityContactClient(
         HttpClient httpClient,
         IOptions<NotificationSettings> notificationOptions,
@@ -30,7 +33,7 @@ public sealed class IdentityContactClient : IIdentityContactClient
     }
 
     /// <summary>
-    /// Executes GetUserContactAsync.
+    /// Executes the GetUserContactAsync operation.
     /// </summary>
     public async Task<UserContactDto?> GetUserContactAsync(int userId, CancellationToken cancellationToken, string? correlationId = null)
     {

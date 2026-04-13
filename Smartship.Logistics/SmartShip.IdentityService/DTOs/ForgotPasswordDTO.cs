@@ -11,6 +11,9 @@ namespace SmartShip.IdentityService.DTOs
     /// </summary>
     public class ForgotPasswordDTO
     {
+        /// <summary>
+        /// Gets or sets the email.
+        /// </summary>
         [Required]
         [EmailAddress]
         [StringLength(150)]

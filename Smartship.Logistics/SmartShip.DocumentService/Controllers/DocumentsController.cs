@@ -216,3 +216,68 @@ public class DocumentsController : ControllerBase
 }
 
 
+    [Authorize(Roles = "ADMIN")]
+    /// <summary>
+    /// Permanently deletes a document from logical storage and discards the binary payload.
+    /// </summary>
+    /// <param name="id">The document identifier.</param>
+    /// <returns>Success acknowledgment.</returns>
+    public async Task<IActionResult> DeleteDocument(int id)
+    {
+        await _service.DeleteDocumentAsync(id);
+        return Ok();
+    }
+    #endregion
+
+    #region Delivery Proof
+
+    /// <summary>
+    /// Asynchronously handles the upload delivery proof process.
+    /// </summary>
+    [HttpPost("delivery-proof/{shipmentId:int}")]
+    [Authorize(Roles = "DRIVER,ADMIN")]
+    /// <summary>
+    /// Dedicated endpoint for drivers/logistics personnel to upload signed Proof of Delivery (PoD) receipts.
+    /// </summary>
+    /// <param name="shipmentId">The shipment that was delivered.</param>
+    /// <param name="dto">The photo or file payload acting as proof.</param>
+    /// <returns>The finalized document tracking receipt.</returns>
+    public async Task<IActionResult> UploadDeliveryProof(int shipmentId, [FromForm] DeliveryProofDTO dto)
+    {
+        var result = await _service.UploadDeliveryProofAsync(shipmentId, dto);
+        return Ok(result);
+    }
+
+    /// <summary>
+    /// Asynchronously handles the get delivery proof process.
+    /// </summary>
+    [HttpGet("delivery-proof/{shipmentId:int}")]
+    [Authorize]
+    /// <summary>
+    /// Retrieves the cryptographically signed or standard Proof of Delivery document for a completed shipment.
+    /// </summary>
+    /// <param name="shipmentId">The delivered shipment ID.</param>
+    /// <returns>The delivery proof file metadata.</returns>
+    public async Task<IActionResult> GetDeliveryProof(int shipmentId)
+    {
+        if (!User.IsAdmin())
+        {
+            if (!User.TryGetUserId(out var currentUserId))
+            {
+                return Unauthorized();
+            }
+
+            var shipmentDocumentsResponse = await _service.GetDocumentsByShipmentAsync(shipmentId);
+            if (!shipmentDocumentsResponse.Data.Any(d => d.CustomerId == currentUserId))
+            {
+                return Forbid();
+            }
+        }
+
+        var result = await _service.GetDeliveryProofAsync(shipmentId);
+        return Ok(result);
+    }
+    #endregion
+}
+
+

@@ -12,7 +12,7 @@ namespace SmartShip.ShipmentService.Helpers;
 public static class ShipmentStateValidator
 {
     /// <summary>
-    /// Executes IsValidTransition.
+    /// Executes the IsValidTransition operation.
     /// </summary>
     public static bool IsValidTransition(ShipmentStatus current, ShipmentStatus next)
     {

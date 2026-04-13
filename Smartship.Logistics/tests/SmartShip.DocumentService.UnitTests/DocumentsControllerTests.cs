@@ -14,7 +14,10 @@ using SmartShip.Shared.DTOs;
 
 namespace SmartShip.DocumentService.UnitTests;
 
-[TestFixture]
+/// <summary>
+    /// Represents the documents controller tests entity or configuration model.
+    /// </summary>
+    [TestFixture]
 /// <summary>
 /// Represents DocumentsControllerTests.
 /// </summary>
@@ -23,9 +26,12 @@ public class DocumentsControllerTests
     private Mock<IDocumentService> _serviceMock = null!;
     private DocumentsController _controller = null!;
 
+    /// <summary>
+    /// Asynchronously handles the set up process.
+    /// </summary>
     [SetUp]
     /// <summary>
-    /// Executes SetUp.
+    /// Executes the SetUp operation.
     /// </summary>
     public void SetUp()
     {
@@ -33,9 +39,12 @@ public class DocumentsControllerTests
         _controller = new DocumentsController(_serviceMock.Object);
     }
 
+    /// <summary>
+    /// Asynchronously handles the upload document_when no user claim_returns unauthorized process.
+    /// </summary>
     [Test]
     /// <summary>
-    /// Executes UploadDocument_WhenNoUserClaim_ReturnsUnauthorized.
+    /// Executes the UploadDocument_WhenNoUserClaim_ReturnsUnauthorized operation.
     /// </summary>
     public async Task UploadDocument_WhenNoUserClaim_ReturnsUnauthorized()
     {
@@ -46,9 +55,12 @@ public class DocumentsControllerTests
         Assert.That(result, Is.TypeOf<UnauthorizedResult>());
     }
 
+    /// <summary>
+    /// Asynchronously handles the upload document_when user exists_calls service and returns ok process.
+    /// </summary>
     [Test]
     /// <summary>
-    /// Executes UploadDocument_WhenUserExists_CallsServiceAndReturnsOk.
+    /// Executes the UploadDocument_WhenUserExists_CallsServiceAndReturnsOk operation.
     /// </summary>
     public async Task UploadDocument_WhenUserExists_CallsServiceAndReturnsOk()
     {
@@ -65,9 +77,12 @@ public class DocumentsControllerTests
         Assert.That(ok!.Value, Is.SameAs(serviceResponse));
     }
 
+    /// <summary>
+    /// Asynchronously handles the get document_when not owner_returns forbid process.
+    /// </summary>
     [Test]
     /// <summary>
-    /// Executes GetDocument_WhenNotOwner_ReturnsForbid.
+    /// Executes the GetDocument_WhenNotOwner_ReturnsForbid operation.
     /// </summary>
     public async Task GetDocument_WhenNotOwner_ReturnsForbid()
     {
@@ -79,9 +94,12 @@ public class DocumentsControllerTests
         Assert.That(result, Is.TypeOf<ForbidResult>());
     }
 
+    /// <summary>
+    /// Asynchronously handles the get documents by shipment_when no user claim_returns unauthorized process.
+    /// </summary>
     [Test]
     /// <summary>
-    /// Executes GetDocumentsByShipment_WhenNoUserClaim_ReturnsUnauthorized.
+    /// Executes the GetDocumentsByShipment_WhenNoUserClaim_ReturnsUnauthorized operation.
     /// </summary>
     public async Task GetDocumentsByShipment_WhenNoUserClaim_ReturnsUnauthorized()
     {
@@ -101,9 +119,12 @@ public class DocumentsControllerTests
         Assert.That(result, Is.TypeOf<UnauthorizedResult>());
     }
 
+    /// <summary>
+    /// Asynchronously handles the get documents by shipment_when non admin_filters to current user process.
+    /// </summary>
     [Test]
     /// <summary>
-    /// Executes GetDocumentsByShipment_WhenNonAdmin_FiltersToCurrentUser.
+    /// Executes the GetDocumentsByShipment_WhenNonAdmin_FiltersToCurrentUser operation.
     /// </summary>
     public async Task GetDocumentsByShipment_WhenNonAdmin_FiltersToCurrentUser()
     {
@@ -133,9 +154,12 @@ public class DocumentsControllerTests
         Assert.That(paginatedResponse.Data[0].CustomerId, Is.EqualTo(4));
     }
 
+    /// <summary>
+    /// Asynchronously handles the get delivery proof_when no user claim_returns unauthorized process.
+    /// </summary>
     [Test]
     /// <summary>
-    /// Executes GetDeliveryProof_WhenNoUserClaim_ReturnsUnauthorized.
+    /// Executes the GetDeliveryProof_WhenNoUserClaim_ReturnsUnauthorized operation.
     /// </summary>
     public async Task GetDeliveryProof_WhenNoUserClaim_ReturnsUnauthorized()
     {
@@ -147,9 +171,12 @@ public class DocumentsControllerTests
         _serviceMock.VerifyNoOtherCalls();
     }
 
+    /// <summary>
+    /// Asynchronously handles the get delivery proof_when user not owner_returns forbid process.
+    /// </summary>
     [Test]
     /// <summary>
-    /// Executes GetDeliveryProof_WhenUserNotOwner_ReturnsForbid.
+    /// Executes the GetDeliveryProof_WhenUserNotOwner_ReturnsForbid operation.
     /// </summary>
     public async Task GetDeliveryProof_WhenUserNotOwner_ReturnsForbid()
     {
@@ -172,9 +199,12 @@ public class DocumentsControllerTests
         Assert.That(result, Is.TypeOf<ForbidResult>());
     }
 
+    /// <summary>
+    /// Asynchronously handles the get delivery proof_when user owns shipment_returns ok process.
+    /// </summary>
     [Test]
     /// <summary>
-    /// Executes GetDeliveryProof_WhenUserOwnsShipment_ReturnsOk.
+    /// Executes the GetDeliveryProof_WhenUserOwnsShipment_ReturnsOk operation.
     /// </summary>
     public async Task GetDeliveryProof_WhenUserOwnsShipment_ReturnsOk()
     {
@@ -201,9 +231,12 @@ public class DocumentsControllerTests
         Assert.That(ok!.Value, Is.SameAs(proof));
     }
 
+    /// <summary>
+    /// Asynchronously handles the get documents by shipment_when called_returns paginated documents process.
+    /// </summary>
     [Test]
     /// <summary>
-    /// Executes GetDocumentsByShipment_WhenCalled_ReturnsPaginatedDocuments.
+    /// Executes the GetDocumentsByShipment_WhenCalled_ReturnsPaginatedDocuments operation.
     /// </summary>
     public async Task GetDocumentsByShipment_WhenCalled_ReturnsPaginatedDocuments()
     {
@@ -240,9 +273,12 @@ public class DocumentsControllerTests
         Assert.That(returned.HasNextPage, Is.True);
     }
 
+    /// <summary>
+    /// Asynchronously handles the get documents by shipment_when page number2_returns second page process.
+    /// </summary>
     [Test]
     /// <summary>
-    /// Executes GetDocumentsByShipment_WhenPageNumber2_ReturnsSecondPage.
+    /// Executes the GetDocumentsByShipment_WhenPageNumber2_ReturnsSecondPage operation.
     /// </summary>
     public async Task GetDocumentsByShipment_WhenPageNumber2_ReturnsSecondPage()
     {

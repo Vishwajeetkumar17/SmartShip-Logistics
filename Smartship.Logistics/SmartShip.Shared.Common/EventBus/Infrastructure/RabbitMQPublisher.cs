@@ -21,6 +21,9 @@ public sealed class RabbitMQPublisher : IEventPublisher
     private readonly ILogger<RabbitMQPublisher> _logger;
     private readonly JsonSerializerOptions _serializerOptions = new(JsonSerializerDefaults.Web);
 
+    /// <summary>
+    /// Initializes a new instance of the rabbit mqpublisher class.
+    /// </summary>
     public RabbitMQPublisher(
         RabbitMQConnectionManager connectionManager,
         IOptions<RabbitMqOptions> options,
@@ -31,6 +34,9 @@ public sealed class RabbitMQPublisher : IEventPublisher
         _logger = logger;
     }
 
+    /// <summary>
+    /// Asynchronously handles the publish async process.
+    /// </summary>
     public async Task PublishAsync<T>(string queueName, T @event, CancellationToken cancellationToken = default) where T : class
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(queueName);

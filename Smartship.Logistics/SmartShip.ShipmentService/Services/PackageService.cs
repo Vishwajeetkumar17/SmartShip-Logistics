@@ -18,6 +18,9 @@ public class PackageService : IPackageService
     private readonly IPackageRepository _repository;
     private readonly IShipmentRepository _shipmentRepository;
 
+    /// <summary>
+    /// Initializes a new instance of the package service class.
+    /// </summary>
     public PackageService(IPackageRepository repository, IShipmentRepository shipmentRepository)
     {
         _repository = repository;
@@ -25,7 +28,7 @@ public class PackageService : IPackageService
     }
 
     /// <summary>
-    /// Executes AddPackage.
+    /// Executes the AddPackage operation.
     /// </summary>
     public async Task AddPackage(int shipmentId, PackageDTO dto)
     {
@@ -53,7 +56,7 @@ public class PackageService : IPackageService
     }
 
     /// <summary>
-    /// Executes GetPackages.
+    /// Executes the GetPackages operation.
     /// </summary>
     public async Task<List<PackageDTO>> GetPackages(int shipmentId)
     {
@@ -64,7 +67,7 @@ public class PackageService : IPackageService
     }
 
     /// <summary>
-    /// Executes UpdatePackage.
+    /// Executes the UpdatePackage operation.
     /// </summary>
     public async Task UpdatePackage(int shipmentId, int packageId, PackageDTO dto)
     {
@@ -95,7 +98,7 @@ public class PackageService : IPackageService
     }
 
     /// <summary>
-    /// Executes DeletePackage.
+    /// Executes the DeletePackage operation.
     /// </summary>
     public async Task DeletePackage(int shipmentId, int packageId)
     {

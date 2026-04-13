@@ -12,7 +12,10 @@ using SmartShip.ShipmentService.Services;
 
 namespace SmartShip.ShipmentService.UnitTests;
 
-[TestFixture]
+/// <summary>
+    /// Represents the packages controller tests entity or configuration model.
+    /// </summary>
+    [TestFixture]
 /// <summary>
 /// Represents PackagesControllerTests.
 /// </summary>
@@ -22,9 +25,12 @@ public class PackagesControllerTests
     private Mock<IShipmentService> _shipmentServiceMock = null!;
     private PackagesController _controller = null!;
 
+    /// <summary>
+    /// Asynchronously handles the set up process.
+    /// </summary>
     [SetUp]
     /// <summary>
-    /// Executes SetUp.
+    /// Executes the SetUp operation.
     /// </summary>
     public void SetUp()
     {
@@ -33,9 +39,12 @@ public class PackagesControllerTests
         _controller = new PackagesController(_packageServiceMock.Object, _shipmentServiceMock.Object);
     }
 
+    /// <summary>
+    /// Asynchronously handles the add package_when shipment missing_returns not found process.
+    /// </summary>
     [Test]
     /// <summary>
-    /// Executes AddPackage_WhenShipmentMissing_ReturnsNotFound.
+    /// Executes the AddPackage_WhenShipmentMissing_ReturnsNotFound operation.
     /// </summary>
     public async Task AddPackage_WhenShipmentMissing_ReturnsNotFound()
     {
@@ -47,9 +56,12 @@ public class PackagesControllerTests
         Assert.That(result, Is.TypeOf<NotFoundResult>());
     }
 
+    /// <summary>
+    /// Asynchronously handles the add package_when customer claim missing_returns unauthorized process.
+    /// </summary>
     [Test]
     /// <summary>
-    /// Executes AddPackage_WhenCustomerClaimMissing_ReturnsUnauthorized.
+    /// Executes the AddPackage_WhenCustomerClaimMissing_ReturnsUnauthorized operation.
     /// </summary>
     public async Task AddPackage_WhenCustomerClaimMissing_ReturnsUnauthorized()
     {
@@ -61,9 +73,12 @@ public class PackagesControllerTests
         Assert.That(result, Is.TypeOf<UnauthorizedResult>());
     }
 
+    /// <summary>
+    /// Asynchronously handles the add package_when non owner_returns forbid process.
+    /// </summary>
     [Test]
     /// <summary>
-    /// Executes AddPackage_WhenNonOwner_ReturnsForbid.
+    /// Executes the AddPackage_WhenNonOwner_ReturnsForbid operation.
     /// </summary>
     public async Task AddPackage_WhenNonOwner_ReturnsForbid()
     {
@@ -75,9 +90,12 @@ public class PackagesControllerTests
         Assert.That(result, Is.TypeOf<ForbidResult>());
     }
 
+    /// <summary>
+    /// Asynchronously handles the add package_when owner_calls service and returns ok process.
+    /// </summary>
     [Test]
     /// <summary>
-    /// Executes AddPackage_WhenOwner_CallsServiceAndReturnsOk.
+    /// Executes the AddPackage_WhenOwner_CallsServiceAndReturnsOk operation.
     /// </summary>
     public async Task AddPackage_WhenOwner_CallsServiceAndReturnsOk()
     {
@@ -92,9 +110,12 @@ public class PackagesControllerTests
         _packageServiceMock.Verify(s => s.AddPackage(44, packageDto), Times.Once);
     }
 
+    /// <summary>
+    /// Asynchronously handles the get packages_when admin_returns packages process.
+    /// </summary>
     [Test]
     /// <summary>
-    /// Executes GetPackages_WhenAdmin_ReturnsPackages.
+    /// Executes the GetPackages_WhenAdmin_ReturnsPackages operation.
     /// </summary>
     public async Task GetPackages_WhenAdmin_ReturnsPackages()
     {

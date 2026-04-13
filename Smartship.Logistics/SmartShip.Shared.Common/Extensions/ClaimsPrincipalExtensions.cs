@@ -13,7 +13,7 @@ namespace SmartShip.Shared.Common.Extensions;
 public static class ClaimsPrincipalExtensions
 {
     /// <summary>
-    /// Executes TryGetUserId.
+    /// Executes the TryGetUserId operation.
     /// </summary>
     public static bool TryGetUserId(this ClaimsPrincipal user, out int userId)
     {
@@ -31,7 +31,7 @@ public static class ClaimsPrincipalExtensions
     }
 
     /// <summary>
-    /// Executes TryGetCustomerId.
+    /// Executes the TryGetCustomerId operation.
     /// </summary>
     public static bool TryGetCustomerId(this ClaimsPrincipal user, out int customerId)
     {
@@ -39,7 +39,7 @@ public static class ClaimsPrincipalExtensions
     }
 
     /// <summary>
-    /// Executes IsAdmin.
+    /// Executes the IsAdmin operation.
     /// </summary>
     public static bool IsAdmin(this ClaimsPrincipal user)
     {

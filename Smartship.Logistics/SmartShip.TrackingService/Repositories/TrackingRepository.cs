@@ -15,13 +15,16 @@ public class TrackingRepository : ITrackingRepository
 {
     private readonly TrackingDbContext _context;
 
+    /// <summary>
+    /// Initializes a new instance of the tracking repository class.
+    /// </summary>
     public TrackingRepository(TrackingDbContext context)
     {
         _context = context;
     }
 
     /// <summary>
-    /// Executes GetEventsAsync.
+    /// Executes the GetEventsAsync operation.
     /// </summary>
     public async Task<List<TrackingEvent>> GetEventsAsync(string trackingNumber)
     {
@@ -34,7 +37,7 @@ public class TrackingRepository : ITrackingRepository
     }
 
     /// <summary>
-    /// Executes GetEventByIdAsync.
+    /// Executes the GetEventByIdAsync operation.
     /// </summary>
     public async Task<TrackingEvent?> GetEventByIdAsync(int id)
     {
@@ -42,7 +45,7 @@ public class TrackingRepository : ITrackingRepository
     }
 
     /// <summary>
-    /// Executes AddEventAsync.
+    /// Executes the AddEventAsync operation.
     /// </summary>
     public async Task AddEventAsync(TrackingEvent trackingEvent)
     {
@@ -69,7 +72,7 @@ public class TrackingRepository : ITrackingRepository
     }
 
     /// <summary>
-    /// Executes UpdateEventAsync.
+    /// Executes the UpdateEventAsync operation.
     /// </summary>
     public async Task UpdateEventAsync(TrackingEvent trackingEvent)
     {
@@ -78,7 +81,7 @@ public class TrackingRepository : ITrackingRepository
     }
 
     /// <summary>
-    /// Executes DeleteEventAsync.
+    /// Executes the DeleteEventAsync operation.
     /// </summary>
     public async Task DeleteEventAsync(TrackingEvent trackingEvent)
     {
@@ -87,7 +90,7 @@ public class TrackingRepository : ITrackingRepository
     }
 
     /// <summary>
-    /// Executes GetLocationsAsync.
+    /// Executes the GetLocationsAsync operation.
     /// </summary>
     public async Task<List<ShipmentLocation>> GetLocationsAsync(string trackingNumber)
     {
@@ -100,7 +103,7 @@ public class TrackingRepository : ITrackingRepository
     }
 
     /// <summary>
-    /// Executes GetLatestLocationAsync.
+    /// Executes the GetLatestLocationAsync operation.
     /// </summary>
     public async Task<ShipmentLocation?> GetLatestLocationAsync(string trackingNumber)
     {
@@ -113,7 +116,7 @@ public class TrackingRepository : ITrackingRepository
     }
 
     /// <summary>
-    /// Executes AddLocationAsync.
+    /// Executes the AddLocationAsync operation.
     /// </summary>
     public async Task AddLocationAsync(ShipmentLocation location)
     {

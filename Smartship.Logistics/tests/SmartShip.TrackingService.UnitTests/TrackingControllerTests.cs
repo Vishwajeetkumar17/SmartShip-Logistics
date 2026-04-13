@@ -11,7 +11,10 @@ using SmartShip.TrackingService.Services;
 
 namespace SmartShip.TrackingService.UnitTests;
 
-[TestFixture]
+/// <summary>
+    /// Represents the tracking controller tests entity or configuration model.
+    /// </summary>
+    [TestFixture]
 /// <summary>
 /// Represents TrackingControllerTests.
 /// </summary>
@@ -20,9 +23,12 @@ public class TrackingControllerTests
     private Mock<ITrackingService> _serviceMock = null!;
     private TrackingController _controller = null!;
 
+    /// <summary>
+    /// Asynchronously handles the set up process.
+    /// </summary>
     [SetUp]
     /// <summary>
-    /// Executes SetUp.
+    /// Executes the SetUp operation.
     /// </summary>
     public void SetUp()
     {
@@ -30,9 +36,12 @@ public class TrackingControllerTests
         _controller = new TrackingController(_serviceMock.Object);
     }
 
+    /// <summary>
+    /// Asynchronously handles the get tracking info_returns ok with payload process.
+    /// </summary>
     [Test]
     /// <summary>
-    /// Executes GetTrackingInfo_ReturnsOkWithPayload.
+    /// Executes the GetTrackingInfo_ReturnsOkWithPayload operation.
     /// </summary>
     public async Task GetTrackingInfo_ReturnsOkWithPayload()
     {
@@ -46,9 +55,12 @@ public class TrackingControllerTests
         Assert.That(ok!.Value, Is.SameAs(response));
     }
 
+    /// <summary>
+    /// Asynchronously handles the add event_calls service and returns ok process.
+    /// </summary>
     [Test]
     /// <summary>
-    /// Executes AddEvent_CallsServiceAndReturnsOk.
+    /// Executes the AddEvent_CallsServiceAndReturnsOk operation.
     /// </summary>
     public async Task AddEvent_CallsServiceAndReturnsOk()
     {
@@ -69,9 +81,12 @@ public class TrackingControllerTests
         _serviceMock.Verify(s => s.AddTrackingEventAsync(dto), Times.Once);
     }
 
+    /// <summary>
+    /// Asynchronously handles the update status_normalizes tracking number in dto process.
+    /// </summary>
     [Test]
     /// <summary>
-    /// Executes UpdateStatus_NormalizesTrackingNumberInDto.
+    /// Executes the UpdateStatus_NormalizesTrackingNumberInDto operation.
     /// </summary>
     public async Task UpdateStatus_NormalizesTrackingNumberInDto()
     {
@@ -87,9 +102,12 @@ public class TrackingControllerTests
         _serviceMock.Verify(s => s.UpdateDeliveryStatusAsync(" trk-900 ", dto), Times.Once);
     }
 
+    /// <summary>
+    /// Asynchronously handles the update status_when tracking number blank_throws validation exception process.
+    /// </summary>
     [Test]
     /// <summary>
-    /// Executes UpdateStatus_WhenTrackingNumberBlank_ThrowsValidationException.
+    /// Executes the UpdateStatus_WhenTrackingNumberBlank_ThrowsValidationException operation.
     /// </summary>
     public void UpdateStatus_WhenTrackingNumberBlank_ThrowsValidationException()
     {

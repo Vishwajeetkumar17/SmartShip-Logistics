@@ -132,3 +132,61 @@ public class TrackingController : ControllerBase
 }
 
 
+    }
+
+    /// <summary>
+    /// Asynchronously handles the get location process.
+    /// </summary>
+    [HttpGet("location/{trackingNumber}")]
+    /// <summary>
+    /// Fetches the last known geo-location or hub scan of the shipment.
+    /// </summary>
+    /// <param name="trackingNumber">The tracking code.</param>
+    /// <returns>The latest location details.</returns>
+    public async Task<IActionResult> GetLocation(string trackingNumber)
+    {
+        var result = await _service.GetLatestLocationAsync(trackingNumber);
+        return Ok(result);
+    }
+
+    #endregion
+
+    #region Delivery Status Management
+
+    /// <summary>
+    /// Asynchronously handles the get status process.
+    /// </summary>
+    [HttpGet("{trackingNumber}/status")]
+    /// <summary>
+    /// Quickly resolves the strictly formatted overarching delivery status code.
+    /// </summary>
+    /// <param name="trackingNumber">The tracking code.</param>
+    /// <returns>The enum or string representation of the final status.</returns>
+    public async Task<IActionResult> GetStatus(string trackingNumber)
+    {
+        var result = await _service.GetDeliveryStatusAsync(trackingNumber);
+        return Ok(result);
+    }
+
+    /// <summary>
+    /// Asynchronously handles the update status process.
+    /// </summary>
+    [HttpPut("{trackingNumber}/status")]
+    [Authorize(Roles = "ADMIN")]
+    /// <summary>
+    /// Updates the global delivery status, which triggers respective final-state logic.
+    /// </summary>
+    /// <param name="trackingNumber">The tracking code.</param>
+    /// <param name="dto">The new status update wrapper.</param>
+    /// <returns>Success acknowledgment.</returns>
+    public async Task<IActionResult> UpdateStatus(string trackingNumber, [FromBody] StatusUpdateDTO dto)
+    {
+        dto.TrackingNumber = TrackingValidationHelper.NormalizeTrackingNumber(trackingNumber);
+        await _service.UpdateDeliveryStatusAsync(trackingNumber, dto);
+        return Ok();
+    }
+
+    #endregion
+}
+
+

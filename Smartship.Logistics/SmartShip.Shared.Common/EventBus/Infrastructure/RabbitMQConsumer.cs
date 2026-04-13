@@ -34,6 +34,9 @@ public sealed class RabbitMQConsumer : IEventConsumer
     #endregion
 
     #region Construction
+    /// <summary>
+    /// Initializes a new instance of the rabbit mqconsumer class.
+    /// </summary>
     public RabbitMQConsumer(
         RabbitMQConnectionManager connectionManager,
         IOptions<RabbitMqOptions> options,
@@ -46,6 +49,9 @@ public sealed class RabbitMQConsumer : IEventConsumer
     #endregion
 
     #region Public API
+    /// <summary>
+    /// Asynchronously handles the consume async process.
+    /// </summary>
     public async Task ConsumeAsync<T>(string queueName, Func<T, CancellationToken, Task> handler, CancellationToken cancellationToken = default) where T : class
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(queueName);
