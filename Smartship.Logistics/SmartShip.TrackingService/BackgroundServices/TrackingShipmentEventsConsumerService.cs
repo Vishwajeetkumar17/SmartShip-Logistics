@@ -1,7 +1,3 @@
-/// <summary>
-/// Provides backend implementation for TrackingShipmentEventsConsumerService.
-/// </summary>
-
 using Microsoft.Extensions.DependencyInjection;
 using SmartShip.EventBus.Abstractions;
 using SmartShip.EventBus.Constants;
@@ -13,7 +9,7 @@ using Serilog.Context;
 namespace SmartShip.TrackingService.BackgroundServices;
 
 /// <summary>
-/// Represents TrackingShipmentEventsConsumerService.
+/// Implements tracking shipment events consumer business workflows for SmartShip logistics operations.
 /// </summary>
 public sealed class TrackingShipmentEventsConsumerService : BackgroundService
 {
@@ -74,6 +70,9 @@ public sealed class TrackingShipmentEventsConsumerService : BackgroundService
             consumeDeliveredTask);
     }
 
+    /// <summary>
+    /// Processes shipment created asynchronously.
+    /// </summary>
     private async Task HandleShipmentCreatedAsync(ShipmentCreatedEvent @event, CancellationToken cancellationToken)
     {
         // ✓ Generate correlation ID for event processing
@@ -84,6 +83,9 @@ public sealed class TrackingShipmentEventsConsumerService : BackgroundService
         await AddTrackingEventAsync(@event, "Created", "Shipment created in system");
     }
 
+    /// <summary>
+    /// Processes shipment booked asynchronously.
+    /// </summary>
     private async Task HandleShipmentBookedAsync(ShipmentBookedEvent @event, CancellationToken cancellationToken)
     {
         // ✓ Generate correlation ID for event processing
@@ -94,6 +96,9 @@ public sealed class TrackingShipmentEventsConsumerService : BackgroundService
         await AddTrackingEventAsync(@event, "Booked", "Shipment booked by admin");
     }
 
+    /// <summary>
+    /// Processes shipment picked up asynchronously.
+    /// </summary>
     private async Task HandleShipmentPickedUpAsync(ShipmentPickedUpEvent @event, CancellationToken cancellationToken)
     {
         // ✓ Generate correlation ID for event processing
@@ -104,6 +109,9 @@ public sealed class TrackingShipmentEventsConsumerService : BackgroundService
         await AddTrackingEventAsync(@event, "PickedUp", "Shipment picked up from sender");
     }
 
+    /// <summary>
+    /// Processes shipment in transit asynchronously.
+    /// </summary>
     private async Task HandleShipmentInTransitAsync(ShipmentInTransitEvent @event, CancellationToken cancellationToken)
     {
         // ✓ Generate correlation ID for event processing
@@ -114,6 +122,9 @@ public sealed class TrackingShipmentEventsConsumerService : BackgroundService
         await AddTrackingEventAsync(@event, "InTransit", "Shipment moved through transit hub");
     }
 
+    /// <summary>
+    /// Processes shipment out for delivery asynchronously.
+    /// </summary>
     private async Task HandleShipmentOutForDeliveryAsync(ShipmentOutForDeliveryEvent @event, CancellationToken cancellationToken)
     {
         // ✓ Generate correlation ID for event processing
@@ -124,6 +135,9 @@ public sealed class TrackingShipmentEventsConsumerService : BackgroundService
         await AddTrackingEventAsync(@event, "OutForDelivery", "Shipment is out for delivery");
     }
 
+    /// <summary>
+    /// Processes shipment delivered asynchronously.
+    /// </summary>
     private async Task HandleShipmentDeliveredAsync(ShipmentDeliveredEvent @event, CancellationToken cancellationToken)
     {
         // ✓ Generate correlation ID for event processing
@@ -134,6 +148,9 @@ public sealed class TrackingShipmentEventsConsumerService : BackgroundService
         await AddTrackingEventAsync(@event, "Delivered", "Shipment delivered to receiver");
     }
 
+    /// <summary>
+    /// Adds tracking event async.
+    /// </summary>
     private async Task AddTrackingEventAsync(ShipmentEventBase @event, string status, string description)
     {
         using var scope = _scopeFactory.CreateScope();
@@ -150,6 +167,9 @@ public sealed class TrackingShipmentEventsConsumerService : BackgroundService
         });
     }
 
+    /// <summary>
+    /// Resolves location async.
+    /// </summary>
     private static async Task<string> ResolveLocationAsync(ShipmentEventBase @event, ITrackingService trackingService)
     {
         if (!string.IsNullOrWhiteSpace(@event.HubLocation))
@@ -173,9 +193,6 @@ public sealed class TrackingShipmentEventsConsumerService : BackgroundService
 
         return "SmartShip Hub";
     }
-}
-
-
 }
 
 

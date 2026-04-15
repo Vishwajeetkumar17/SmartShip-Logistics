@@ -1,30 +1,19 @@
-/// <summary>
-/// Provides backend implementation for PickupScheduleDTO.
-/// </summary>
-
 using System.ComponentModel.DataAnnotations;
 using SmartShip.Shared.Common.Helpers;
 
 namespace SmartShip.ShipmentService.DTOs;
 
 /// <summary>
-/// Represents PickupScheduleDTO.
+/// Data transfer model for pickup schedule payloads.
 /// </summary>
 public class PickupScheduleDTO : IValidatableObject
 {
-    /// <summary>
-    /// Gets or sets the pickup date.
-    /// </summary>
     public DateTime PickupDate { get; set; }
-
-    /// <summary>
-    /// Gets or sets the notes.
-    /// </summary>
     [MaxLength(1000)]
     public string Notes { get; set; } = string.Empty;
 
     /// <summary>
-    /// Executes the Validate operation.
+    /// Validates request data against business rules.
     /// </summary>
     public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
     {

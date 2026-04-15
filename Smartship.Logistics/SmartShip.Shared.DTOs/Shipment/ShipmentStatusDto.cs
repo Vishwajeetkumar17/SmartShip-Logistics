@@ -1,36 +1,32 @@
-/// <summary>
-/// Provides backend implementation for ShipmentStatusDto.
-/// </summary>
-
 namespace SmartShip.Shared.DTOs.Shipment;
 
 /// <summary>
-    /// Defines the possible values for shipment status dto.
-    /// </summary>
+/// Domain model for shipment status dto.
+/// </summary>
     public enum ShipmentStatusDto
 {
     /// <summary>
-    /// Specifies the draft enumeration value.
+    /// Code summary.
     /// </summary>
     Draft = 0,
     /// <summary>
-    /// Specifies the booked enumeration value.
+    /// Code summary.
     /// </summary>
     Booked = 1,
     /// <summary>
-    /// Specifies the picked up enumeration value.
+    /// Code summary.
     /// </summary>
     PickedUp = 2,
     /// <summary>
-    /// Specifies the in transit enumeration value.
+    /// Code summary.
     /// </summary>
     InTransit = 3,
     /// <summary>
-    /// Specifies the out for delivery enumeration value.
+    /// Code summary.
     /// </summary>
     OutForDelivery = 4,
     /// <summary>
-    /// Specifies the delivered enumeration value.
+    /// Code summary.
     /// </summary>
     Delivered = 5
 }

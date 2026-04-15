@@ -1,7 +1,3 @@
-/// <summary>
-/// Provides backend implementation for ShipmentsControllerTests.
-/// </summary>
-
 using System.Security.Claims;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -16,11 +12,11 @@ using SmartShip.Shared.DTOs;
 namespace SmartShip.ShipmentService.UnitTests;
 
 /// <summary>
-    /// Represents the shipments controller tests entity or configuration model.
-    /// </summary>
+/// Domain model for shipments controller tests.
+/// </summary>
     [TestFixture]
 /// <summary>
-/// Represents ShipmentsControllerTests.
+/// Domain model for shipments controller tests.
 /// </summary>
 public class ShipmentsControllerTests
 {
@@ -28,11 +24,11 @@ public class ShipmentsControllerTests
     private ShipmentsController _controller = null!;
 
     /// <summary>
-    /// Asynchronously handles the set up process.
+    /// Sets up.
     /// </summary>
     [SetUp]
     /// <summary>
-    /// Executes the SetUp operation.
+    /// Sets up.
     /// </summary>
     public void SetUp()
     {
@@ -41,11 +37,11 @@ public class ShipmentsControllerTests
     }
 
     /// <summary>
-    /// Asynchronously handles the create_when customer claim missing_returns unauthorized process.
+    /// Creates when customer claim missing returns unauthorized.
     /// </summary>
     [Test]
     /// <summary>
-    /// Executes the Create_WhenCustomerClaimMissing_ReturnsUnauthorized operation.
+    /// Creates when customer claim missing returns unauthorized.
     /// </summary>
     public async Task Create_WhenCustomerClaimMissing_ReturnsUnauthorized()
     {
@@ -60,11 +56,11 @@ public class ShipmentsControllerTests
     }
 
     /// <summary>
-    /// Asynchronously handles the create_when non admin_assigns customer id and returns ok process.
+    /// Creates when non admin assigns customer id and returns ok.
     /// </summary>
     [Test]
     /// <summary>
-    /// Executes the Create_WhenNonAdmin_AssignsCustomerIdAndReturnsOk operation.
+    /// Creates when non admin assigns customer id and returns ok.
     /// </summary>
     public async Task Create_WhenNonAdmin_AssignsCustomerIdAndReturnsOk()
     {
@@ -83,11 +79,11 @@ public class ShipmentsControllerTests
     }
 
     /// <summary>
-    /// Asynchronously handles the get_when shipment not found_returns not found process.
+    /// Returns when shipment not found returns not found.
     /// </summary>
     [Test]
     /// <summary>
-    /// Executes the Get_WhenShipmentNotFound_ReturnsNotFound operation.
+    /// Returns when shipment not found returns not found.
     /// </summary>
     public async Task Get_WhenShipmentNotFound_ReturnsNotFound()
     {
@@ -101,11 +97,11 @@ public class ShipmentsControllerTests
     }
 
     /// <summary>
-    /// Asynchronously handles the get_when non admin accesses another customer_returns forbid process.
+    /// Returns when non admin accesses another customer returns forbid.
     /// </summary>
     [Test]
     /// <summary>
-    /// Executes the Get_WhenNonAdminAccessesAnotherCustomer_ReturnsForbid operation.
+    /// Returns when non admin accesses another customer returns forbid.
     /// </summary>
     public async Task Get_WhenNonAdminAccessesAnotherCustomer_ReturnsForbid()
     {
@@ -118,11 +114,11 @@ public class ShipmentsControllerTests
     }
 
     /// <summary>
-    /// Asynchronously handles the get_when non admin accesses own shipment_returns ok process.
+    /// Returns when non admin accesses own shipment returns ok.
     /// </summary>
     [Test]
     /// <summary>
-    /// Executes the Get_WhenNonAdminAccessesOwnShipment_ReturnsOk operation.
+    /// Returns when non admin accesses own shipment returns ok.
     /// </summary>
     public async Task Get_WhenNonAdminAccessesOwnShipment_ReturnsOk()
     {
@@ -135,11 +131,11 @@ public class ShipmentsControllerTests
     }
 
     /// <summary>
-    /// Asynchronously handles the schedule pickup_when shipment missing_returns not found process.
+    /// Schedules pickup when shipment missing returns not found.
     /// </summary>
     [Test]
     /// <summary>
-    /// Executes the SchedulePickup_WhenShipmentMissing_ReturnsNotFound operation.
+    /// Schedules pickup when shipment missing returns not found.
     /// </summary>
     public async Task SchedulePickup_WhenShipmentMissing_ReturnsNotFound()
     {
@@ -152,11 +148,11 @@ public class ShipmentsControllerTests
     }
 
     /// <summary>
-    /// Asynchronously handles the schedule pickup_when non owner_returns forbid process.
+    /// Schedules pickup when non owner returns forbid.
     /// </summary>
     [Test]
     /// <summary>
-    /// Executes the SchedulePickup_WhenNonOwner_ReturnsForbid operation.
+    /// Schedules pickup when non owner returns forbid.
     /// </summary>
     public async Task SchedulePickup_WhenNonOwner_ReturnsForbid()
     {
@@ -169,11 +165,11 @@ public class ShipmentsControllerTests
     }
 
     /// <summary>
-    /// Asynchronously handles the schedule pickup_when admin_calls service and returns ok process.
+    /// Schedules pickup when admin calls service and returns ok.
     /// </summary>
     [Test]
     /// <summary>
-    /// Executes the SchedulePickup_WhenAdmin_CallsServiceAndReturnsOk operation.
+    /// Schedules pickup when admin calls service and returns ok.
     /// </summary>
     public async Task SchedulePickup_WhenAdmin_CallsServiceAndReturnsOk()
     {
@@ -188,11 +184,11 @@ public class ShipmentsControllerTests
     }
 
     /// <summary>
-    /// Asynchronously handles the raise issue_when unauthenticated_returns unauthorized process.
+    /// Submits issue when unauthenticated returns unauthorized.
     /// </summary>
     [Test]
     /// <summary>
-    /// Executes the RaiseIssue_WhenUnauthenticated_ReturnsUnauthorized operation.
+    /// Submits issue when unauthenticated returns unauthorized.
     /// </summary>
     public async Task RaiseIssue_WhenUnauthenticated_ReturnsUnauthorized()
     {
@@ -204,11 +200,11 @@ public class ShipmentsControllerTests
     }
 
     /// <summary>
-    /// Asynchronously handles the raise issue_when owner_calls service and returns ok process.
+    /// Submits issue when owner calls service and returns ok.
     /// </summary>
     [Test]
     /// <summary>
-    /// Executes the RaiseIssue_WhenOwner_CallsServiceAndReturnsOk operation.
+    /// Submits issue when owner calls service and returns ok.
     /// </summary>
     public async Task RaiseIssue_WhenOwner_CallsServiceAndReturnsOk()
     {
@@ -225,11 +221,11 @@ public class ShipmentsControllerTests
     }
 
     /// <summary>
-    /// Asynchronously handles the pickup_when called_uses picked up status process.
+    /// Processes pickup for when called uses picked up status.
     /// </summary>
     [Test]
     /// <summary>
-    /// Executes the Pickup_WhenCalled_UsesPickedUpStatus operation.
+    /// Processes pickup for when called uses picked up status.
     /// </summary>
     public async Task Pickup_WhenCalled_UsesPickedUpStatus()
     {
@@ -243,11 +239,11 @@ public class ShipmentsControllerTests
     }
 
     /// <summary>
-    /// Asynchronously handles the get all_when called_returns paginated response process.
+    /// Returns all when called returns paginated response.
     /// </summary>
     [Test]
     /// <summary>
-    /// Executes the GetAll_WhenCalled_ReturnsPaginatedResponse operation.
+    /// Returns all when called returns paginated response.
     /// </summary>
     public async Task GetAll_WhenCalled_ReturnsPaginatedResponse()
     {
@@ -287,11 +283,11 @@ public class ShipmentsControllerTests
     }
 
     /// <summary>
-    /// Asynchronously handles the get all_when page number2_returns second page process.
+    /// Returns all when page number2 returns second page.
     /// </summary>
     [Test]
     /// <summary>
-    /// Executes the GetAll_WhenPageNumber2_ReturnsSecondPage operation.
+    /// Returns all when page number2 returns second page.
     /// </summary>
     public async Task GetAll_WhenPageNumber2_ReturnsSecondPage()
     {
@@ -330,11 +326,11 @@ public class ShipmentsControllerTests
     }
 
     /// <summary>
-    /// Asynchronously handles the get all_when last page_verifies pagination metadata process.
+    /// Returns all when last page verifies pagination metadata.
     /// </summary>
     [Test]
     /// <summary>
-    /// Executes the GetAll_WhenLastPage_VerifiesPaginationMetadata operation.
+    /// Returns all when last page verifies pagination metadata.
     /// </summary>
     public async Task GetAll_WhenLastPage_VerifiesPaginationMetadata()
     {
@@ -372,11 +368,11 @@ public class ShipmentsControllerTests
     }
 
     /// <summary>
-    /// Asynchronously handles the get all_when custom page size_returns smaller pages process.
+    /// Returns all when custom page size returns smaller pages.
     /// </summary>
     [Test]
     /// <summary>
-    /// Executes the GetAll_WhenCustomPageSize_ReturnsSmallerPages operation.
+    /// Returns all when custom page size returns smaller pages.
     /// </summary>
     public async Task GetAll_WhenCustomPageSize_ReturnsSmallerPages()
     {

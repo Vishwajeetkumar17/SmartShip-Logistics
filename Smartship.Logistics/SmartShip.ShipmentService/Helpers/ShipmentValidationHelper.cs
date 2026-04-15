@@ -1,7 +1,3 @@
-/// <summary>
-/// Provides backend implementation for ShipmentValidationHelper.
-/// </summary>
-
 using SmartShip.Shared.Common.Exceptions;
 using SmartShip.Shared.Common.Helpers;
 using SmartShip.ShipmentService.DTOs;
@@ -11,12 +7,12 @@ using SmartShip.ShipmentService.Models;
 namespace SmartShip.ShipmentService.Helpers;
 
 /// <summary>
-/// Represents ShipmentValidationHelper.
+/// Domain model for shipment validation helper.
 /// </summary>
 public static class ShipmentValidationHelper
 {
     /// <summary>
-    /// Executes the ValidateCreateRequest operation.
+    /// Validates create request.
     /// </summary>
     public static void ValidateCreateRequest(CreateShipmentDTO dto)
     {
@@ -42,7 +38,7 @@ public static class ShipmentValidationHelper
     }
 
     /// <summary>
-    /// Executes the ValidatePickupSchedule operation.
+    /// Validates pickup schedule.
     /// </summary>
     public static void ValidatePickupSchedule(PickupScheduleDTO dto)
     {
@@ -55,7 +51,7 @@ public static class ShipmentValidationHelper
     }
 
     /// <summary>
-    /// Executes the EnsureShipmentCanBeModified operation.
+    /// Ensures shipment can be modified.
     /// </summary>
     public static void EnsureShipmentCanBeModified(Shipment shipment)
     {
@@ -66,7 +62,7 @@ public static class ShipmentValidationHelper
     }
 
     /// <summary>
-    /// Executes the CalculateTotalWeight operation.
+    /// Calculates total weight.
     /// </summary>
     public static decimal CalculateTotalWeight(IEnumerable<PackageDTO> packages)
     {

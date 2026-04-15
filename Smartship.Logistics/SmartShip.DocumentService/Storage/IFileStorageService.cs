@@ -1,13 +1,9 @@
-/// <summary>
-/// Provides backend implementation for IFileStorageService.
-/// </summary>
-
 using Microsoft.AspNetCore.Http;
 
 namespace SmartShip.DocumentService.Storage;
 
 /// <summary>
-/// Represents IFileStorageService.
+/// Defines file storage business operations used by the service layer.
 /// </summary>
 public interface IFileStorageService
 {

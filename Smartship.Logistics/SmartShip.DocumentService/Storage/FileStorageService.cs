@@ -1,7 +1,3 @@
-/// <summary>
-/// Provides backend implementation for FileStorageService.
-/// </summary>
-
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using SmartShip.Shared.Common.Exceptions;
@@ -9,14 +5,14 @@ using SmartShip.Shared.Common.Exceptions;
 namespace SmartShip.DocumentService.Storage;
 
 /// <summary>
-/// Represents FileStorageService.
+/// Local web-root file storage for uploaded shipment documents and proof images.
 /// </summary>
 public class FileStorageService : IFileStorageService
 {
     private readonly IWebHostEnvironment _env;
 
     /// <summary>
-    /// Initializes a new instance of the file storage service class.
+    /// Initializes paths from the host environment web root for uploads.
     /// </summary>
     public FileStorageService(IWebHostEnvironment env)
     {
@@ -24,7 +20,7 @@ public class FileStorageService : IFileStorageService
     }
 
     /// <summary>
-    /// Executes the SaveFileAsync operation.
+    /// Persists the upload under wwwroot/uploads/{subFolder} and returns a web-relative URL path.
     /// </summary>
     public async Task<string> SaveFileAsync(IFormFile file, string subFolder)
     {
@@ -49,7 +45,7 @@ public class FileStorageService : IFileStorageService
     }
 
     /// <summary>
-    /// Executes the DeleteFileAsync operation.
+    /// Deletes a previously stored file when the relative path resolves under web root.
     /// </summary>
     public Task DeleteFileAsync(string filePath)
     {
@@ -68,7 +64,7 @@ public class FileStorageService : IFileStorageService
     }
 
     /// <summary>
-    /// Executes the FileExists operation.
+    /// Returns whether a file still exists on disk for the given web-relative path.
     /// </summary>
     public bool FileExists(string filePath)
     {

@@ -1,7 +1,3 @@
-/// <summary>
-/// Provides backend implementation for IShipmentService.
-/// </summary>
-
 using SmartShip.ShipmentService.DTOs;
 using SmartShip.ShipmentService.Enums;
 using SmartShip.Shared.DTOs;
@@ -9,7 +5,7 @@ using SmartShip.Shared.DTOs;
 namespace SmartShip.ShipmentService.Services;
 
 /// <summary>
-/// Represents IShipmentService.
+/// Defines shipment business operations used by the service layer.
 /// </summary>
 public interface IShipmentService
 {

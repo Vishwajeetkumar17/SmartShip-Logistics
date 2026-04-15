@@ -1,13 +1,9 @@
-/// <summary>
-/// Provides backend implementation for IDocumentRepository.
-/// </summary>
-
 using SmartShip.DocumentService.Models;
 
 namespace SmartShip.DocumentService.Repositories;
 
 /// <summary>
-/// Represents IDocumentRepository.
+/// Contract for idocument persistence operations.
 /// </summary>
 public interface IDocumentRepository
 {

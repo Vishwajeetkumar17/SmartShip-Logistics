@@ -1,26 +1,15 @@
-/// <summary>
-/// Provides backend implementation for ExceptionDTOs.
-/// </summary>
-
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
 
 namespace SmartShip.AdminService.DTOs;
 
 /// <summary>
-/// Represents ResolveExceptionDTO.
+/// Data transfer model for resolve exception payloads.
 /// </summary>
 public class ResolveExceptionDTO
 {
-    /// <summary>
-    /// Gets or sets the shipment id.
-    /// </summary>
     [JsonIgnore]
     public int ShipmentId { get; set; }
-
-    /// <summary>
-    /// Gets or sets the resolution notes.
-    /// </summary>
     [Required]
     [MaxLength(1000)]
     [RegularExpression(@"^(?!\s*$).+", ErrorMessage = "ResolutionNotes is required")]
@@ -28,13 +17,10 @@ public class ResolveExceptionDTO
 }
 
 /// <summary>
-/// Represents ShipmentActionReasonDTO.
+/// Data transfer model for shipment action reason payloads.
 /// </summary>
 public class ShipmentActionReasonDTO
 {
-    /// <summary>
-    /// Gets or sets the reason.
-    /// </summary>
     [Required]
     [MaxLength(1000)]
     [RegularExpression(@"^(?!\s*$).+", ErrorMessage = "Reason is required")]
@@ -42,37 +28,16 @@ public class ShipmentActionReasonDTO
 }
 
 /// <summary>
-/// Represents ExceptionRecordResponseDTO.
+/// Data transfer model for exception record response payloads.
 /// </summary>
 public class ExceptionRecordResponseDTO
 {
-    /// <summary>
-    /// Gets or sets the exception id.
-    /// </summary>
     public int ExceptionId { get; set; }
-    /// <summary>
-    /// Gets or sets the shipment id.
-    /// </summary>
     public int ShipmentId { get; set; }
-    /// <summary>
-    /// Gets or sets the exception type.
-    /// </summary>
     public string ExceptionType { get; set; } = string.Empty;
-    /// <summary>
-    /// Gets or sets the description.
-    /// </summary>
     public string Description { get; set; } = string.Empty;
-    /// <summary>
-    /// Gets or sets the status.
-    /// </summary>
     public string Status { get; set; } = string.Empty;
-    /// <summary>
-    /// Gets or sets the created at.
-    /// </summary>
     public DateTime CreatedAt { get; set; }
-    /// <summary>
-    /// Gets or sets the resolved at.
-    /// </summary>
     public DateTime? ResolvedAt { get; set; }
 }
 

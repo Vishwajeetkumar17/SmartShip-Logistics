@@ -1,8 +1,3 @@
-/// <summary>
-/// Global exception handling middleware for the IdentityService.
-/// Catches unhandled exceptions and returns consistent RFC 7807 ProblemDetails responses.
-/// </summary>
-
 using Microsoft.AspNetCore.Mvc;
 using SmartShip.Shared.Common.Exceptions;
 using SmartShip.Shared.Common.Services;
@@ -10,8 +5,7 @@ using SmartShip.Shared.Common.Services;
 namespace SmartShip.IdentityService.Middleware
 {
     /// <summary>
-    /// Intercepts unhandled exceptions and maps them to appropriate HTTP status codes
-    /// using the shared custom exception hierarchy.
+    /// Catches unhandled exceptions and returns consistent problem-details style JSON responses.
     /// </summary>
     public class GlobalExceptionMiddleware
     {
@@ -19,7 +13,7 @@ namespace SmartShip.IdentityService.Middleware
         private readonly ILogger<GlobalExceptionMiddleware> _logger;
 
         /// <summary>
-        /// Initializes a new instance of the global exception middleware class.
+        /// Creates middleware that logs and translates exceptions for the identity API.
         /// </summary>
         public GlobalExceptionMiddleware(RequestDelegate next, ILogger<GlobalExceptionMiddleware> logger)
         {
@@ -28,7 +22,7 @@ namespace SmartShip.IdentityService.Middleware
         }
 
         /// <summary>
-        /// Invokes the middleware pipeline and catches any unhandled exceptions.
+        /// Invokes the next delegate; on failure writes a JSON error body with appropriate status.
         /// </summary>
         public async Task InvokeAsync(HttpContext context)
         {

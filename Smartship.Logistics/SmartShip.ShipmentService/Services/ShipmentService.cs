@@ -1,7 +1,3 @@
-/// <summary>
-/// Provides shipment lifecycle operations including creation, status transitions, and customer shipment management.
-/// </summary>
-
 using SmartShip.EventBus.Abstractions;
 using SmartShip.EventBus.Constants;
 using SmartShip.EventBus.Contracts;
@@ -18,7 +14,7 @@ using SmartShip.ShipmentService.Repositories;
 namespace SmartShip.ShipmentService.Services;
 
 /// <summary>
-/// Coordinates shipment business rules, persistence, and event publication.
+/// Implements shipment business workflows for SmartShip logistics operations.
 /// </summary>
 public class ShipmentService : IShipmentService
 {
@@ -27,9 +23,9 @@ public class ShipmentService : IShipmentService
 
 
 
-    #region ShipmentService
+    #region Constructor
     /// <summary>
-    /// Initializes a new instance of the ShipmentService service.
+    /// Implements shipment service workflows.
     /// </summary>
     public ShipmentService(IShipmentRepository repository, IEventPublisher eventPublisher)
     {
@@ -40,9 +36,9 @@ public class ShipmentService : IShipmentService
 
 
 
-    #region CreateShipment
+    #region Public API
     /// <summary>
-    /// Creates shipment using service business rules.
+    /// Creates shipment.
     /// </summary>
     public async Task<ShipmentResponseDTO> CreateShipment(CreateShipmentDTO dto)
     {
@@ -98,9 +94,9 @@ public class ShipmentService : IShipmentService
 
 
 
-    #region GetShipments
+    #region Public API
     /// <summary>
-    /// Retrieves shipments for the current request.
+    /// Returns shipments.
     /// </summary>
     public async Task<PaginatedResponse<ShipmentResponseDTO>> GetShipments(int pageNumber = 1, int pageSize = 5)
     {
@@ -123,9 +119,9 @@ public class ShipmentService : IShipmentService
 
 
 
-    #region GetShipment
+    #region Public API
     /// <summary>
-    /// Retrieves shipment for the current request.
+    /// Returns shipment.
     /// </summary>
     public async Task<ShipmentResponseDTO?> GetShipment(int id)
     {
@@ -136,9 +132,9 @@ public class ShipmentService : IShipmentService
 
 
 
-    #region GetShipmentByTrackingNumber
+    #region Public API
     /// <summary>
-    /// Retrieves shipment by tracking number for the current request.
+    /// Returns shipment by tracking number.
     /// </summary>
     public async Task<ShipmentResponseDTO?> GetShipmentByTrackingNumber(string trackingNumber)
     {
@@ -149,9 +145,9 @@ public class ShipmentService : IShipmentService
 
 
 
-    #region GetCustomerShipments
+    #region Public API
     /// <summary>
-    /// Retrieves customer shipments for the current request.
+    /// Returns customer shipments.
     /// </summary>
     public async Task<List<ShipmentResponseDTO>> GetCustomerShipments(int customerId)
     {
@@ -167,9 +163,9 @@ public class ShipmentService : IShipmentService
 
 
 
-    #region GetCustomerShipments
+    #region Public API
     /// <summary>
-    /// Retrieves customer shipments for the current request.
+    /// Returns customer shipments.
     /// </summary>
     public async Task<PaginatedResponse<ShipmentResponseDTO>> GetCustomerShipments(int customerId, int pageNumber = 1, int pageSize = 5)
     {
@@ -196,9 +192,9 @@ public class ShipmentService : IShipmentService
 
 
 
-    #region UpdateShipment
+    #region Public API
     /// <summary>
-    /// Updates shipment using service business rules.
+    /// Updates shipment.
     /// </summary>
     public async Task UpdateShipment(int id, UpdateShipmentDTO dto)
     {
@@ -214,9 +210,9 @@ public class ShipmentService : IShipmentService
 
 
 
-    #region DeleteShipment
+    #region Public API
     /// <summary>
-    /// Deletes shipment using service business rules.
+    /// Deletes shipment.
     /// </summary>
     public async Task DeleteShipment(int id)
     {
@@ -229,9 +225,9 @@ public class ShipmentService : IShipmentService
 
 
 
-    #region DeleteCustomerShipment
+    #region Public API
     /// <summary>
-    /// Deletes customer shipment using service business rules.
+    /// Deletes customer shipment.
     /// </summary>
     public async Task DeleteCustomerShipment(int shipmentId, int customerId)
     {
@@ -264,9 +260,9 @@ public class ShipmentService : IShipmentService
 
 
 
-    #region BookShipment
+    #region Public API
     /// <summary>
-    /// Performs book shipment as part of the ShipmentService workflow.
+    /// Books shipment.
     /// </summary>
     public async Task BookShipment(int shipmentId, BookShipmentDTO dto)
     {
@@ -289,9 +285,9 @@ public class ShipmentService : IShipmentService
 
 
 
-    #region UpdateStatus
+    #region Public API
     /// <summary>
-    /// Updates status using service business rules.
+    /// Updates status.
     /// </summary>
     public async Task UpdateStatus(int shipmentId, ShipmentStatus nextStatus, string? hubLocation = null)
     {
@@ -334,9 +330,9 @@ public class ShipmentService : IShipmentService
 
 
 
-    #region SchedulePickup
+    #region Public API
     /// <summary>
-    /// Schedules pickup using service business rules.
+    /// Schedules pickup.
     /// </summary>
     public async Task SchedulePickup(int shipmentId, PickupScheduleDTO dto)
     {
@@ -360,9 +356,9 @@ public class ShipmentService : IShipmentService
 
 
 
-    #region RaiseIssueAsync
+    #region Public API
     /// <summary>
-    /// Performs raise issue as part of the ShipmentService workflow.
+    /// Submits issue async.
     /// </summary>
     public async Task RaiseIssueAsync(int shipmentId, int customerId, ShipmentIssueDTO dto)
     {
@@ -417,9 +413,9 @@ public class ShipmentService : IShipmentService
 
 
 
-    #region PublishStatusEventAsync
+    #region Private Helpers
     /// <summary>
-    /// Publishes status event using service business rules.
+    /// Publishes status event async.
     /// </summary>
     private async Task PublishStatusEventAsync(Shipment shipment, ShipmentStatus status, string? hubLocation)
     {
@@ -497,9 +493,9 @@ public class ShipmentService : IShipmentService
 
 
 
-    #region CloneAddress
+    #region Private Helpers
     /// <summary>
-    /// Performs clone address as part of the ShipmentService workflow.
+    /// Processes clone address.
     /// </summary>
     private static Address CloneAddress(Address address)
     {
@@ -516,9 +512,9 @@ public class ShipmentService : IShipmentService
 
 
 
-    #region ResolveEstimatedCost
+    #region Private Helpers
     /// <summary>
-    /// Resolves estimated cost using service business rules.
+    /// Resolves estimated cost.
     /// </summary>
     private static decimal ResolveEstimatedCost(CreateShipmentDTO dto)
     {
@@ -538,9 +534,9 @@ public class ShipmentService : IShipmentService
 
 
 
-    #region ResolveIssueExceptionType
+    #region Private Helpers
     /// <summary>
-    /// Resolves issue exception type using service business rules.
+    /// Resolves issue exception type.
     /// </summary>
     private static string ResolveIssueExceptionType(string issueType)
     {
@@ -561,9 +557,9 @@ public class ShipmentService : IShipmentService
 
 
 
-    #region MapToDto
+    #region Private Helpers
     /// <summary>
-    /// Maps to dto to the corresponding DTO or response model.
+    /// Maps to dto.
     /// </summary>
     private static ShipmentResponseDTO MapToDto(Shipment shipment)
     {

@@ -1,14 +1,10 @@
-/// <summary>
-/// Provides backend implementation for IAuthService.
-/// </summary>
-
 using SmartShip.IdentityService.DTOs;
 using SmartShip.Shared.DTOs;
 
 namespace SmartShip.IdentityService.Services
 {
     /// <summary>
-    /// Represents IAuthService.
+    /// Defines auth business operations used by the service layer.
     /// </summary>
     public interface IAuthService
     {

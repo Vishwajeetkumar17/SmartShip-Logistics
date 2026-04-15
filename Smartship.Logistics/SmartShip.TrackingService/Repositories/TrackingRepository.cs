@@ -1,7 +1,3 @@
-/// <summary>
-/// Provides backend implementation for TrackingRepository.
-/// </summary>
-
 using Microsoft.EntityFrameworkCore;
 using SmartShip.TrackingService.Data;
 using SmartShip.TrackingService.Models;
@@ -9,22 +5,27 @@ using SmartShip.TrackingService.Models;
 namespace SmartShip.TrackingService.Repositories;
 
 /// <summary>
-/// Represents TrackingRepository.
+/// Repository for tracking data access operations.
 /// </summary>
 public class TrackingRepository : ITrackingRepository
 {
+    #region Fields
     private readonly TrackingDbContext _context;
+    #endregion
 
+    #region Constructor
     /// <summary>
-    /// Initializes a new instance of the tracking repository class.
+    /// Provides persistence operations for tracking data.
     /// </summary>
     public TrackingRepository(TrackingDbContext context)
     {
         _context = context;
     }
+    #endregion
 
+    #region Public API
     /// <summary>
-    /// Executes the GetEventsAsync operation.
+    /// Returns events async.
     /// </summary>
     public async Task<List<TrackingEvent>> GetEventsAsync(string trackingNumber)
     {
@@ -37,21 +38,24 @@ public class TrackingRepository : ITrackingRepository
     }
 
     /// <summary>
-    /// Executes the GetEventByIdAsync operation.
+    /// Returns event by id async.
     /// </summary>
     public async Task<TrackingEvent?> GetEventByIdAsync(int id)
     {
         return await _context.TrackingEvents.FindAsync(id);
     }
+    #endregion
 
+    #region Public API
     /// <summary>
-    /// Executes the AddEventAsync operation.
+    /// Adds event async.
     /// </summary>
     public async Task AddEventAsync(TrackingEvent trackingEvent)
     {
         var duplicateWindowStart = trackingEvent.Timestamp.AddSeconds(-1);
         var duplicateWindowEnd = trackingEvent.Timestamp.AddSeconds(1);
 
+        // Protects against duplicate broker deliveries that differ only by milliseconds.
         var hasNearDuplicate = await _context.TrackingEvents
             .AsNoTracking()
             .AnyAsync(e =>
@@ -72,7 +76,7 @@ public class TrackingRepository : ITrackingRepository
     }
 
     /// <summary>
-    /// Executes the UpdateEventAsync operation.
+    /// Updates event async.
     /// </summary>
     public async Task UpdateEventAsync(TrackingEvent trackingEvent)
     {
@@ -81,16 +85,18 @@ public class TrackingRepository : ITrackingRepository
     }
 
     /// <summary>
-    /// Executes the DeleteEventAsync operation.
+    /// Deletes event async.
     /// </summary>
     public async Task DeleteEventAsync(TrackingEvent trackingEvent)
     {
         _context.TrackingEvents.Remove(trackingEvent);
         await _context.SaveChangesAsync();
     }
+    #endregion
 
+    #region Public API
     /// <summary>
-    /// Executes the GetLocationsAsync operation.
+    /// Returns locations async.
     /// </summary>
     public async Task<List<ShipmentLocation>> GetLocationsAsync(string trackingNumber)
     {
@@ -103,7 +109,7 @@ public class TrackingRepository : ITrackingRepository
     }
 
     /// <summary>
-    /// Executes the GetLatestLocationAsync operation.
+    /// Returns latest location async.
     /// </summary>
     public async Task<ShipmentLocation?> GetLatestLocationAsync(string trackingNumber)
     {
@@ -116,13 +122,14 @@ public class TrackingRepository : ITrackingRepository
     }
 
     /// <summary>
-    /// Executes the AddLocationAsync operation.
+    /// Adds location async.
     /// </summary>
     public async Task AddLocationAsync(ShipmentLocation location)
     {
         await _context.ShipmentLocations.AddAsync(location);
         await _context.SaveChangesAsync();
     }
+    #endregion
 }
 
 

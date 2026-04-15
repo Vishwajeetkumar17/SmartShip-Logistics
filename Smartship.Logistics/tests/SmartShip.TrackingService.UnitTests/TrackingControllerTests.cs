@@ -1,7 +1,3 @@
-/// <summary>
-/// Provides backend implementation for TrackingControllerTests.
-/// </summary>
-
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using SmartShip.Shared.Common.Exceptions;
@@ -12,11 +8,11 @@ using SmartShip.TrackingService.Services;
 namespace SmartShip.TrackingService.UnitTests;
 
 /// <summary>
-    /// Represents the tracking controller tests entity or configuration model.
-    /// </summary>
+/// Domain model for tracking controller tests.
+/// </summary>
     [TestFixture]
 /// <summary>
-/// Represents TrackingControllerTests.
+/// Domain model for tracking controller tests.
 /// </summary>
 public class TrackingControllerTests
 {
@@ -24,11 +20,11 @@ public class TrackingControllerTests
     private TrackingController _controller = null!;
 
     /// <summary>
-    /// Asynchronously handles the set up process.
+    /// Sets up.
     /// </summary>
     [SetUp]
     /// <summary>
-    /// Executes the SetUp operation.
+    /// Sets up.
     /// </summary>
     public void SetUp()
     {
@@ -37,11 +33,11 @@ public class TrackingControllerTests
     }
 
     /// <summary>
-    /// Asynchronously handles the get tracking info_returns ok with payload process.
+    /// Returns tracking info returns ok with payload.
     /// </summary>
     [Test]
     /// <summary>
-    /// Executes the GetTrackingInfo_ReturnsOkWithPayload operation.
+    /// Returns tracking info returns ok with payload.
     /// </summary>
     public async Task GetTrackingInfo_ReturnsOkWithPayload()
     {
@@ -56,11 +52,11 @@ public class TrackingControllerTests
     }
 
     /// <summary>
-    /// Asynchronously handles the add event_calls service and returns ok process.
+    /// Adds event calls service and returns ok.
     /// </summary>
     [Test]
     /// <summary>
-    /// Executes the AddEvent_CallsServiceAndReturnsOk operation.
+    /// Adds event calls service and returns ok.
     /// </summary>
     public async Task AddEvent_CallsServiceAndReturnsOk()
     {
@@ -82,11 +78,11 @@ public class TrackingControllerTests
     }
 
     /// <summary>
-    /// Asynchronously handles the update status_normalizes tracking number in dto process.
+    /// Updates status normalizes tracking number in dto.
     /// </summary>
     [Test]
     /// <summary>
-    /// Executes the UpdateStatus_NormalizesTrackingNumberInDto operation.
+    /// Updates status normalizes tracking number in dto.
     /// </summary>
     public async Task UpdateStatus_NormalizesTrackingNumberInDto()
     {
@@ -103,11 +99,11 @@ public class TrackingControllerTests
     }
 
     /// <summary>
-    /// Asynchronously handles the update status_when tracking number blank_throws validation exception process.
+    /// Updates status when tracking number blank throws validation exception.
     /// </summary>
     [Test]
     /// <summary>
-    /// Executes the UpdateStatus_WhenTrackingNumberBlank_ThrowsValidationException operation.
+    /// Updates status when tracking number blank throws validation exception.
     /// </summary>
     public void UpdateStatus_WhenTrackingNumberBlank_ThrowsValidationException()
     {

@@ -1,16 +1,12 @@
-/// <summary>
-/// Provides backend implementation for IIdentityContactClient.
-/// </summary>
-
 namespace SmartShip.NotificationService.Integration;
 
 /// <summary>
-/// Represents IIdentityContactClient.
+/// Contract for identity contact client behavior.
 /// </summary>
 public interface IIdentityContactClient
 {
     /// <summary>
-    /// Gets user contact information with optional correlation ID propagation.
+    /// Returns user contact async.
     /// </summary>
     /// <param name="userId">The user ID to lookup</param>
     /// <param name="cancellationToken">Cancellation token</param>

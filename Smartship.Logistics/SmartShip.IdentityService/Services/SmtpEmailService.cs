@@ -1,7 +1,3 @@
-/// <summary>
-/// Provides backend implementation for SmtpEmailService.
-/// </summary>
-
 using Microsoft.Extensions.Options;
 using SmartShip.IdentityService.Configurations;
 using System.Net;
@@ -10,7 +6,7 @@ using System.Net.Mail;
 namespace SmartShip.IdentityService.Services
 {
     /// <summary>
-    /// Represents SmtpEmailService.
+    /// Implements smtp email business workflows for SmartShip logistics operations.
     /// </summary>
     public class SmtpEmailService : IEmailService
     {
@@ -24,7 +20,7 @@ namespace SmartShip.IdentityService.Services
         }
 
         /// <summary>
-        /// Executes SendSignupOtpEmailAsync.
+        /// Sends signup otp email async.
         /// </summary>
         public async Task SendSignupOtpEmailAsync(string email, string otp)
         {
@@ -44,7 +40,7 @@ namespace SmartShip.IdentityService.Services
         }
 
         /// <summary>
-        /// Executes SendPasswordResetEmailAsync.
+        /// Sends password reset email async.
         /// </summary>
         public async Task SendPasswordResetEmailAsync(string email, string token)
         {
@@ -140,8 +136,4 @@ namespace SmartShip.IdentityService.Services
         }
     }
 }
-
-
-}
-
 

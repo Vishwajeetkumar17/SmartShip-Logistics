@@ -1,33 +1,21 @@
-/// <summary>
-/// Provides backend implementation for TrackingDbContext.
-/// </summary>
-
 using Microsoft.EntityFrameworkCore;
 using SmartShip.TrackingService.Models;
 
 namespace SmartShip.TrackingService.Data;
 
 /// <summary>
-/// Represents TrackingDbContext.
+/// Entity Framework database context for tracking.
 /// </summary>
 public class TrackingDbContext : DbContext
 {
     /// <summary>
-    /// Initializes a new instance of the tracking db context class.
+    /// Configures Entity Framework context for tracking data.
     /// </summary>
     public TrackingDbContext(DbContextOptions<TrackingDbContext> options)
         : base(options)
     {
     }
-
-    /// <summary>
-    /// Gets or sets the tracking events.
-    /// </summary>
     public DbSet<TrackingEvent> TrackingEvents { get; set; }
-    
-    /// <summary>
-    /// Gets or sets the shipment locations.
-    /// </summary>
     public DbSet<ShipmentLocation> ShipmentLocations { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)

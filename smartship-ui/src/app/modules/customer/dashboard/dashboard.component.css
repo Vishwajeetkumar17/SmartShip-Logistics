@@ -1,5 +1,140 @@
 :host { display: block; }
 
+/* KPI premium variant */
+.kpi-grid-premium {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--ss-space-5);
+  margin-bottom: var(--ss-space-6);
+}
+
+.kpi-card {
+  background: var(--ss-surface);
+  border: 1px solid var(--ss-border);
+  border-radius: var(--ss-radius-lg);
+  padding: var(--ss-space-5) var(--ss-space-6);
+  box-shadow: var(--ss-shadow-xs);
+  transition: all 0.2s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.kpi-card::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+}
+
+.kpi-card-indigo::after { background: #4F46E5; }
+.kpi-card-blue::after   { background: #3B82F6; }
+.kpi-card-green::after  { background: #10B981; }
+.kpi-card-red::after    { background: #EF4444; }
+
+.kpi-card:hover {
+  box-shadow: var(--ss-shadow-md);
+  transform: translateY(-2px);
+}
+
+.kpi-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--ss-space-3);
+}
+
+.kpi-icon {
+  width: 42px;
+  height: 42px;
+  border-radius: var(--ss-radius);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.kpi-icon .material-icons { font-size: 1.2rem; }
+.kpi-icon-indigo { background: #EEF2FF; color: #4F46E5; }
+.kpi-icon-blue   { background: #DBEAFE; color: #2563EB; }
+.kpi-icon-green  { background: #D1FAE5; color: #059669; }
+.kpi-icon-red    { background: #FEE2E2; color: #DC2626; }
+
+.kpi-value {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--ss-text);
+  line-height: 1.2;
+  margin-bottom: 4px;
+  letter-spacing: -0.02em;
+}
+
+.kpi-label {
+  font-size: 0.8rem;
+  color: var(--ss-text-muted);
+  font-weight: 500;
+}
+
+/* Skeleton cards for customer dashboard */
+.skeleton-card {
+  border: 1px solid var(--ss-border);
+  box-shadow: var(--ss-shadow-xs);
+  padding: var(--ss-space-5) var(--ss-space-6);
+}
+
+.skeleton-icon {
+  width: 42px;
+  height: 42px;
+  border-radius: var(--ss-radius);
+  background: linear-gradient(90deg, #F3F4F6 25%, #E5E7EB 50%, #F3F4F6 75%);
+  background-size: 800px 100%;
+  animation: shimmer 1.6s infinite linear;
+  margin-bottom: var(--ss-space-3);
+}
+
+.skeleton-value {
+  width: 60px;
+  height: 24px;
+  border-radius: 4px;
+  background: linear-gradient(90deg, #F3F4F6 25%, #E5E7EB 50%, #F3F4F6 75%);
+  background-size: 800px 100%;
+  animation: shimmer 1.6s infinite linear;
+  margin-bottom: var(--ss-space-2);
+}
+
+.skeleton-label {
+  width: 100px;
+  height: 14px;
+  border-radius: 4px;
+  background: linear-gradient(90deg, #F3F4F6 25%, #E5E7EB 50%, #F3F4F6 75%);
+  background-size: 800px 100%;
+  animation: shimmer 1.6s infinite linear;
+}
+
+.table-skeleton {
+  padding: var(--ss-space-6);
+}
+
+.skeleton-table-header {
+  width: 100%;
+  height: 40px;
+  border-radius: 4px;
+  background: linear-gradient(90deg, #F3F4F6 25%, #E5E7EB 50%, #F3F4F6 75%);
+  background-size: 800px 100%;
+  animation: shimmer 1.6s infinite linear;
+  margin-bottom: var(--ss-space-3);
+}
+
+.skeleton-table-row {
+  width: 100%;
+  height: 48px;
+  border-radius: 4px;
+  background: linear-gradient(90deg, #F3F4F6 25%, #E5E7EB 50%, #F3F4F6 75%);
+  background-size: 800px 100%;
+  animation: shimmer 1.6s infinite linear;
+  margin-bottom: var(--ss-space-2);
+}
+
 .dashboard-page {
   animation: fadeInUp 0.3s ease forwards;
 }

@@ -1,11 +1,7 @@
-/// <summary>
-/// Provides backend implementation for IEmailService.
-/// </summary>
-
 namespace SmartShip.IdentityService.Services
 {
     /// <summary>
-    /// Represents IEmailService.
+    /// Defines email business operations used by the service layer.
     /// </summary>
     public interface IEmailService
     {

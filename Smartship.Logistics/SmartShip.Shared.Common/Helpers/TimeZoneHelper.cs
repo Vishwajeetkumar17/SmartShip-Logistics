@@ -1,15 +1,14 @@
 namespace SmartShip.Shared.Common.Helpers;
 
 /// <summary>
-/// Helper class to handle Indian Standard Time (IST) conversions across the application.
-/// IST is UTC+5:30
+/// Domain model for time zone helper.
 /// </summary>
 public static class TimeZoneHelper
 {
     private static readonly TimeZoneInfo IstTimeZone = TimeZoneInfo.FindSystemTimeZoneById("India Standard Time");
 
     /// <summary>
-    /// Gets the current time in Indian Standard Time (IST)
+    /// Returns current ist time.
     /// </summary>
     public static DateTime GetCurrentIstTime()
     {
@@ -17,7 +16,7 @@ public static class TimeZoneHelper
     }
 
     /// <summary>
-    /// Gets the current UTC time (for database storage)
+    /// Returns current utc time.
     /// </summary>
     public static DateTime GetCurrentUtcTime()
     {
@@ -25,7 +24,7 @@ public static class TimeZoneHelper
     }
 
     /// <summary>
-    /// Converts a UTC DateTime to IST DateTime
+    /// Converts utc to ist.
     /// </summary>
     public static DateTime ConvertUtcToIst(DateTime utcDateTime)
     {
@@ -37,7 +36,7 @@ public static class TimeZoneHelper
     }
 
     /// <summary>
-    /// Converts an IST DateTime to UTC DateTime
+    /// Converts ist to utc.
     /// </summary>
     public static DateTime ConvertIstToUtc(DateTime istDateTime)
     {
@@ -45,7 +44,7 @@ public static class TimeZoneHelper
     }
 
     /// <summary>
-    /// Gets the IST offset from UTC (5:30)
+    /// Returns ist offset.
     /// </summary>
     public static TimeSpan GetIstOffset()
     {

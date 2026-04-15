@@ -1,7 +1,3 @@
-/// <summary>
-/// Provides backend implementation for RabbitMQConnectionManager.
-/// </summary>
-
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using RabbitMQ.Client;
@@ -10,7 +6,7 @@ using SmartShip.EventBus.Configuration;
 namespace SmartShip.EventBus.Infrastructure;
 
 /// <summary>
-/// Represents RabbitMQConnectionManager.
+/// Domain model for rabbit mqconnection manager.
 /// </summary>
 public sealed class RabbitMQConnectionManager : IDisposable
 {
@@ -20,7 +16,7 @@ public sealed class RabbitMQConnectionManager : IDisposable
     private IConnection? _connection;
 
     /// <summary>
-    /// Initializes a new instance of the rabbit mqconnection manager class.
+    /// Processes rabbit mqconnection manager.
     /// </summary>
     public RabbitMQConnectionManager(IOptions<RabbitMqOptions> options, ILogger<RabbitMQConnectionManager> logger)
     {
@@ -29,7 +25,7 @@ public sealed class RabbitMQConnectionManager : IDisposable
     }
 
     /// <summary>
-    /// Executes the GetConnectionAsync operation.
+    /// Returns connection async.
     /// </summary>
     public async Task<IConnection> GetConnectionAsync(CancellationToken cancellationToken = default)
     {
@@ -73,7 +69,7 @@ public sealed class RabbitMQConnectionManager : IDisposable
     }
 
     /// <summary>
-    /// Executes the Dispose operation.
+    /// Releases managed resources.
     /// </summary>
     public void Dispose()
     {

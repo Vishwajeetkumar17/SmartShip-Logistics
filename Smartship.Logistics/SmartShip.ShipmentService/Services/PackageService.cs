@@ -1,7 +1,3 @@
-/// <summary>
-/// Provides backend implementation for PackageService.
-/// </summary>
-
 using SmartShip.Shared.Common.Exceptions;
 using SmartShip.ShipmentService.DTOs;
 using SmartShip.ShipmentService.Helpers;
@@ -11,7 +7,7 @@ using SmartShip.ShipmentService.Repositories;
 namespace SmartShip.ShipmentService.Services;
 
 /// <summary>
-/// Represents PackageService.
+/// Implements package business workflows for SmartShip logistics operations.
 /// </summary>
 public class PackageService : IPackageService
 {
@@ -19,7 +15,7 @@ public class PackageService : IPackageService
     private readonly IShipmentRepository _shipmentRepository;
 
     /// <summary>
-    /// Initializes a new instance of the package service class.
+    /// Implements package service workflows.
     /// </summary>
     public PackageService(IPackageRepository repository, IShipmentRepository shipmentRepository)
     {
@@ -28,7 +24,7 @@ public class PackageService : IPackageService
     }
 
     /// <summary>
-    /// Executes the AddPackage operation.
+    /// Adds package.
     /// </summary>
     public async Task AddPackage(int shipmentId, PackageDTO dto)
     {
@@ -56,7 +52,7 @@ public class PackageService : IPackageService
     }
 
     /// <summary>
-    /// Executes the GetPackages operation.
+    /// Returns packages.
     /// </summary>
     public async Task<List<PackageDTO>> GetPackages(int shipmentId)
     {
@@ -67,7 +63,7 @@ public class PackageService : IPackageService
     }
 
     /// <summary>
-    /// Executes the UpdatePackage operation.
+    /// Updates package.
     /// </summary>
     public async Task UpdatePackage(int shipmentId, int packageId, PackageDTO dto)
     {
@@ -98,7 +94,7 @@ public class PackageService : IPackageService
     }
 
     /// <summary>
-    /// Executes the DeletePackage operation.
+    /// Deletes package.
     /// </summary>
     public async Task DeletePackage(int shipmentId, int packageId)
     {

@@ -1,22 +1,15 @@
-/// <summary>
-/// Entity Framework Core database context for the Admin microservice.
-/// Manages persistence for Hubs, Service Locations, and Exception Records.
-/// </summary>
-
 using Microsoft.EntityFrameworkCore;
 using SmartShip.AdminService.Models;
 
 namespace SmartShip.AdminService.Data;
 
 /// <summary>
-/// Database context for the Admin microservice, providing access to
-/// logistics hub management, service location mapping, and shipment exception tracking.
+/// Entity Framework database context for admin.
 /// </summary>
 public class AdminDbContext : DbContext
 {
     /// <summary>
-    /// Initializes a new instance of the <see cref="AdminDbContext"/> class
-    /// with the specified database context options.
+    /// Initializes admin database context options.
     /// </summary>
     /// <param name="options">The configuration options for this context.</param>
     public AdminDbContext(DbContextOptions<AdminDbContext> options)
@@ -25,20 +18,8 @@ public class AdminDbContext : DbContext
     }
 
     #region DbSet Properties
-
-    /// <summary>
-    /// Gets or sets the collection of logistics hubs (warehouses, sorting centres).
-    /// </summary>
     public DbSet<Hub> Hubs { get; set; }
-
-    /// <summary>
-    /// Gets or sets the collection of service delivery locations tied to hubs.
-    /// </summary>
     public DbSet<ServiceLocation> ServiceLocations { get; set; }
-
-    /// <summary>
-    /// Gets or sets the collection of shipment exception/anomaly records.
-    /// </summary>
     public DbSet<ExceptionRecord> ExceptionRecords { get; set; }
 
     #endregion

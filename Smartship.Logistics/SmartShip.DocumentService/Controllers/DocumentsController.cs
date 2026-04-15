@@ -1,7 +1,3 @@
-/// <summary>
-/// Provides backend implementation for DocumentsController.
-/// </summary>
-
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SmartShip.DocumentService.DTOs;
@@ -13,12 +9,15 @@ namespace SmartShip.DocumentService.Controllers;
 [ApiController]
 [Route("api/documents")]
 /// <summary>
-/// Represents DocumentsController.
+/// Shipment documents and delivery proof API: upload, list, download metadata, and driver proof capture.
 /// </summary>
 public class DocumentsController : ControllerBase
 {
     private readonly IDocumentService _service;
 
+    /// <summary>
+    /// Initializes the controller with document storage and metadata services.
+    /// </summary>
     public DocumentsController(IDocumentService service)
     {
         _service = service;
@@ -27,7 +26,7 @@ public class DocumentsController : ControllerBase
     [HttpPost("upload")]
     [Authorize]
     /// <summary>
-    /// Executes UploadDocument.
+    /// Uploads a general shipment document and stores file plus metadata for the authenticated user.
     /// </summary>
     public async Task<IActionResult> UploadDocument([FromForm] UploadDocumentDTO dto)
     {
@@ -43,7 +42,7 @@ public class DocumentsController : ControllerBase
     [HttpPost("upload-invoice")]
     [Authorize]
     /// <summary>
-    /// Executes UploadInvoice.
+    /// Uploads an invoice document tagged as Invoice for the shipment.
     /// </summary>
     public async Task<IActionResult> UploadInvoice([FromForm] UploadDocumentDTO dto)
     {
@@ -59,7 +58,7 @@ public class DocumentsController : ControllerBase
     [HttpPost("upload-label")]
     [Authorize]
     /// <summary>
-    /// Executes UploadLabel.
+    /// Uploads a shipping label document tagged as Label for the shipment.
     /// </summary>
     public async Task<IActionResult> UploadLabel([FromForm] UploadDocumentDTO dto)
     {
@@ -75,7 +74,7 @@ public class DocumentsController : ControllerBase
     [HttpPost("upload-customs")]
     [Authorize]
     /// <summary>
-    /// Executes UploadCustoms.
+    /// Uploads customs or clearance paperwork tagged as Customs for the shipment.
     /// </summary>
     public async Task<IActionResult> UploadCustoms([FromForm] UploadDocumentDTO dto)
     {
@@ -91,7 +90,7 @@ public class DocumentsController : ControllerBase
     [HttpGet("{id:int}")]
     [Authorize]
     /// <summary>
-    /// Executes GetDocument.
+    /// Returns document metadata by id; customers may only load their own documents.
     /// </summary>
     public async Task<IActionResult> GetDocument(int id)
     {
@@ -111,7 +110,7 @@ public class DocumentsController : ControllerBase
     [HttpGet("shipment/{shipmentId:int}")]
     [Authorize]
     /// <summary>
-    /// Executes GetDocumentsByShipment.
+    /// Lists documents linked to a shipment id with optional pagination; non-admin responses are scoped to the caller.
     /// </summary>
     public async Task<IActionResult> GetDocumentsByShipment(int shipmentId, [FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 5)
     {
@@ -135,7 +134,7 @@ public class DocumentsController : ControllerBase
     [HttpGet("customer/{customerId:int}")]
     [Authorize]
     /// <summary>
-    /// Executes GetDocumentsByCustomer.
+    /// Lists all documents owned by a customer id; customers may only query their own id.
     /// </summary>
     public async Task<IActionResult> GetDocumentsByCustomer(int customerId)
     {
@@ -154,7 +153,7 @@ public class DocumentsController : ControllerBase
     [HttpPut("{id:int}")]
     [Authorize]
     /// <summary>
-    /// Executes UpdateDocument.
+    /// Replaces file and metadata for an existing document when the caller is allowed to edit it.
     /// </summary>
     public async Task<IActionResult> UpdateDocument(int id, [FromForm] UploadDocumentDTO dto)
     {
@@ -170,7 +169,7 @@ public class DocumentsController : ControllerBase
     [HttpDelete("{id:int}")]
     [Authorize(Roles = "ADMIN")]
     /// <summary>
-    /// Executes DeleteDocument.
+    /// Deletes a document record and its stored file (admin only).
     /// </summary>
     public async Task<IActionResult> DeleteDocument(int id)
     {
@@ -181,7 +180,7 @@ public class DocumentsController : ControllerBase
     [HttpPost("delivery-proof/{shipmentId:int}")]
     [Authorize(Roles = "DRIVER,ADMIN")]
     /// <summary>
-    /// Executes UploadDeliveryProof.
+    /// Captures proof of delivery (photo or signature) for a shipment (driver or admin).
     /// </summary>
     public async Task<IActionResult> UploadDeliveryProof(int shipmentId, [FromForm] DeliveryProofDTO dto)
     {
@@ -192,7 +191,7 @@ public class DocumentsController : ControllerBase
     [HttpGet("delivery-proof/{shipmentId:int}")]
     [Authorize]
     /// <summary>
-    /// Executes GetDeliveryProof.
+    /// Returns delivery proof for a shipment; customers must have access to that shipment's documents.
     /// </summary>
     public async Task<IActionResult> GetDeliveryProof(int shipmentId)
     {
@@ -213,71 +212,6 @@ public class DocumentsController : ControllerBase
         var result = await _service.GetDeliveryProofAsync(shipmentId);
         return Ok(result);
     }
-}
-
-
-    [Authorize(Roles = "ADMIN")]
-    /// <summary>
-    /// Permanently deletes a document from logical storage and discards the binary payload.
-    /// </summary>
-    /// <param name="id">The document identifier.</param>
-    /// <returns>Success acknowledgment.</returns>
-    public async Task<IActionResult> DeleteDocument(int id)
-    {
-        await _service.DeleteDocumentAsync(id);
-        return Ok();
-    }
-    #endregion
-
-    #region Delivery Proof
-
-    /// <summary>
-    /// Asynchronously handles the upload delivery proof process.
-    /// </summary>
-    [HttpPost("delivery-proof/{shipmentId:int}")]
-    [Authorize(Roles = "DRIVER,ADMIN")]
-    /// <summary>
-    /// Dedicated endpoint for drivers/logistics personnel to upload signed Proof of Delivery (PoD) receipts.
-    /// </summary>
-    /// <param name="shipmentId">The shipment that was delivered.</param>
-    /// <param name="dto">The photo or file payload acting as proof.</param>
-    /// <returns>The finalized document tracking receipt.</returns>
-    public async Task<IActionResult> UploadDeliveryProof(int shipmentId, [FromForm] DeliveryProofDTO dto)
-    {
-        var result = await _service.UploadDeliveryProofAsync(shipmentId, dto);
-        return Ok(result);
-    }
-
-    /// <summary>
-    /// Asynchronously handles the get delivery proof process.
-    /// </summary>
-    [HttpGet("delivery-proof/{shipmentId:int}")]
-    [Authorize]
-    /// <summary>
-    /// Retrieves the cryptographically signed or standard Proof of Delivery document for a completed shipment.
-    /// </summary>
-    /// <param name="shipmentId">The delivered shipment ID.</param>
-    /// <returns>The delivery proof file metadata.</returns>
-    public async Task<IActionResult> GetDeliveryProof(int shipmentId)
-    {
-        if (!User.IsAdmin())
-        {
-            if (!User.TryGetUserId(out var currentUserId))
-            {
-                return Unauthorized();
-            }
-
-            var shipmentDocumentsResponse = await _service.GetDocumentsByShipmentAsync(shipmentId);
-            if (!shipmentDocumentsResponse.Data.Any(d => d.CustomerId == currentUserId))
-            {
-                return Forbid();
-            }
-        }
-
-        var result = await _service.GetDeliveryProofAsync(shipmentId);
-        return Ok(result);
-    }
-    #endregion
 }
 
 

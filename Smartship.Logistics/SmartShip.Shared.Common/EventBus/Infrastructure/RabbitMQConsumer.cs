@@ -1,7 +1,3 @@
-/// <summary>
-/// RabbitMQ event consumer with per-consumer queues, delayed retries, and dead-letter handling.
-/// </summary>
-
 using System.Text;
 using System.Text.Json;
 using System.Reflection;
@@ -15,8 +11,7 @@ using SmartShip.EventBus.Configuration;
 namespace SmartShip.EventBus.Infrastructure;
 
 /// <summary>
-/// Consumes JSON messages from a fanout exchange and dispatches them to a typed handler.
-/// Implements exponential backoff retries via a retry queue (per-message TTL) and routes failures to a DLQ.
+/// Domain model for rabbit mqconsumer.
 /// </summary>
 public sealed class RabbitMQConsumer : IEventConsumer
 {
@@ -35,7 +30,7 @@ public sealed class RabbitMQConsumer : IEventConsumer
 
     #region Construction
     /// <summary>
-    /// Initializes a new instance of the rabbit mqconsumer class.
+    /// Processes rabbit mqconsumer.
     /// </summary>
     public RabbitMQConsumer(
         RabbitMQConnectionManager connectionManager,
@@ -50,7 +45,7 @@ public sealed class RabbitMQConsumer : IEventConsumer
 
     #region Public API
     /// <summary>
-    /// Asynchronously handles the consume async process.
+    /// Code summary.
     /// </summary>
     public async Task ConsumeAsync<T>(string queueName, Func<T, CancellationToken, Task> handler, CancellationToken cancellationToken = default) where T : class
     {

@@ -1,16 +1,10 @@
-/// <summary>
-/// Delegating handler that automatically adds correlation ID to outgoing HTTP requests.
-/// Ensures every service-to-service call includes the correlation ID for distributed tracing.
-/// </summary>
-
 using Microsoft.Extensions.Logging;
 using SmartShip.Shared.Common.Services;
 
 namespace SmartShip.Shared.Common.Handlers;
 
 /// <summary>
-/// HttpClient delegating handler that propagates correlation ID to downstream services.
-/// Add to HttpClientBuilder: .AddHttpMessageHandler<CorrelationIdDelegatingHandler>()
+/// Handler component for correlation id delegating processing.
 /// </summary>
 public sealed class CorrelationIdDelegatingHandler : DelegatingHandler
 {
@@ -19,7 +13,7 @@ public sealed class CorrelationIdDelegatingHandler : DelegatingHandler
     private const string CorrelationIdHeaderName = "X-Correlation-ID";
 
     /// <summary>
-    /// Initializes a new instance of the correlation id delegating handler class.
+    /// Processes correlation id delegating handler.
     /// </summary>
     public CorrelationIdDelegatingHandler(
         ICorrelationIdService correlationIdService,

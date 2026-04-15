@@ -1,7 +1,3 @@
-/// <summary>
-/// Provides backend implementation for IDocumentService.
-/// </summary>
-
 using SmartShip.DocumentService.DTOs;
 using SmartShip.EventBus.Contracts;
 using SmartShip.Shared.DTOs;
@@ -9,7 +5,7 @@ using SmartShip.Shared.DTOs;
 namespace SmartShip.DocumentService.Services;
 
 /// <summary>
-/// Represents IDocumentService.
+/// Defines document business operations used by the service layer.
 /// </summary>
 public interface IDocumentService
 {

@@ -1,13 +1,9 @@
-/// <summary>
-/// Provides backend implementation for ITrackingService.
-/// </summary>
-
 using SmartShip.TrackingService.DTOs;
 
 namespace SmartShip.TrackingService.Services;
 
 /// <summary>
-/// Represents ITrackingService.
+/// Defines tracking business operations used by the service layer.
 /// </summary>
 public interface ITrackingService
 {

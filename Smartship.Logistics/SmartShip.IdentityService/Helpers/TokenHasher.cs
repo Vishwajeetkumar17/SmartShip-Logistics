@@ -1,19 +1,15 @@
-/// <summary>
-/// Provides backend implementation for TokenHasher.
-/// </summary>
-
 using System.Security.Cryptography;
 using System.Text;
 
 namespace SmartShip.IdentityService.Helpers
 {
     /// <summary>
-    /// Represents TokenHasher.
+    /// Hex-encoded SHA-256 hashing for OTPs and refresh tokens at rest (not for passwords).
     /// </summary>
     public static class TokenHasher
     {
         /// <summary>
-        /// Executes the Hash operation.
+        /// Returns a fixed-length hex string hash of the input value.
         /// </summary>
         public static string Hash(string value)
         {

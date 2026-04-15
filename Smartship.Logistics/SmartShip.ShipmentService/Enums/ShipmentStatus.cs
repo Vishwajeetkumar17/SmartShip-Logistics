@@ -1,36 +1,32 @@
-/// <summary>
-/// Provides backend implementation for ShipmentStatus.
-/// </summary>
-
 namespace SmartShip.ShipmentService.Enums;
 
 /// <summary>
-    /// Defines the possible values for shipment status.
-    /// </summary>
+/// Domain model for shipment status.
+/// </summary>
     public enum ShipmentStatus
 {
     /// <summary>
-    /// Specifies the draft enumeration value.
+    /// Code summary.
     /// </summary>
     Draft,
     /// <summary>
-    /// Specifies the booked enumeration value.
+    /// Code summary.
     /// </summary>
     Booked,
     /// <summary>
-    /// Specifies the picked up enumeration value.
+    /// Code summary.
     /// </summary>
     PickedUp,
     /// <summary>
-    /// Specifies the in transit enumeration value.
+    /// Code summary.
     /// </summary>
     InTransit,
     /// <summary>
-    /// Specifies the out for delivery enumeration value.
+    /// Code summary.
     /// </summary>
     OutForDelivery,
     /// <summary>
-    /// Specifies the delivered enumeration value.
+    /// Code summary.
     /// </summary>
     Delivered
 }

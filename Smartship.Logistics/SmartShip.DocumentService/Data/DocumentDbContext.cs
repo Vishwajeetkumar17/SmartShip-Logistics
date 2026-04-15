@@ -1,33 +1,21 @@
-/// <summary>
-/// Provides backend implementation for DocumentDbContext.
-/// </summary>
-
 using Microsoft.EntityFrameworkCore;
 using SmartShip.DocumentService.Models;
 
 namespace SmartShip.DocumentService.Data;
 
 /// <summary>
-/// Represents DocumentDbContext.
+/// Entity Framework database context for document.
 /// </summary>
 public class DocumentDbContext : DbContext
 {
     /// <summary>
-    /// Initializes a new instance of the document db context class.
+    /// Configures Entity Framework context for document data.
     /// </summary>
     public DocumentDbContext(DbContextOptions<DocumentDbContext> options)
         : base(options)
     {
     }
-
-    /// <summary>
-    /// Gets or sets the documents.
-    /// </summary>
     public DbSet<Document> Documents { get; set; }
-
-    /// <summary>
-    /// Gets or sets the delivery proofs.
-    /// </summary>
     public DbSet<DeliveryProof> DeliveryProofs { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)

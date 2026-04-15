@@ -1,19 +1,15 @@
-/// <summary>
-/// Provides backend implementation for PackageValidationHelper.
-/// </summary>
-
 using SmartShip.Shared.Common.Exceptions;
 using SmartShip.ShipmentService.DTOs;
 
 namespace SmartShip.ShipmentService.Helpers;
 
 /// <summary>
-/// Represents PackageValidationHelper.
+/// Domain model for package validation helper.
 /// </summary>
 public static class PackageValidationHelper
 {
     /// <summary>
-    /// Executes the ValidatePackage operation.
+    /// Validates package.
     /// </summary>
     public static void ValidatePackage(PackageDTO dto)
     {

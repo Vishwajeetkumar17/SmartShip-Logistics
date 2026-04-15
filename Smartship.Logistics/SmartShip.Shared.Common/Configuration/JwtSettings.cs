@@ -1,33 +1,17 @@
-/// <summary>
-/// Provides backend implementation for JwtSettings.
-/// </summary>
-
 namespace SmartShip.Shared.Common.Configuration;
 
 /// <summary>
-/// Represents JwtSettings.
+/// Configuration model for jwt settings.
 /// </summary>
 public class JwtSettings
 {
-    /// <summary>
-    /// Gets or sets the secret.
-    /// </summary>
     public string Secret { get; set; } = string.Empty;
-    /// <summary>
-    /// Gets or sets the issuer.
-    /// </summary>
     public string Issuer { get; set; } = string.Empty;
-    /// <summary>
-    /// Gets or sets the audiences.
-    /// </summary>
     public List<string> Audiences { get; set; } = [];
-    /// <summary>
-    /// Gets or sets the expiry minutes.
-    /// </summary>
     public int ExpiryMinutes { get; set; } = 60;
 
     /// <summary>
-    /// Executes the GetValidAudiences operation.
+    /// Returns valid audiences.
     /// </summary>
     public IReadOnlyList<string> GetValidAudiences()
     {
@@ -41,7 +25,7 @@ public class JwtSettings
     }
 
     /// <summary>
-    /// Executes the Validate operation.
+    /// Validates request data against business rules.
     /// </summary>
     public void Validate(bool requireExpiryMinutes = false)
     {

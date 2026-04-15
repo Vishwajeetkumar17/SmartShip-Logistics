@@ -1,7 +1,3 @@
-/// <summary>
-/// Provides backend implementation for AdminValidationHelper.
-/// </summary>
-
 using SmartShip.AdminService.DTOs;
 using SmartShip.Shared.Common.Exceptions;
 using System.Text.RegularExpressions;
@@ -9,12 +5,12 @@ using System.Text.RegularExpressions;
 namespace SmartShip.AdminService.Helpers;
 
 /// <summary>
-/// Represents AdminValidationHelper.
+/// Domain model for admin validation helper.
 /// </summary>
 public static class AdminValidationHelper
 {
     /// <summary>
-    /// Executes the ValidateHub operation.
+    /// Validates hub.
     /// </summary>
     public static void ValidateHub(CreateHubDTO dto)
     {
@@ -28,7 +24,7 @@ public static class AdminValidationHelper
     }
 
     /// <summary>
-    /// Executes the ValidateHub operation.
+    /// Validates hub.
     /// </summary>
     public static void ValidateHub(UpdateHubDTO dto)
     {
@@ -42,7 +38,7 @@ public static class AdminValidationHelper
     }
 
     /// <summary>
-    /// Executes the ValidateLocation operation.
+    /// Validates location.
     /// </summary>
     public static void ValidateLocation(CreateLocationDTO dto)
     {
@@ -57,7 +53,7 @@ public static class AdminValidationHelper
     }
 
     /// <summary>
-    /// Executes the ValidateLocation operation.
+    /// Validates location.
     /// </summary>
     public static void ValidateLocation(UpdateLocationDTO dto)
     {
@@ -72,7 +68,7 @@ public static class AdminValidationHelper
     }
 
     /// <summary>
-    /// Executes the NormalizeReason operation.
+    /// Normalizes reason.
     /// </summary>
     public static string NormalizeReason(string reason, string fieldName)
     {

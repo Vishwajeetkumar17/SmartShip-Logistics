@@ -1,16 +1,11 @@
-/// <summary>
-/// Provides correlation ID management for request tracing across services.
-/// Retrieves correlation ID from HttpContext items or headers for distributed tracing.
-/// </summary>
-
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 
 namespace SmartShip.Shared.Common.Services;
 
 /// <summary>
-    /// Defines the contract for the correlation id service structure.
-    /// </summary>
+/// Defines correlation id business operations used by the service layer.
+/// </summary>
     public interface ICorrelationIdService
 {
     string GetCorrelationId();
@@ -18,8 +13,7 @@ namespace SmartShip.Shared.Common.Services;
 }
 
 /// <summary>
-/// Provides default implementation of ICorrelationIdService.
-/// Production-level implementation with proper error handling and fallback mechanisms.
+/// Implements correlation id business workflows for SmartShip logistics operations.
 /// </summary>
 public sealed class CorrelationIdService : ICorrelationIdService
 {
@@ -29,7 +23,7 @@ public sealed class CorrelationIdService : ICorrelationIdService
     private const string CorrelationIdContextKey = "CorrelationId";
 
     /// <summary>
-    /// Initializes a new instance of the correlation id service class.
+    /// Implements correlation id service workflows.
     /// </summary>
     public CorrelationIdService(IHttpContextAccessor httpContextAccessor, ILogger<CorrelationIdService> logger)
     {
@@ -38,7 +32,7 @@ public sealed class CorrelationIdService : ICorrelationIdService
     }
 
     /// <summary>
-    /// Asynchronously handles the get correlation id process.
+    /// Returns correlation id.
     /// </summary>
     public string GetCorrelationId()
     {
@@ -75,7 +69,7 @@ public sealed class CorrelationIdService : ICorrelationIdService
     }
 
     /// <summary>
-    /// Asynchronously handles the set correlation id process.
+    /// Sets correlation id.
     /// </summary>
     public void SetCorrelationId(string correlationId)
     {

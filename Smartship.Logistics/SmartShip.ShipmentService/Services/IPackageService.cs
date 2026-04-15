@@ -1,13 +1,9 @@
-/// <summary>
-/// Provides backend implementation for IPackageService.
-/// </summary>
-
 using SmartShip.ShipmentService.DTOs;
 
 namespace SmartShip.ShipmentService.Services;
 
 /// <summary>
-/// Represents IPackageService.
+/// Defines package business operations used by the service layer.
 /// </summary>
 public interface IPackageService
 {

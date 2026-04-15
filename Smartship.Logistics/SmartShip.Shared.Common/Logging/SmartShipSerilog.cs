@@ -5,14 +5,14 @@ using Serilog.Events;
 namespace SmartShip.Shared.Common.Logging;
 
 /// <summary>
-/// Centralized Serilog configuration for SmartShip services.
+/// Domain model for smart ship serilog.
 /// </summary>
 public static class SmartShipSerilog
 {
     private const string PersistLogsConfigKey = "SmartShipLogging:PersistLogs";
 
     /// <summary>
-    /// Configures Serilog consistently across services and supports disabling persistent sinks (File/Seq).
+    /// Processes configure.
     /// </summary>
     /// <param name="configuration">Application configuration.</param>
     /// <param name="loggerConfiguration">Serilog logger configuration builder.</param>

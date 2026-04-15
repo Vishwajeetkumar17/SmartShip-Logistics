@@ -1,11 +1,7 @@
-/// <summary>
-/// Provides backend implementation for LoggingEmailService.
-/// </summary>
-
 namespace SmartShip.IdentityService.Services
 {
     /// <summary>
-    /// Represents LoggingEmailService.
+    /// Development-friendly email implementation that logs OTP and reset payloads instead of sending mail.
     /// </summary>
     public class LoggingEmailService : IEmailService
     {
@@ -17,7 +13,7 @@ namespace SmartShip.IdentityService.Services
         }
 
         /// <summary>
-        /// Executes SendSignupOtpEmailAsync.
+        /// Sends signup otp email async.
         /// </summary>
         public Task SendSignupOtpEmailAsync(string email, string otp)
         {
@@ -26,7 +22,7 @@ namespace SmartShip.IdentityService.Services
         }
 
         /// <summary>
-        /// Executes SendPasswordResetEmailAsync.
+        /// Sends password reset email async.
         /// </summary>
         public Task SendPasswordResetEmailAsync(string email, string token)
         {
@@ -35,8 +31,4 @@ namespace SmartShip.IdentityService.Services
         }
     }
 }
-
-
-}
-
 

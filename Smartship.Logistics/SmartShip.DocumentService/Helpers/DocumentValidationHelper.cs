@@ -1,14 +1,10 @@
-/// <summary>
-/// Provides backend implementation for DocumentValidationHelper.
-/// </summary>
-
 using SmartShip.DocumentService.DTOs;
 using SmartShip.Shared.Common.Exceptions;
 
 namespace SmartShip.DocumentService.Helpers;
 
 /// <summary>
-/// Represents DocumentValidationHelper.
+/// Domain model for document validation helper.
 /// </summary>
 public static class DocumentValidationHelper
 {
@@ -38,7 +34,7 @@ public static class DocumentValidationHelper
     ];
 
     /// <summary>
-    /// Executes the ValidateUpload operation.
+    /// Validates upload.
     /// </summary>
     public static void ValidateUpload(UploadDocumentDTO dto, string documentType)
     {
@@ -54,7 +50,7 @@ public static class DocumentValidationHelper
     }
 
     /// <summary>
-    /// Executes the ValidateDeliveryProof operation.
+    /// Validates delivery proof.
     /// </summary>
     public static void ValidateDeliveryProof(int shipmentId, DeliveryProofDTO dto)
     {
@@ -74,7 +70,7 @@ public static class DocumentValidationHelper
     }
 
     /// <summary>
-    /// Executes the NormalizeDocumentType operation.
+    /// Normalizes document type.
     /// </summary>
     public static string NormalizeDocumentType(string documentType)
     {
@@ -83,7 +79,7 @@ public static class DocumentValidationHelper
     }
 
     /// <summary>
-    /// Executes the NormalizeText operation.
+    /// Normalizes text.
     /// </summary>
     public static string NormalizeText(string value) => value?.Trim() ?? string.Empty;
 

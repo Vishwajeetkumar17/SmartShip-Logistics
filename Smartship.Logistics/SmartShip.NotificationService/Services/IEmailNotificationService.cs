@@ -1,11 +1,7 @@
-/// <summary>
-/// Provides backend implementation for IEmailNotificationService.
-/// </summary>
-
 namespace SmartShip.NotificationService.Services;
 
 /// <summary>
-/// Represents IEmailNotificationService.
+/// Defines email notification business operations used by the service layer.
 /// </summary>
 public interface IEmailNotificationService
 {

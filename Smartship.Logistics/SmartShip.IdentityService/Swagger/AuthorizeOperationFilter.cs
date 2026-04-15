@@ -1,7 +1,3 @@
-/// <summary>
-/// Provides backend implementation for AuthorizeOperationFilter.
-/// </summary>
-
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
@@ -9,12 +5,12 @@ using Swashbuckle.AspNetCore.SwaggerGen;
 namespace SmartShip.IdentityService.Swagger
 {
     /// <summary>
-    /// Represents AuthorizeOperationFilter.
+    /// Swagger operation filter that adds Bearer security requirements for endpoints unless marked AllowAnonymous.
     /// </summary>
     public class AuthorizeOperationFilter : IOperationFilter
     {
         /// <summary>
-        /// Executes the Apply operation.
+        /// Adds OpenAPI security metadata when the action requires authentication.
         /// </summary>
         public void Apply(OpenApiOperation operation, OperationFilterContext context)
         {

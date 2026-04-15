@@ -1,8 +1,3 @@
-/// <summary>
-/// Middleware for handling correlation ID across requests.
-/// Ensures every request has a correlation ID extracted from headers or generated new.
-/// </summary>
-
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
@@ -11,9 +6,7 @@ using SmartShip.Shared.Common.Services;
 namespace SmartShip.Shared.Common.Middleware;
 
 /// <summary>
-/// Middleware for correlation ID management.
-/// Extracts X-Correlation-ID from request headers or generates a new one.
-/// Sets it in response headers and HttpContext for downstream access.
+/// Middleware component for correlation id request pipeline behavior.
 /// </summary>
 public sealed class CorrelationIdMiddleware
 {
@@ -23,7 +16,7 @@ public sealed class CorrelationIdMiddleware
     private const string CorrelationIdContextKey = "CorrelationId";
 
     /// <summary>
-    /// Initializes a new instance of the correlation id middleware class.
+    /// Processes correlation id middleware behavior in the request pipeline.
     /// </summary>
     public CorrelationIdMiddleware(RequestDelegate next, ILogger<CorrelationIdMiddleware> logger)
     {
@@ -32,7 +25,7 @@ public sealed class CorrelationIdMiddleware
     }
 
     /// <summary>
-    /// Asynchronously handles the invoke async process.
+    /// Processes invoke asynchronously.
     /// </summary>
     public async Task InvokeAsync(HttpContext context)
     {
@@ -62,7 +55,7 @@ public sealed class CorrelationIdMiddleware
     }
 
     /// <summary>
-    /// Extracts correlation ID from request headers or generates a new one.
+    /// Processes extract correlation id.
     /// </summary>
     private string ExtractCorrelationId(HttpContext context)
     {
@@ -90,13 +83,12 @@ public sealed class CorrelationIdMiddleware
 }
 
 /// <summary>
-/// Extension methods for CorrelationIdMiddleware registration.
+/// Domain model for correlation id middleware extensions.
 /// </summary>
 public static class CorrelationIdMiddlewareExtensions
 {
     /// <summary>
-    /// Adds CorrelationIdMiddleware to the request pipeline.
-    /// Should be called early in the pipeline, often as the first middleware.
+    /// Registers correlation id.
     /// </summary>
     public static IApplicationBuilder UseCorrelationId(this IApplicationBuilder app)
     {

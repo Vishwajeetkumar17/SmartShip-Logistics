@@ -1,7 +1,3 @@
-/// <summary>
-/// Provides backend implementation for NotificationEventsConsumerService.
-/// </summary>
-
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
@@ -17,19 +13,27 @@ using Serilog.Context;
 namespace SmartShip.NotificationService.BackgroundServices;
 
 /// <summary>
-/// Represents NotificationEventsConsumerService.
+/// Implements notification events consumer business workflows for SmartShip logistics operations.
 /// </summary>
 public sealed class NotificationEventsConsumerService : BackgroundService
 {
+    #region Static Fields
     private static readonly TimeZoneInfo IndianTimeZone = ResolveIndianTimeZone();
     private static readonly TimeSpan ConsumerStartupRetryDelay = TimeSpan.FromSeconds(5);
+    #endregion
 
+    #region Fields
     private readonly IEventConsumer _eventConsumer;
     private readonly IIdentityContactClient _identityContactClient;
     private readonly NotificationSettings _notificationSettings;
     private readonly ILogger<NotificationEventsConsumerService> _logger;
     private readonly IServiceProvider _serviceProvider;
+    #endregion
 
+    #region Constructor
+    /// <summary>
+    /// Implements notification events consumer service workflows.
+    /// </summary>
     public NotificationEventsConsumerService(
         IEventConsumer eventConsumer,
         IIdentityContactClient identityContactClient,
@@ -43,7 +47,12 @@ public sealed class NotificationEventsConsumerService : BackgroundService
         _logger = logger;
         _serviceProvider = serviceProvider;
     }
+    #endregion
 
+    #region Protected API
+    /// <summary>
+    /// Processes execute asynchronously.
+    /// </summary>
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
         while (!stoppingToken.IsCancellationRequested)
@@ -99,7 +108,12 @@ public sealed class NotificationEventsConsumerService : BackgroundService
             }
         }
     }
+    #endregion
 
+    #region User Event Handling
+    /// <summary>
+    /// Processes user created asynchronously.
+    /// </summary>
     private async Task HandleUserCreatedAsync(UserCreatedEvent @event, CancellationToken cancellationToken)
     {
         if (string.IsNullOrWhiteSpace(@event.Email))
@@ -135,7 +149,12 @@ public sealed class NotificationEventsConsumerService : BackgroundService
         var emailService = scope.ServiceProvider.GetRequiredService<IEmailNotificationService>();
         await emailService.SendEmailAsync([@event.Email], subject, body, cancellationToken);
     }
+    #endregion
 
+    #region Timezone Helpers
+    /// <summary>
+    /// Converts to indian time.
+    /// </summary>
     private static DateTime ConvertToIndianTime(DateTime timestamp)
     {
         var utcTimestamp = timestamp.Kind switch
@@ -159,7 +178,12 @@ public sealed class NotificationEventsConsumerService : BackgroundService
             return TimeZoneInfo.FindSystemTimeZoneById("India Standard Time");
         }
     }
+    #endregion
 
+    #region Shipment Event Handling
+    /// <summary>
+    /// Processes shipment created asynchronously.
+    /// </summary>
     private async Task HandleShipmentCreatedAsync(ShipmentCreatedEvent @event, CancellationToken cancellationToken)
     {
         // Generate correlation ID for this event processing for distributed tracing
@@ -194,6 +218,9 @@ public sealed class NotificationEventsConsumerService : BackgroundService
         _logger.LogInformation("Shipment created notification sent. ShipmentId: {ShipmentId}, TrackingNumber: {TrackingNumber}, CorrelationId: {CorrelationId}", @event.ShipmentId, @event.TrackingNumber, correlationId);
     }
 
+    /// <summary>
+    /// Processes shipment out for delivery asynchronously.
+    /// </summary>
     private async Task HandleShipmentOutForDeliveryAsync(ShipmentOutForDeliveryEvent @event, CancellationToken cancellationToken)
     {
         // Generate correlation ID for this event processing for distributed tracing
@@ -226,6 +253,9 @@ public sealed class NotificationEventsConsumerService : BackgroundService
         await emailService.SendEmailAsync(recipients, subject, body, cancellationToken);
     }
 
+    /// <summary>
+    /// Processes shipment delivered asynchronously.
+    /// </summary>
     private async Task HandleShipmentDeliveredAsync(ShipmentDeliveredEvent @event, CancellationToken cancellationToken)
     {
         // Generate correlation ID for this event processing for distributed tracing
@@ -257,6 +287,9 @@ public sealed class NotificationEventsConsumerService : BackgroundService
         await emailService.SendEmailAsync(recipients, subject, body, cancellationToken);
     }
 
+    /// <summary>
+    /// Resolves recipients async.
+    /// </summary>
     private async Task<List<string>> ResolveRecipientsAsync(int customerId, bool includeAdminRecipients, bool requireCustomerRecipient, CancellationToken cancellationToken, string? correlationId = null)
     {
         var recipients = new List<string>();
@@ -285,9 +318,7 @@ public sealed class NotificationEventsConsumerService : BackgroundService
             .Distinct(StringComparer.OrdinalIgnoreCase)
             .ToList();
     }
-}
-
-
+    #endregion
 }
 
 

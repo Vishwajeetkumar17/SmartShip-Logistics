@@ -1,7 +1,3 @@
-/// <summary>
-/// Provides backend implementation for AdminControllerTests.
-/// </summary>
-
 using System.Security.Claims;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -15,11 +11,11 @@ using SmartShip.Shared.DTOs;
 namespace SmartShip.AdminService.UnitTests;
 
 /// <summary>
-    /// Represents the admin controller tests entity or configuration model.
-    /// </summary>
+/// Domain model for admin controller tests.
+/// </summary>
     [TestFixture]
 /// <summary>
-/// Represents AdminControllerTests.
+/// Domain model for admin controller tests.
 /// </summary>
 public class AdminControllerTests
 {
@@ -28,11 +24,11 @@ public class AdminControllerTests
     private AdminController _controller = null!;
 
     /// <summary>
-    /// Asynchronously handles the set up process.
+    /// Sets up.
     /// </summary>
     [SetUp]
     /// <summary>
-    /// Executes the SetUp operation.
+    /// Sets up.
     /// </summary>
     public void SetUp()
     {
@@ -43,11 +39,11 @@ public class AdminControllerTests
     }
 
     /// <summary>
-    /// Asynchronously handles the logging demo_calls service and returns ok process.
+    /// Processes logging demo calls service and returns ok.
     /// </summary>
     [Test]
     /// <summary>
-    /// Executes the LoggingDemo_CallsServiceAndReturnsOk operation.
+    /// Processes logging demo calls service and returns ok.
     /// </summary>
     public void LoggingDemo_CallsServiceAndReturnsOk()
     {
@@ -61,11 +57,11 @@ public class AdminControllerTests
     }
 
     /// <summary>
-    /// Asynchronously handles the get dashboard_returns ok process.
+    /// Returns dashboard returns ok.
     /// </summary>
     [Test]
     /// <summary>
-    /// Executes the GetDashboard_ReturnsOk operation.
+    /// Returns dashboard returns ok.
     /// </summary>
     public async Task GetDashboard_ReturnsOk()
     {
@@ -77,11 +73,11 @@ public class AdminControllerTests
     }
 
     /// <summary>
-    /// Asynchronously handles the create hub_calls service and returns ok process.
+    /// Creates hub calls service and returns ok.
     /// </summary>
     [Test]
     /// <summary>
-    /// Executes the CreateHub_CallsServiceAndReturnsOk operation.
+    /// Creates hub calls service and returns ok.
     /// </summary>
     public async Task CreateHub_CallsServiceAndReturnsOk()
     {
@@ -95,11 +91,11 @@ public class AdminControllerTests
     }
 
     /// <summary>
-    /// Asynchronously handles the delete hub_calls service and returns ok process.
+    /// Deletes hub calls service and returns ok.
     /// </summary>
     [Test]
     /// <summary>
-    /// Executes the DeleteHub_CallsServiceAndReturnsOk operation.
+    /// Deletes hub calls service and returns ok.
     /// </summary>
     public async Task DeleteHub_CallsServiceAndReturnsOk()
     {
@@ -112,11 +108,11 @@ public class AdminControllerTests
     }
 
     /// <summary>
-    /// Asynchronously handles the resolve exception_sets shipment id before calling service process.
+    /// Resolves exception sets shipment id before calling service.
     /// </summary>
     [Test]
     /// <summary>
-    /// Executes the ResolveException_SetsShipmentIdBeforeCallingService operation.
+    /// Resolves exception sets shipment id before calling service.
     /// </summary>
     public async Task ResolveException_SetsShipmentIdBeforeCallingService()
     {
@@ -134,11 +130,11 @@ public class AdminControllerTests
     }
 
     /// <summary>
-    /// Asynchronously handles the delay shipment_passes reason to service process.
+    /// Marks shipment passes reason to service.
     /// </summary>
     [Test]
     /// <summary>
-    /// Executes the DelayShipment_PassesReasonToService operation.
+    /// Marks shipment passes reason to service.
     /// </summary>
     public async Task DelayShipment_PassesReasonToService()
     {
@@ -153,11 +149,11 @@ public class AdminControllerTests
     }
 
     /// <summary>
-    /// Asynchronously handles the get reports_returns ok process.
+    /// Returns reports returns ok.
     /// </summary>
     [Test]
     /// <summary>
-    /// Executes the GetReports_ReturnsOk operation.
+    /// Returns reports returns ok.
     /// </summary>
     public async Task GetReports_ReturnsOk()
     {
@@ -169,11 +165,11 @@ public class AdminControllerTests
     }
 
     /// <summary>
-    /// Asynchronously handles the get all hubs_when called_returns paginated response process.
+    /// Returns all hubs when called returns paginated response.
     /// </summary>
     [Test]
     /// <summary>
-    /// Executes the GetAllHubs_WhenCalled_ReturnsPaginatedResponse operation.
+    /// Returns all hubs when called returns paginated response.
     /// </summary>
     public async Task GetAllHubs_WhenCalled_ReturnsPaginatedResponse()
     {
@@ -210,11 +206,11 @@ public class AdminControllerTests
     }
 
     /// <summary>
-    /// Asynchronously handles the get all locations_when page number2_returns second page process.
+    /// Returns all locations when page number2 returns second page.
     /// </summary>
     [Test]
     /// <summary>
-    /// Executes the GetAllLocations_WhenPageNumber2_ReturnsSecondPage operation.
+    /// Returns all locations when page number2 returns second page.
     /// </summary>
     public async Task GetAllLocations_WhenPageNumber2_ReturnsSecondPage()
     {
@@ -250,11 +246,11 @@ public class AdminControllerTests
     }
 
     /// <summary>
-    /// Asynchronously handles the get exceptions_when called_returns paginated exceptions process.
+    /// Returns exceptions when called returns paginated exceptions.
     /// </summary>
     [Test]
     /// <summary>
-    /// Executes the GetExceptions_WhenCalled_ReturnsPaginatedExceptions operation.
+    /// Returns exceptions when called returns paginated exceptions.
     /// </summary>
     public async Task GetExceptions_WhenCalled_ReturnsPaginatedExceptions()
     {

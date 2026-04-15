@@ -1,8 +1,3 @@
-/// <summary>
-/// Application entry point and service composition root for the Admin microservice.
-/// Configures authentication, database access, message bus consumers, and the HTTP pipeline.
-/// </summary>
-
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Hosting;
@@ -28,13 +23,12 @@ using System.Text.Json.Serialization;
 namespace SmartShip.AdminService;
 
 /// <summary>
-/// Bootstrap class for the Admin microservice.
-/// Handles dependency injection, middleware pipeline, and application startup.
+/// Application entry point that configures services and starts the host.
 /// </summary>
 public class Program
 {
     /// <summary>
-    /// Application entry point. Configures and launches the Admin API server.
+    /// Application entry point that configures services and starts the host.
     /// </summary>
     /// <param name="args">Command-line arguments.</param>
     public static void Main(string[] args)

@@ -1,7 +1,3 @@
-/// <summary>
-/// Provides backend implementation for PackagesController.
-/// </summary>
-
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SmartShip.Shared.Common.Extensions;
@@ -13,7 +9,7 @@ namespace SmartShip.ShipmentService.Controllers;
 [ApiController]
 [Route("api/shipments/{shipmentId:int}/packages")]
 /// <summary>
-/// Represents PackagesController.
+/// Exposes packages endpoints for SmartShip logistics workflows.
 /// </summary>
 public class PackagesController : ControllerBase
 {
@@ -29,7 +25,7 @@ public class PackagesController : ControllerBase
     [HttpPost]
     [Authorize]
     /// <summary>
-    /// Executes AddPackage.
+    /// Adds package.
     /// </summary>
     public async Task<IActionResult> AddPackage(int shipmentId, [FromBody] PackageDTO dto)
     {
@@ -46,7 +42,7 @@ public class PackagesController : ControllerBase
     [HttpGet]
     [Authorize]
     /// <summary>
-    /// Executes GetPackages.
+    /// Returns packages.
     /// </summary>
     public async Task<IActionResult> GetPackages(int shipmentId)
     {
@@ -63,7 +59,7 @@ public class PackagesController : ControllerBase
     [HttpPut("{packageId:int}")]
     [Authorize]
     /// <summary>
-    /// Executes UpdatePackage.
+    /// Updates package.
     /// </summary>
     public async Task<IActionResult> UpdatePackage(int shipmentId, int packageId, [FromBody] PackageDTO dto)
     {
@@ -80,7 +76,7 @@ public class PackagesController : ControllerBase
     [HttpDelete("{packageId:int}")]
     [Authorize]
     /// <summary>
-    /// Executes DeletePackage.
+    /// Deletes package.
     /// </summary>
     public async Task<IActionResult> DeletePackage(int shipmentId, int packageId)
     {
@@ -114,36 +110,6 @@ public class PackagesController : ControllerBase
 
         return shipment.CustomerId == customerId ? null : Forbid();
     }
-}
-
-
-        return Ok();
-    }
-    #endregion
-
-    #region Internal Access Control
-
-    private async Task<IActionResult?> EnsureShipmentAccess(int shipmentId)
-    {
-        var shipment = await _shipmentService.GetShipment(shipmentId);
-        if (shipment == null)
-        {
-            return NotFound();
-        }
-
-        if (User.IsAdmin())
-        {
-            return null;
-        }
-
-        if (!User.TryGetCustomerId(out var customerId))
-        {
-            return Unauthorized();
-        }
-
-        return shipment.CustomerId == customerId ? null : Forbid();
-    }
-    #endregion
 }
 
 

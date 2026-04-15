@@ -1,7 +1,3 @@
-/// <summary>
-/// Provides shipment document upload, retrieval, and delivery proof management workflows.
-/// </summary>
-
 using SmartShip.DocumentService.DTOs;
 using SmartShip.DocumentService.Helpers;
 using SmartShip.DocumentService.Models;
@@ -16,7 +12,7 @@ using SmartShip.Shared.DTOs;
 namespace SmartShip.DocumentService.Services;
 
 /// <summary>
-/// Coordinates shipment document storage, retrieval, and delivery proof processing.
+/// Coordinates document metadata, file storage, delivery proof capture, and related validation rules.
 /// </summary>
 public class DocumentService : IDocumentService
 {
@@ -25,9 +21,9 @@ public class DocumentService : IDocumentService
 
 
 
-    #region DocumentService
+    #region Constructor
     /// <summary>
-    /// Initializes a new instance of the DocumentService service.
+    /// Initializes persistence and blob-style file storage for document operations.
     /// </summary>
     public DocumentService(IDocumentRepository repository, IFileStorageService storageService)
     {
@@ -38,9 +34,9 @@ public class DocumentService : IDocumentService
 
 
 
-    #region UploadDocumentAsync
+    #region Public API
     /// <summary>
-    /// Uploads document using service business rules.
+    /// Uploads document async.
     /// </summary>
     public async Task<DocumentResponseDTO> UploadDocumentAsync(UploadDocumentDTO dto, string documentType, int customerId)
     {
@@ -73,9 +69,9 @@ public class DocumentService : IDocumentService
 
 
 
-    #region GetDocumentByIdAsync
+    #region Public API
     /// <summary>
-    /// Retrieves document by id for the current request.
+    /// Returns document by id async.
     /// </summary>
     public async Task<DocumentResponseDTO> GetDocumentByIdAsync(int documentId)
     {
@@ -88,9 +84,9 @@ public class DocumentService : IDocumentService
 
 
 
-    #region GetDocumentsByShipmentAsync
+    #region Public API
     /// <summary>
-    /// Retrieves documents by shipment for the current request.
+    /// Returns documents by shipment async.
     /// </summary>
     public async Task<PaginatedResponse<DocumentResponseDTO>> GetDocumentsByShipmentAsync(int shipmentId, int pageNumber = 1, int pageSize = 5)
     {
@@ -115,9 +111,9 @@ public class DocumentService : IDocumentService
 
 
 
-    #region GetDocumentsByCustomerAsync
+    #region Public API
     /// <summary>
-    /// Retrieves documents by customer for the current request.
+    /// Returns documents by customer async.
     /// </summary>
     public async Task<List<DocumentResponseDTO>> GetDocumentsByCustomerAsync(int customerId)
     {
@@ -133,9 +129,9 @@ public class DocumentService : IDocumentService
 
 
 
-    #region UpdateDocumentAsync
+    #region Public API
     /// <summary>
-    /// Updates document using service business rules.
+    /// Updates document async.
     /// </summary>
     public async Task<DocumentResponseDTO> UpdateDocumentAsync(int documentId, UploadDocumentDTO dto, int customerId, bool isAdmin)
     {
@@ -169,9 +165,9 @@ public class DocumentService : IDocumentService
 
 
 
-    #region DeleteDocumentAsync
+    #region Public API
     /// <summary>
-    /// Deletes document using service business rules.
+    /// Deletes document async.
     /// </summary>
     public async Task DeleteDocumentAsync(int documentId)
     {
@@ -185,9 +181,9 @@ public class DocumentService : IDocumentService
 
 
 
-    #region UploadDeliveryProofAsync
+    #region Public API
     /// <summary>
-    /// Uploads delivery proof using service business rules.
+    /// Uploads delivery proof async.
     /// </summary>
     public async Task<DeliveryProofResponseDTO> UploadDeliveryProofAsync(int shipmentId, DeliveryProofDTO dto)
     {
@@ -217,9 +213,9 @@ public class DocumentService : IDocumentService
 
 
 
-    #region GetDeliveryProofAsync
+    #region Public API
     /// <summary>
-    /// Retrieves delivery proof for the current request.
+    /// Returns delivery proof async.
     /// </summary>
     public async Task<DeliveryProofResponseDTO> GetDeliveryProofAsync(int shipmentId)
     {
@@ -237,9 +233,9 @@ public class DocumentService : IDocumentService
 
 
 
-    #region CreateDeliveryConfirmationDocumentAsync
+    #region Public API
     /// <summary>
-    /// Creates delivery confirmation document using service business rules.
+    /// Creates delivery confirmation document async.
     /// </summary>
     public async Task CreateDeliveryConfirmationDocumentAsync(ShipmentDeliveredEvent @event)
     {
@@ -270,9 +266,9 @@ public class DocumentService : IDocumentService
 
 
 
-    #region MapToDto
+    #region Private Helpers
     /// <summary>
-    /// Maps to dto to the corresponding DTO or response model.
+    /// Maps a persisted document row to the API response shape (includes public file URL path).
     /// </summary>
     private static DocumentResponseDTO MapToDto(Document doc)
     {
@@ -292,9 +288,9 @@ public class DocumentService : IDocumentService
 
 
 
-    #region MapToProofDto
+    #region Private Helpers
     /// <summary>
-    /// Maps to proof dto to the corresponding DTO or response model.
+    /// Maps a delivery proof entity to the response DTO.
     /// </summary>
     private static DeliveryProofResponseDTO MapToProofDto(DeliveryProof proof)
     {

@@ -1,7 +1,3 @@
-/// <summary>
-/// Provides backend implementation for PackageRepository.
-/// </summary>
-
 using Microsoft.EntityFrameworkCore;
 using SmartShip.ShipmentService.Data;
 using SmartShip.ShipmentService.Models;
@@ -9,14 +5,14 @@ using SmartShip.ShipmentService.Models;
 namespace SmartShip.ShipmentService.Repositories;
 
 /// <summary>
-/// Represents PackageRepository.
+/// Repository for package data access operations.
 /// </summary>
 public class PackageRepository : IPackageRepository
 {
     private readonly ShipmentDbContext _context;
 
     /// <summary>
-    /// Initializes a new instance of the package repository class.
+    /// Provides persistence operations for package data.
     /// </summary>
     public PackageRepository(ShipmentDbContext context)
     {
@@ -24,7 +20,7 @@ public class PackageRepository : IPackageRepository
     }
 
     /// <summary>
-    /// Executes the GetByShipmentIdAsync operation.
+    /// Returns packages for a shipment identifier.
     /// </summary>
     public async Task<List<Package>> GetByShipmentIdAsync(int shipmentId)
     {
@@ -34,7 +30,7 @@ public class PackageRepository : IPackageRepository
     }
 
     /// <summary>
-    /// Executes the GetByIdAsync operation.
+    /// Returns a record by identifier.
     /// </summary>
     public async Task<Package?> GetByIdAsync(int packageId)
     {
@@ -42,7 +38,7 @@ public class PackageRepository : IPackageRepository
     }
 
     /// <summary>
-    /// Executes the AddAsync operation.
+    /// Adds async.
     /// </summary>
     public async Task AddAsync(Package package)
     {
@@ -51,7 +47,7 @@ public class PackageRepository : IPackageRepository
     }
 
     /// <summary>
-    /// Executes the UpdateAsync operation.
+    /// Updates async.
     /// </summary>
     public async Task UpdateAsync(Package package)
     {
@@ -60,7 +56,7 @@ public class PackageRepository : IPackageRepository
     }
 
     /// <summary>
-    /// Executes the DeleteAsync operation.
+    /// Deletes async.
     /// </summary>
     public async Task DeleteAsync(Package package)
     {

@@ -1,7 +1,3 @@
-/// <summary>
-/// Provides business operations for SmartShip admin management and reporting.
-/// </summary>
-
 using SmartShip.AdminService.DTOs;
 using SmartShip.AdminService.Helpers;
 using SmartShip.AdminService.Integration;
@@ -18,7 +14,7 @@ using Microsoft.Extensions.Logging;
 namespace SmartShip.AdminService.Services;
 
 /// <summary>
-/// Coordinates admin hub, location, exception, shipment, and reporting workflows.
+/// Implements admin business workflows for SmartShip logistics operations.
 /// </summary>
 public class AdminService : IAdminService
 {
@@ -28,7 +24,7 @@ public class AdminService : IAdminService
 
     #region AdminService
     /// <summary>
-    /// Initializes the admin service with repository, shipment integration, and logging dependencies.
+    /// Orchestrates admin workflows for hubs, locations, reporting, and exceptions.
     /// </summary>
     public AdminService(
         IAdminRepository repository,
@@ -44,7 +40,7 @@ public class AdminService : IAdminService
 
     #region LogLevelDemo
     /// <summary>
-    /// Demonstrates trace, debug, information, warning, error, and critical log levels with scoped metadata.
+    /// Writes diagnostic logs across severity levels for observability checks.
     /// </summary>
     public void LogLevelDemo(string userId, string requestId, bool simulateFailure)
     {
@@ -80,7 +76,7 @@ public class AdminService : IAdminService
 
     #region GetDashboardMetricsAsync
     /// <summary>
-    /// Returns top-level dashboard counters for active hubs, service locations, and open exceptions.
+    /// Returns dashboard metrics.
     /// </summary>
     public async Task<DashboardMetricsDTO> GetDashboardMetricsAsync()
     {
@@ -113,7 +109,7 @@ public class AdminService : IAdminService
 
     #region GetComprehensiveStatisticsAsync
     /// <summary>
-    /// Builds comprehensive shipment analytics including trends, status distribution, and delivery performance.
+    /// Returns comprehensive statistics.
     /// </summary>
     public async Task<ComprehensiveDashboardDTO> GetComprehensiveStatisticsAsync()
     {
@@ -226,7 +222,7 @@ public class AdminService : IAdminService
 
     #region GetAllHubsAsync
     /// <summary>
-    /// Returns paginated hub records for admin management screens.
+    /// Returns all hubs.
     /// </summary>
     public async Task<PaginatedResponse<HubResponseDTO>> GetAllHubsAsync(int pageNumber = 1, int pageSize = 5)
     {
@@ -246,7 +242,7 @@ public class AdminService : IAdminService
 
     #region GetHubByIdAsync
     /// <summary>
-    /// Fetches one hub by id and validates that the requested hub exists.
+    /// Returns hub by id.
     /// </summary>
     public async Task<HubResponseDTO> GetHubByIdAsync(int hubId)
     {
@@ -265,7 +261,7 @@ public class AdminService : IAdminService
 
     #region CreateHubAsync
     /// <summary>
-    /// Creates a new hub after validating input and enforcing unique hub name rules.
+    /// Creates hub.
     /// </summary>
     public async Task<HubResponseDTO> CreateHubAsync(CreateHubDTO dto)
     {
@@ -295,7 +291,7 @@ public class AdminService : IAdminService
 
     #region UpdateHubAsync
     /// <summary>
-    /// Updates an existing hub after validation and duplicate-name checks.
+    /// Updates hub.
     /// </summary>
     public async Task<HubResponseDTO> UpdateHubAsync(int hubId, UpdateHubDTO dto)
     {
@@ -329,7 +325,7 @@ public class AdminService : IAdminService
 
     #region DeleteHubAsync
     /// <summary>
-    /// Deletes a hub when it has no assigned service locations.
+    /// Deletes hub.
     /// </summary>
     public async Task DeleteHubAsync(int hubId)
     {
@@ -353,7 +349,7 @@ public class AdminService : IAdminService
 
     #region GetAllLocationsAsync
     /// <summary>
-    /// Returns paginated service locations for admin monitoring.
+    /// Returns all locations.
     /// </summary>
     public async Task<PaginatedResponse<LocationResponseDTO>> GetAllLocationsAsync(int pageNumber = 1, int pageSize = 5)
     {
@@ -373,7 +369,7 @@ public class AdminService : IAdminService
 
     #region CreateLocationAsync
     /// <summary>
-    /// Creates a service location mapped to an existing hub with unique zip code validation.
+    /// Creates location.
     /// </summary>
     public async Task<LocationResponseDTO> CreateLocationAsync(CreateLocationDTO dto)
     {
@@ -404,7 +400,7 @@ public class AdminService : IAdminService
 
     #region UpdateLocationAsync
     /// <summary>
-    /// Updates a service location and validates hub mapping plus zip code uniqueness.
+    /// Updates location.
     /// </summary>
     public async Task<LocationResponseDTO> UpdateLocationAsync(int locationId, UpdateLocationDTO dto)
     {
@@ -440,7 +436,7 @@ public class AdminService : IAdminService
 
     #region DeleteLocationAsync
     /// <summary>
-    /// Deletes a service location by identifier.
+    /// Deletes location.
     /// </summary>
     public async Task DeleteLocationAsync(int locationId)
     {
@@ -459,7 +455,7 @@ public class AdminService : IAdminService
 
     #region GetActiveExceptionsAsync
     /// <summary>
-    /// Returns paginated open exception records for admin triage.
+    /// Returns active exceptions.
     /// </summary>
     public async Task<PaginatedResponse<ExceptionRecordResponseDTO>> GetActiveExceptionsAsync(int pageNumber = 1, int pageSize = 5)
     {
@@ -479,7 +475,7 @@ public class AdminService : IAdminService
 
     #region ResolveExceptionAsync
     /// <summary>
-    /// Marks an active shipment exception as resolved and appends resolution notes.
+    /// Resolves an active shipment exception with resolution notes.
     /// </summary>
     public async Task<ExceptionRecordResponseDTO> ResolveExceptionAsync(int shipmentId, ResolveExceptionDTO dto)
     {
@@ -503,7 +499,7 @@ public class AdminService : IAdminService
 
     #region DelayShipmentAsync
     /// <summary>
-    /// Creates a delay exception record for a shipment when no open delay exists.
+    /// Marks a shipment exception as delayed with the provided reason.
     /// </summary>
     public async Task<ExceptionRecordResponseDTO> DelayShipmentAsync(int shipmentId, string reason)
     {
@@ -534,7 +530,7 @@ public class AdminService : IAdminService
 
     #region ReturnShipmentAsync
     /// <summary>
-    /// Creates a return exception record for a shipment when no open return exists.
+    /// Marks a shipment exception as returned with the provided reason.
     /// </summary>
     public async Task<ExceptionRecordResponseDTO> ReturnShipmentAsync(int shipmentId, string reason)
     {
@@ -565,7 +561,7 @@ public class AdminService : IAdminService
 
     #region CreateExceptionRecordFromEventAsync
     /// <summary>
-    /// Persists an exception record from shipment exception events while preventing duplicates.
+    /// Creates exception record from event.
     /// </summary>
     public async Task CreateExceptionRecordFromEventAsync(ShipmentExceptionEvent @event)
     {
@@ -598,7 +594,7 @@ public class AdminService : IAdminService
 
     #region MapToHubDto
     /// <summary>
-    /// Maps a hub entity to the hub response DTO.
+    /// Maps a hub entity to the response DTO.
     /// </summary>
     private static HubResponseDTO MapToHubDto(Hub hub)
     {
@@ -617,7 +613,7 @@ public class AdminService : IAdminService
 
     #region MapToLocationDto
     /// <summary>
-    /// Maps a service location entity to the location response DTO.
+    /// Maps a service location entity to the response DTO.
     /// </summary>
     private static LocationResponseDTO MapToLocationDto(ServiceLocation location)
     {
@@ -634,7 +630,7 @@ public class AdminService : IAdminService
 
     #region MapToExceptionDto
     /// <summary>
-    /// Maps an exception record entity to the exception response DTO.
+    /// Maps an exception record entity to the response DTO.
     /// </summary>
     private static ExceptionRecordResponseDTO MapToExceptionDto(ExceptionRecord record)
     {
@@ -652,9 +648,9 @@ public class AdminService : IAdminService
     #endregion
 
 
-    #region GetShipmentsAsync
+    #region Public API
     /// <summary>
-    /// Returns paginated shipments ordered by latest creation timestamp.
+    /// Returns shipments.
     /// </summary>
     public async Task<PaginatedResponse<ShipmentExternalDto>> GetShipmentsAsync(int pageNumber = 1, int pageSize = 5)
     {
@@ -674,9 +670,9 @@ public class AdminService : IAdminService
     #endregion
 
 
-    #region GetShipmentByIdAsync
+    #region Public API
     /// <summary>
-    /// Fetches shipment details from the shipment service by shipment id.
+    /// Returns shipment by id.
     /// </summary>
     public async Task<ShipmentExternalDto> GetShipmentByIdAsync(int shipmentId)
     {
@@ -692,9 +688,9 @@ public class AdminService : IAdminService
     #endregion
 
 
-    #region GetShipmentsByHubAsync
+    #region Public API
     /// <summary>
-    /// Returns paginated shipments associated with the selected hub service location zip codes.
+    /// Returns shipments by hub.
     /// </summary>
     public async Task<PaginatedResponse<ShipmentExternalDto>> GetShipmentsByHubAsync(int hubId, int pageNumber = 1, int pageSize = 5)
     {
@@ -729,7 +725,7 @@ public class AdminService : IAdminService
 
     #region GetReportsOverviewAsync
     /// <summary>
-    /// Returns summary reporting metrics for total volume, revenue, and active exceptions.
+    /// Returns reports overview.
     /// </summary>
     public async Task<object> GetReportsOverviewAsync()
     {
@@ -744,9 +740,9 @@ public class AdminService : IAdminService
     #endregion
 
 
-    #region GetShipmentPerformanceAsync
+    #region Public API
     /// <summary>
-    /// Calculates delivered shipment ratio to indicate operational performance.
+    /// Returns shipment performance.
     /// </summary>
     public async Task<object> GetShipmentPerformanceAsync()
     {
@@ -769,7 +765,7 @@ public class AdminService : IAdminService
 
     #region GetDeliverySLAAsync
     /// <summary>
-    /// Calculates SLA compliance percentage for shipments delivered within the target window.
+    /// Returns delivery SLA metrics.
     /// </summary>
     public async Task<object> GetDeliverySLAAsync()
     {
@@ -791,7 +787,7 @@ public class AdminService : IAdminService
 
     #region GetRevenueAsync
     /// <summary>
-    /// Calculates revenue for the recent period using shipment weight totals.
+    /// Returns revenue.
     /// </summary>
     public async Task<object> GetRevenueAsync()
     {
@@ -811,7 +807,7 @@ public class AdminService : IAdminService
 
     #region GetHubPerformanceAsync
     /// <summary>
-    /// Builds per-hub shipment volume rankings for operational comparison.
+    /// Returns hub performance.
     /// </summary>
     public async Task<object> GetHubPerformanceAsync()
     {

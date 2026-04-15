@@ -1,22 +1,16 @@
-/// <summary>
-/// Provides backend implementation for TrackingValidationHelper.
-/// </summary>
-
-using SmartShip.Shared.Common.Exceptions;
 using SmartShip.TrackingService.DTOs;
-
-namespace SmartShip.TrackingService.Helpers;
-
 using SmartShip.Shared.Common.Exceptions;
 using SmartShip.Shared.Common.Helpers;
 
+namespace SmartShip.TrackingService.Helpers;
+
 /// <summary>
-/// Represents TrackingValidationHelper.
+/// Domain model for tracking validation helper.
 /// </summary>
 public static class TrackingValidationHelper
 {
     /// <summary>
-    /// Executes the NormalizeTrackingNumber operation.
+    /// Normalizes tracking number.
     /// </summary>
     public static string NormalizeTrackingNumber(string trackingNumber)
     {
@@ -29,7 +23,7 @@ public static class TrackingValidationHelper
     }
 
     /// <summary>
-    /// Executes the ValidateEvent operation.
+    /// Validates event.
     /// </summary>
     public static void ValidateEvent(TrackingEventDTO dto)
     {
@@ -42,7 +36,7 @@ public static class TrackingValidationHelper
     }
 
     /// <summary>
-    /// Executes the ValidateLocation operation.
+    /// Validates location.
     /// </summary>
     public static void ValidateLocation(LocationUpdateDTO dto)
     {
@@ -53,7 +47,7 @@ public static class TrackingValidationHelper
     }
 
     /// <summary>
-    /// Executes the ValidateStatus operation.
+    /// Validates status.
     /// </summary>
     public static void ValidateStatus(StatusUpdateDTO dto, string trackingNumber)
     {

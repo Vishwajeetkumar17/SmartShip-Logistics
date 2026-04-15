@@ -1,7 +1,3 @@
-/// <summary>
-/// Provides backend implementation for AuthControllerTests.
-/// </summary>
-
 using System.Security.Claims;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -16,22 +12,22 @@ using SmartShip.Shared.DTOs;
 namespace SmartShip.IdentityService.UnitTests;
 
 /// <summary>
-    /// Represents the auth controller tests entity or configuration model.
-    /// </summary>
+/// Domain model for auth controller tests.
+/// </summary>
     [TestFixture]
 /// <summary>
-/// Represents AuthControllerTests.
+/// Domain model for auth controller tests.
 /// </summary>
 public class AuthControllerTests
 {
     private Mock<IAuthService> _authServiceMock = null!;
 
     /// <summary>
-    /// Asynchronously handles the set up process.
+    /// Sets up.
     /// </summary>
     [SetUp]
     /// <summary>
-    /// Executes the SetUp operation.
+    /// Sets up.
     /// </summary>
     public void SetUp()
     {
@@ -39,11 +35,11 @@ public class AuthControllerTests
     }
 
     /// <summary>
-    /// Asynchronously handles the logout_when user id claim missing_returns unauthorized process.
+    /// Processes logout when user id claim missing returns unauthorized.
     /// </summary>
     [Test]
     /// <summary>
-    /// Executes the Logout_WhenUserIdClaimMissing_ReturnsUnauthorized operation.
+    /// Processes logout when user id claim missing returns unauthorized.
     /// </summary>
     public async Task Logout_WhenUserIdClaimMissing_ReturnsUnauthorized()
     {
@@ -57,11 +53,11 @@ public class AuthControllerTests
     }
 
     /// <summary>
-    /// Asynchronously handles the logout_when user id present_calls service and returns ok process.
+    /// Processes logout when user id present calls service and returns ok.
     /// </summary>
     [Test]
     /// <summary>
-    /// Executes the Logout_WhenUserIdPresent_CallsServiceAndReturnsOk operation.
+    /// Processes logout when user id present calls service and returns ok.
     /// </summary>
     public async Task Logout_WhenUserIdPresent_CallsServiceAndReturnsOk()
     {
@@ -76,11 +72,11 @@ public class AuthControllerTests
     }
 
     /// <summary>
-    /// Asynchronously handles the profile_when user id missing_returns unauthorized process.
+    /// Processes profile when user id missing returns unauthorized.
     /// </summary>
     [Test]
     /// <summary>
-    /// Executes the Profile_WhenUserIdMissing_ReturnsUnauthorized operation.
+    /// Processes profile when user id missing returns unauthorized.
     /// </summary>
     public async Task Profile_WhenUserIdMissing_ReturnsUnauthorized()
     {
@@ -93,11 +89,11 @@ public class AuthControllerTests
     }
 
     /// <summary>
-    /// Asynchronously handles the request signup otp_calls service and returns ok process.
+    /// Processes request signup otp calls service and returns ok.
     /// </summary>
     [Test]
     /// <summary>
-    /// Executes the RequestSignupOtp_CallsServiceAndReturnsOk operation.
+    /// Processes request signup otp calls service and returns ok.
     /// </summary>
     public async Task RequestSignupOtp_CallsServiceAndReturnsOk()
     {
@@ -111,11 +107,11 @@ public class AuthControllerTests
     }
 
     /// <summary>
-    /// Asynchronously handles the get user contact internal_when api key config missing_returns500 process.
+    /// Returns user contact internal when api key config missing returns500.
     /// </summary>
     [Test]
     /// <summary>
-    /// Executes the GetUserContactInternal_WhenApiKeyConfigMissing_Returns500 operation.
+    /// Returns user contact internal when api key config missing returns500.
     /// </summary>
     public async Task GetUserContactInternal_WhenApiKeyConfigMissing_Returns500()
     {
@@ -129,11 +125,11 @@ public class AuthControllerTests
     }
 
     /// <summary>
-    /// Asynchronously handles the get user contact internal_when api key invalid_returns unauthorized process.
+    /// Returns user contact internal when api key invalid returns unauthorized.
     /// </summary>
     [Test]
     /// <summary>
-    /// Executes the GetUserContactInternal_WhenApiKeyInvalid_ReturnsUnauthorized operation.
+    /// Returns user contact internal when api key invalid returns unauthorized.
     /// </summary>
     public async Task GetUserContactInternal_WhenApiKeyInvalid_ReturnsUnauthorized()
     {
@@ -145,11 +141,11 @@ public class AuthControllerTests
     }
 
     /// <summary>
-    /// Asynchronously handles the get user contact internal_when api key valid_returns mapped contact process.
+    /// Returns user contact internal when api key valid returns mapped contact.
     /// </summary>
     [Test]
     /// <summary>
-    /// Executes the GetUserContactInternal_WhenApiKeyValid_ReturnsMappedContact operation.
+    /// Returns user contact internal when api key valid returns mapped contact.
     /// </summary>
     public async Task GetUserContactInternal_WhenApiKeyValid_ReturnsMappedContact()
     {
@@ -173,11 +169,11 @@ public class AuthControllerTests
     }
 
     /// <summary>
-    /// Asynchronously handles the assign role_calls service and returns ok process.
+    /// Assigns role calls service and returns ok.
     /// </summary>
     [Test]
     /// <summary>
-    /// Executes the AssignRole_CallsServiceAndReturnsOk operation.
+    /// Assigns role calls service and returns ok.
     /// </summary>
     public async Task AssignRole_CallsServiceAndReturnsOk()
     {
@@ -191,11 +187,11 @@ public class AuthControllerTests
     }
 
     /// <summary>
-    /// Asynchronously handles the get users_when called_returns paginated users process.
+    /// Returns users when called returns paginated users.
     /// </summary>
     [Test]
     /// <summary>
-    /// Executes the GetUsers_WhenCalled_ReturnsPaginatedUsers operation.
+    /// Returns users when called returns paginated users.
     /// </summary>
     public async Task GetUsers_WhenCalled_ReturnsPaginatedUsers()
     {
@@ -234,11 +230,11 @@ public class AuthControllerTests
     }
 
     /// <summary>
-    /// Asynchronously handles the get roles_when called_returns paginated roles process.
+    /// Returns roles when called returns paginated roles.
     /// </summary>
     [Test]
     /// <summary>
-    /// Executes the GetRoles_WhenCalled_ReturnsPaginatedRoles operation.
+    /// Returns roles when called returns paginated roles.
     /// </summary>
     public async Task GetRoles_WhenCalled_ReturnsPaginatedRoles()
     {

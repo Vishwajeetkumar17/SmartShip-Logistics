@@ -1,13 +1,9 @@
-/// <summary>
-/// Provides backend implementation for IUserRepository.
-/// </summary>
-
 using SmartShip.IdentityService.Models;
 
 namespace SmartShip.IdentityService.Repositories
 {
     /// <summary>
-    /// Represents IUserRepository.
+    /// Contract for iuser persistence operations.
     /// </summary>
     public interface IUserRepository
     {

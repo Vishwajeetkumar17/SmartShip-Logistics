@@ -2,15 +2,175 @@
   display: block;
 }
 
-/* All styling handled by global styles.css:
-   - .kpi-grid-premium, .kpi-card, .kpi-card-* — KPI cards with colored top bars
-   - .kpi-top, .kpi-icon, .kpi-icon-* — icon boxes
-   - .kpi-trend, .kpi-trend-up, .kpi-trend-down — trend badges
-   - .kpi-value, .kpi-label — values/labels
-   - .kpi-secondary, .kpi-sec-card — secondary KPI row
-   - .charts-grid, .charts-grid-full — chart layouts
-   - .chart-card, .chart-header, .chart-body, .chart-wrap — chart containers
-   - .ss-page-header — page header
-   - .ss-alert, .ss-alert-error — alerts
-   - .ss-skeleton — skeleton loaders
-*/
+/* KPI premium variant (admin dashboard) */
+.kpi-grid-premium {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--ss-space-5);
+  margin-bottom: var(--ss-space-6);
+}
+
+.kpi-card {
+  background: var(--ss-surface);
+  border: 1px solid var(--ss-border);
+  border-radius: var(--ss-radius-lg);
+  padding: var(--ss-space-5) var(--ss-space-6);
+  box-shadow: var(--ss-shadow-xs);
+  transition: all 0.2s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.kpi-card::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+}
+
+.kpi-card-indigo::after { background: #4F46E5; }
+.kpi-card-blue::after   { background: #3B82F6; }
+.kpi-card-green::after  { background: #10B981; }
+.kpi-card-red::after    { background: #EF4444; }
+
+.kpi-card:hover {
+  box-shadow: var(--ss-shadow-md);
+  transform: translateY(-2px);
+}
+
+.kpi-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--ss-space-3);
+}
+
+.kpi-icon {
+  width: 42px;
+  height: 42px;
+  border-radius: var(--ss-radius);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.kpi-icon .material-icons { font-size: 1.2rem; }
+.kpi-icon-indigo { background: #EEF2FF; color: #4F46E5; }
+.kpi-icon-blue   { background: #DBEAFE; color: #2563EB; }
+.kpi-icon-green  { background: #D1FAE5; color: #059669; }
+.kpi-icon-red    { background: #FEE2E2; color: #DC2626; }
+
+.kpi-trend {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  padding: 3px 8px;
+  border-radius: 20px;
+}
+
+.kpi-trend .material-icons { font-size: 0.8rem; }
+.kpi-trend-up   { background: #D1FAE5; color: #065F46; }
+.kpi-trend-down { background: #FEE2E2; color: #991B1B; }
+
+.kpi-value {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--ss-text);
+  line-height: 1.2;
+  margin-bottom: 4px;
+  letter-spacing: -0.02em;
+}
+
+.kpi-label {
+  font-size: 0.8rem;
+  color: var(--ss-text-muted);
+  font-weight: 500;
+}
+
+/* Secondary KPI cards */
+.kpi-secondary {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--ss-space-5);
+  margin-bottom: var(--ss-space-6);
+}
+
+.kpi-sec-card {
+  background: var(--ss-surface);
+  border: 1px solid var(--ss-border);
+  border-radius: var(--ss-radius-lg);
+  padding: var(--ss-space-5) var(--ss-space-6);
+  display: flex;
+  align-items: center;
+  gap: var(--ss-space-4);
+  box-shadow: var(--ss-shadow-xs);
+}
+
+.kpi-sec-icon {
+  width: 42px;
+  height: 42px;
+  border-radius: var(--ss-radius);
+  background: #EEF2FF;
+  color: #4F46E5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.kpi-sec-icon .material-icons { font-size: 1.2rem; }
+.kpi-sec-label { font-size: 0.8rem; color: var(--ss-text-muted); font-weight: 500; }
+.kpi-sec-value { font-size: 1.25rem; font-weight: 700; color: var(--ss-text); margin-top: 2px; }
+
+/* ============================================================
+   CHARTS
+   ============================================================ */
+.charts-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--ss-space-5);
+  margin-bottom: var(--ss-space-6);
+}
+
+.charts-grid-full {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--ss-space-5);
+  margin-bottom: var(--ss-space-6);
+}
+
+.chart-card {
+  background: var(--ss-surface);
+  border: 1px solid var(--ss-border);
+  border-radius: var(--ss-radius-lg);
+  box-shadow: var(--ss-shadow-xs);
+  overflow: hidden;
+}
+
+.chart-header {
+  padding: var(--ss-space-5) var(--ss-space-6);
+  border-bottom: 1px solid var(--ss-border-soft);
+}
+
+.chart-title {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--ss-text);
+}
+
+.chart-body {
+  padding: var(--ss-space-5) var(--ss-space-6);
+}
+
+.chart-wrap {
+  position: relative;
+  height: 240px;
+  width: 100%;
+}
+
+.chart-wrap.tall {
+  height: 300px;
+}

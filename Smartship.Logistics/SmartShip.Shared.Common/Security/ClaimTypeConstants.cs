@@ -1,13 +1,9 @@
-/// <summary>
-/// Provides backend implementation for ClaimTypeConstants.
-/// </summary>
-
 using System.Security.Claims;
 
 namespace SmartShip.Shared.Common.Security;
 
 /// <summary>
-/// Represents ClaimTypeConstants.
+/// Domain model for claim type constants.
 /// </summary>
 public static class ClaimTypeConstants
 {

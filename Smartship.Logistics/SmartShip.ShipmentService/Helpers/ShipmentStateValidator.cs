@@ -1,18 +1,14 @@
-/// <summary>
-/// Provides backend implementation for ShipmentStateValidator.
-/// </summary>
-
 using SmartShip.ShipmentService.Enums;
 
 namespace SmartShip.ShipmentService.Helpers;
 
 /// <summary>
-/// Represents ShipmentStateValidator.
+/// Domain model for shipment state validator.
 /// </summary>
 public static class ShipmentStateValidator
 {
     /// <summary>
-    /// Executes the IsValidTransition operation.
+    /// Processes is valid transition.
     /// </summary>
     public static bool IsValidTransition(ShipmentStatus current, ShipmentStatus next)
     {

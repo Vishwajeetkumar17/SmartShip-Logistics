@@ -1,62 +1,62 @@
 namespace SmartShip.Shared.DTOs;
 
 /// <summary>
-/// Represents pagination request parameters
+/// Domain model for pagination request.
 /// </summary>
 public class PaginationRequest
 {
     /// <summary>
-    /// Page number (1-indexed)
+    /// Page Number value.
     /// </summary>
     public int PageNumber { get; set; } = 1;
 
     /// <summary>
-    /// Number of items per page
+    /// Page Size value.
     /// </summary>
     public int PageSize { get; set; } = 5;
 }
 
 /// <summary>
-/// Generic paginated response wrapper
+/// Domain model for paginated response.
 /// </summary>
 /// <typeparam name="T">Type of items in the response</typeparam>
 /// <summary>
-/// Represents PaginatedResponse.
+/// Domain model for paginated response.
 /// </summary>
 public class PaginatedResponse<T>
 {
     /// <summary>
-    /// Collection of items for the current page
+    /// Processes new.
     /// </summary>
     public List<T> Data { get; set; } = new();
 
     /// <summary>
-    /// Current page number
+    /// Page Number value.
     /// </summary>
     public int PageNumber { get; set; }
 
     /// <summary>
-    /// Number of items per page
+    /// Page Size value.
     /// </summary>
     public int PageSize { get; set; }
 
     /// <summary>
-    /// Total number of items across all pages
+    /// Total Items value.
     /// </summary>
     public int TotalItems { get; set; }
 
     /// <summary>
-    /// Total number of pages
+    /// Total Pages value.
     /// </summary>
     public int TotalPages { get; set; }
 
     /// <summary>
-    /// Indicates if there is a next page
+    /// Indicates whether s next page.
     /// </summary>
     public bool HasNextPage { get; set; }
 
     /// <summary>
-    /// Indicates if there is a previous page
+    /// Indicates whether s previous page.
     /// </summary>
     public bool HasPreviousPage { get; set; }
 }

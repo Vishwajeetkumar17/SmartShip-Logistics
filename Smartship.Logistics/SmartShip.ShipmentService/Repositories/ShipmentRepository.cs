@@ -1,7 +1,3 @@
-/// <summary>
-/// Provides backend implementation for ShipmentRepository.
-/// </summary>
-
 using Microsoft.EntityFrameworkCore;
 using SmartShip.ShipmentService.Data;
 using SmartShip.ShipmentService.Models;
@@ -9,22 +5,27 @@ using SmartShip.ShipmentService.Models;
 namespace SmartShip.ShipmentService.Repositories;
 
 /// <summary>
-/// Represents ShipmentRepository.
+/// Repository for shipment data access operations.
 /// </summary>
 public class ShipmentRepository : IShipmentRepository
 {
+    #region Fields
     private readonly ShipmentDbContext _context;
+    #endregion
 
+    #region Constructor
     /// <summary>
-    /// Initializes a new instance of the shipment repository class.
+    /// Provides persistence operations for shipment data.
     /// </summary>
     public ShipmentRepository(ShipmentDbContext context)
     {
         _context = context;
     }
+    #endregion
 
+    #region Query Operations
     /// <summary>
-    /// Executes the GetAllAsync operation.
+    /// Returns all async.
     /// </summary>
     public async Task<List<Shipment>> GetAllAsync()
     {
@@ -38,7 +39,7 @@ public class ShipmentRepository : IShipmentRepository
     }
 
     /// <summary>
-    /// Executes the GetByIdAsync operation.
+    /// Returns a record by identifier.
     /// </summary>
     public async Task<Shipment?> GetByIdAsync(int id)
     {
@@ -51,7 +52,7 @@ public class ShipmentRepository : IShipmentRepository
     }
 
     /// <summary>
-    /// Executes the GetByTrackingNumberAsync operation.
+    /// Returns a shipment by tracking number.
     /// </summary>
     public async Task<Shipment?> GetByTrackingNumberAsync(string trackingNumber)
     {
@@ -64,7 +65,7 @@ public class ShipmentRepository : IShipmentRepository
     }
 
     /// <summary>
-    /// Executes the GetByCustomerAsync operation.
+    /// Returns shipments for a specific customer.
     /// </summary>
     public async Task<List<Shipment>> GetByCustomerAsync(int customerId)
     {
@@ -77,9 +78,11 @@ public class ShipmentRepository : IShipmentRepository
             .OrderByDescending(s => s.CreatedAt)
             .ToListAsync();
     }
+    #endregion
 
+    #region Command Operations
     /// <summary>
-    /// Executes the CreateAsync operation.
+    /// Creates async.
     /// </summary>
     public async Task CreateAsync(Shipment shipment)
     {
@@ -88,7 +91,7 @@ public class ShipmentRepository : IShipmentRepository
     }
 
     /// <summary>
-    /// Executes the UpdateAsync operation.
+    /// Updates async.
     /// </summary>
     public async Task UpdateAsync(Shipment shipment)
     {
@@ -97,13 +100,14 @@ public class ShipmentRepository : IShipmentRepository
     }
 
     /// <summary>
-    /// Executes the DeleteAsync operation.
+    /// Deletes async.
     /// </summary>
     public async Task DeleteAsync(Shipment shipment)
     {
         _context.Shipments.Remove(shipment);
         await _context.SaveChangesAsync();
     }
+    #endregion
 }
 
 

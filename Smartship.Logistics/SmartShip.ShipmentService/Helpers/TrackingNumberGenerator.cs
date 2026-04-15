@@ -1,18 +1,14 @@
-/// <summary>
-/// Provides backend implementation for TrackingNumberGenerator.
-/// </summary>
-
 namespace SmartShip.ShipmentService.Helpers;
 
 using SmartShip.Shared.Common.Helpers;
 
 /// <summary>
-/// Represents TrackingNumberGenerator.
+/// Domain model for tracking number generator.
 /// </summary>
 public static class TrackingNumberGenerator
 {
     /// <summary>
-    /// Executes the GenerateTrackingNumber operation.
+    /// Generates tracking number.
     /// </summary>
     public static string GenerateTrackingNumber() => $"SS-{TimeZoneHelper.GetCurrentIstTime():yyyyMMdd}-{Guid.NewGuid().ToString("N")[..8].ToUpperInvariant()}";
 }

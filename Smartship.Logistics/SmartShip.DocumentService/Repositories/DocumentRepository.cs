@@ -1,7 +1,3 @@
-/// <summary>
-/// Provides backend implementation for DocumentRepository.
-/// </summary>
-
 using Microsoft.EntityFrameworkCore;
 using SmartShip.DocumentService.Data;
 using SmartShip.DocumentService.Models;
@@ -9,14 +5,14 @@ using SmartShip.DocumentService.Models;
 namespace SmartShip.DocumentService.Repositories;
 
 /// <summary>
-/// Represents DocumentRepository.
+/// Repository for document data access operations.
 /// </summary>
 public class DocumentRepository : IDocumentRepository
 {
     private readonly DocumentDbContext _context;
 
     /// <summary>
-    /// Initializes a new instance of the document repository class.
+    /// Provides persistence operations for document data.
     /// </summary>
     public DocumentRepository(DocumentDbContext context)
     {
@@ -24,7 +20,7 @@ public class DocumentRepository : IDocumentRepository
     }
 
     /// <summary>
-    /// Executes the GetDocumentByIdAsync operation.
+    /// Returns document by id async.
     /// </summary>
     public async Task<Document?> GetDocumentByIdAsync(int documentId)
     {
@@ -32,7 +28,7 @@ public class DocumentRepository : IDocumentRepository
     }
 
     /// <summary>
-    /// Executes the GetDocumentsByShipmentAsync operation.
+    /// Returns documents by shipment async.
     /// </summary>
     public async Task<List<Document>> GetDocumentsByShipmentAsync(int shipmentId)
     {
@@ -44,7 +40,7 @@ public class DocumentRepository : IDocumentRepository
     }
 
     /// <summary>
-    /// Executes the GetDocumentsByCustomerAsync operation.
+    /// Returns documents by customer async.
     /// </summary>
     public async Task<List<Document>> GetDocumentsByCustomerAsync(int customerId)
     {
@@ -56,7 +52,7 @@ public class DocumentRepository : IDocumentRepository
     }
 
     /// <summary>
-    /// Executes the AddDocumentAsync operation.
+    /// Adds document async.
     /// </summary>
     public async Task AddDocumentAsync(Document document)
     {
@@ -65,7 +61,7 @@ public class DocumentRepository : IDocumentRepository
     }
 
     /// <summary>
-    /// Executes the UpdateDocumentAsync operation.
+    /// Updates document async.
     /// </summary>
     public async Task UpdateDocumentAsync(Document document)
     {
@@ -74,7 +70,7 @@ public class DocumentRepository : IDocumentRepository
     }
 
     /// <summary>
-    /// Executes the DeleteDocumentAsync operation.
+    /// Deletes document async.
     /// </summary>
     public async Task DeleteDocumentAsync(Document document)
     {
@@ -83,7 +79,7 @@ public class DocumentRepository : IDocumentRepository
     }
 
     /// <summary>
-    /// Executes the GetDeliveryProofAsync operation.
+    /// Returns delivery proof async.
     /// </summary>
     public async Task<DeliveryProof?> GetDeliveryProofAsync(int shipmentId)
     {
@@ -93,7 +89,7 @@ public class DocumentRepository : IDocumentRepository
     }
 
     /// <summary>
-    /// Executes the AddDeliveryProofAsync operation.
+    /// Adds delivery proof async.
     /// </summary>
     public async Task AddDeliveryProofAsync(DeliveryProof proof)
     {

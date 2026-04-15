@@ -1,8 +1,3 @@
-/// <summary>
-/// Service contract for the Admin microservice business operations.
-/// Defines hub management, location management, exception handling, shipment integration, and reporting capabilities.
-/// </summary>
-
 using SmartShip.AdminService.DTOs;
 using SmartShip.EventBus.Contracts;
 using SmartShip.Shared.DTOs;
@@ -11,15 +6,14 @@ using SmartShip.Shared.DTOs.Shipment;
 namespace SmartShip.AdminService.Services;
 
 /// <summary>
-/// Defines the contract for admin service operations including hub/location CRUD,
-/// exception management, shipment integration queries, and analytics reporting.
+/// Defines admin business operations used by the service layer.
 /// </summary>
 public interface IAdminService
 {
     #region Diagnostics
 
     /// <summary>
-    /// Demonstrates all Serilog log levels with scoped metadata for testing and verification.
+    /// Writes diagnostic logs across severity levels for observability checks.
     /// </summary>
     void LogLevelDemo(string userId, string requestId, bool simulateFailure);
 
@@ -28,12 +22,12 @@ public interface IAdminService
     #region Dashboard & Analytics
 
     /// <summary>
-    /// Retrieves top-level dashboard counters (hubs, locations, exceptions).
+    /// Returns dashboard metrics.
     /// </summary>
     Task<DashboardMetricsDTO> GetDashboardMetricsAsync();
 
     /// <summary>
-    /// Builds comprehensive shipment analytics including trends, status distribution, and delivery performance.
+    /// Returns comprehensive statistics.
     /// </summary>
     Task<ComprehensiveDashboardDTO> GetComprehensiveStatisticsAsync();
 
@@ -42,27 +36,27 @@ public interface IAdminService
     #region Hub Management
 
     /// <summary>
-    /// Retrieves a paginated list of all logistics hubs.
+    /// Returns all hubs.
     /// </summary>
     Task<PaginatedResponse<HubResponseDTO>> GetAllHubsAsync(int pageNumber = 1, int pageSize = 5);
 
     /// <summary>
-    /// Retrieves a single hub by its unique identifier.
+    /// Returns hub by id.
     /// </summary>
     Task<HubResponseDTO> GetHubByIdAsync(int hubId);
 
     /// <summary>
-    /// Creates a new logistics hub with unique name enforcement.
+    /// Creates hub.
     /// </summary>
     Task<HubResponseDTO> CreateHubAsync(CreateHubDTO dto);
 
     /// <summary>
-    /// Updates an existing hub's details with validation.
+    /// Updates hub.
     /// </summary>
     Task<HubResponseDTO> UpdateHubAsync(int hubId, UpdateHubDTO dto);
 
     /// <summary>
-    /// Deletes a hub if it has no assigned service locations.
+    /// Deletes hub.
     /// </summary>
     Task DeleteHubAsync(int hubId);
 
@@ -71,22 +65,22 @@ public interface IAdminService
     #region Location Management
 
     /// <summary>
-    /// Retrieves a paginated list of all service locations.
+    /// Returns all locations.
     /// </summary>
     Task<PaginatedResponse<LocationResponseDTO>> GetAllLocationsAsync(int pageNumber = 1, int pageSize = 5);
 
     /// <summary>
-    /// Creates a new service location tied to an existing hub.
+    /// Creates location.
     /// </summary>
     Task<LocationResponseDTO> CreateLocationAsync(CreateLocationDTO dto);
 
     /// <summary>
-    /// Updates an existing service location with hub and zip code validation.
+    /// Updates location.
     /// </summary>
     Task<LocationResponseDTO> UpdateLocationAsync(int locationId, UpdateLocationDTO dto);
 
     /// <summary>
-    /// Deletes a service location by its identifier.
+    /// Deletes location.
     /// </summary>
     Task DeleteLocationAsync(int locationId);
 
@@ -95,27 +89,27 @@ public interface IAdminService
     #region Exception Management
 
     /// <summary>
-    /// Retrieves a paginated list of all open/active shipment exceptions.
+    /// Returns active exceptions.
     /// </summary>
     Task<PaginatedResponse<ExceptionRecordResponseDTO>> GetActiveExceptionsAsync(int pageNumber = 1, int pageSize = 5);
 
     /// <summary>
-    /// Marks an active exception as resolved with resolution notes.
+    /// Resolves an active shipment exception with resolution notes.
     /// </summary>
     Task<ExceptionRecordResponseDTO> ResolveExceptionAsync(int shipmentId, ResolveExceptionDTO dto);
 
     /// <summary>
-    /// Records a delay exception for a shipment.
+    /// Marks a shipment exception as delayed with the provided reason.
     /// </summary>
     Task<ExceptionRecordResponseDTO> DelayShipmentAsync(int shipmentId, string reason);
 
     /// <summary>
-    /// Records a return exception for a shipment.
+    /// Marks a shipment exception as returned with the provided reason.
     /// </summary>
     Task<ExceptionRecordResponseDTO> ReturnShipmentAsync(int shipmentId, string reason);
 
     /// <summary>
-    /// Processes an incoming shipment exception event from the message bus.
+    /// Creates exception record from event.
     /// </summary>
     Task CreateExceptionRecordFromEventAsync(ShipmentExceptionEvent @event);
 
@@ -124,17 +118,17 @@ public interface IAdminService
     #region Shipment Integration
 
     /// <summary>
-    /// Retrieves paginated shipments from the ShipmentService via HTTP integration.
+    /// Returns shipments.
     /// </summary>
     Task<PaginatedResponse<ShipmentExternalDto>> GetShipmentsAsync(int pageNumber = 1, int pageSize = 5);
 
     /// <summary>
-    /// Fetches a single shipment by ID from the ShipmentService.
+    /// Returns shipment by id.
     /// </summary>
     Task<ShipmentExternalDto> GetShipmentByIdAsync(int shipmentId);
 
     /// <summary>
-    /// Returns shipments associated with a hub's service area zip codes.
+    /// Returns shipments by hub.
     /// </summary>
     Task<PaginatedResponse<ShipmentExternalDto>> GetShipmentsByHubAsync(int hubId, int pageNumber = 1, int pageSize = 5);
 
@@ -143,27 +137,27 @@ public interface IAdminService
     #region Reports
 
     /// <summary>
-    /// Generates a high-level operational report (volume, revenue, exceptions).
+    /// Returns reports overview.
     /// </summary>
     Task<object> GetReportsOverviewAsync();
 
     /// <summary>
-    /// Calculates shipment delivery performance ratio.
+    /// Returns shipment performance.
     /// </summary>
     Task<object> GetShipmentPerformanceAsync();
 
     /// <summary>
-    /// Computes delivery SLA compliance percentage.
+    /// Returns delivery SLA metrics.
     /// </summary>
     Task<object> GetDeliverySLAAsync();
 
     /// <summary>
-    /// Aggregates revenue figures based on shipment weight.
+    /// Returns revenue.
     /// </summary>
     Task<object> GetRevenueAsync();
 
     /// <summary>
-    /// Compares throughput and performance metrics across logistics hubs.
+    /// Returns hub performance.
     /// </summary>
     Task<object> GetHubPerformanceAsync();
 

@@ -1,7 +1,3 @@
-/// <summary>
-/// Provides backend implementation for UserRepository.
-/// </summary>
-
 using Microsoft.EntityFrameworkCore;
 using SmartShip.IdentityService.Data;
 using SmartShip.IdentityService.Models;
@@ -9,14 +5,14 @@ using SmartShip.IdentityService.Models;
 namespace SmartShip.IdentityService.Repositories
 {
     /// <summary>
-    /// Represents UserRepository.
+    /// Repository for user data access operations.
     /// </summary>
     public class UserRepository : IUserRepository
     {
         private readonly IdentityDbContext _context;
 
         /// <summary>
-        /// Initializes a new instance of the user repository class.
+        /// Registers r repository.
         /// </summary>
         public UserRepository(IdentityDbContext context)
         {
@@ -24,7 +20,7 @@ namespace SmartShip.IdentityService.Repositories
         }
 
         /// <summary>
-        /// Executes the GetByEmailAsync operation.
+        /// Returns a user by email address.
         /// </summary>
         public async Task<User?> GetByEmailAsync(string email)
         {
@@ -32,7 +28,7 @@ namespace SmartShip.IdentityService.Repositories
         }
 
         /// <summary>
-        /// Executes the GetByIdAsync operation.
+        /// Returns a record by identifier.
         /// </summary>
         public async Task<User?> GetByIdAsync(int id)
         {
@@ -40,7 +36,7 @@ namespace SmartShip.IdentityService.Repositories
         }
 
         /// <summary>
-        /// Executes the GetAllUsersAsync operation.
+        /// Returns all users async.
         /// </summary>
         public async Task<List<User>> GetAllUsersAsync()
         {
@@ -48,7 +44,7 @@ namespace SmartShip.IdentityService.Repositories
         }
 
         /// <summary>
-        /// Executes the CreateAsync operation.
+        /// Creates async.
         /// </summary>
         public async Task CreateAsync(User user)
         {
@@ -57,7 +53,7 @@ namespace SmartShip.IdentityService.Repositories
         }
 
         /// <summary>
-        /// Executes the UpdateAsync operation.
+        /// Updates async.
         /// </summary>
         public async Task UpdateAsync(User user)
         {
@@ -66,7 +62,7 @@ namespace SmartShip.IdentityService.Repositories
         }
 
         /// <summary>
-        /// Executes the DeleteAsync operation.
+        /// Deletes async.
         /// </summary>
         public async Task DeleteAsync(User user)
         {

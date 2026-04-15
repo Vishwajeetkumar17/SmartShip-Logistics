@@ -1,13 +1,9 @@
-/// <summary>
-/// Provides backend implementation for ITrackingRepository.
-/// </summary>
-
 using SmartShip.TrackingService.Models;
 
 namespace SmartShip.TrackingService.Repositories;
 
 /// <summary>
-/// Represents ITrackingRepository.
+/// Contract for itracking persistence operations.
 /// </summary>
 public interface ITrackingRepository
 {

@@ -1,7 +1,3 @@
-/// <summary>
-/// Provides backend implementation for TrackingRepositorySmokeTests.
-/// </summary>
-
 using Microsoft.EntityFrameworkCore;
 using SmartShip.TrackingService.Data;
 using SmartShip.TrackingService.Models;
@@ -10,11 +6,11 @@ using SmartShip.TrackingService.Repositories;
 namespace SmartShip.TrackingService.UnitTests;
 
 /// <summary>
-    /// Represents the tracking repository smoke tests entity or configuration model.
-    /// </summary>
+/// Domain model for tracking repository smoke tests.
+/// </summary>
     [TestFixture]
 /// <summary>
-/// Represents TrackingRepositorySmokeTests.
+/// Domain model for tracking repository smoke tests.
 /// </summary>
 public class TrackingRepositorySmokeTests
 {
@@ -29,11 +25,11 @@ public class TrackingRepositorySmokeTests
     }
 
     /// <summary>
-    /// Asynchronously handles the add event async_should store all shipment stages including repeated transit process.
+    /// Adds event async should store all shipment stages including repeated transit.
     /// </summary>
     [Test]
     /// <summary>
-    /// Executes the AddEventAsync_ShouldStoreAllShipmentStagesIncludingRepeatedTransit operation.
+    /// Adds event async should store all shipment stages including repeated transit.
     /// </summary>
     public async Task AddEventAsync_ShouldStoreAllShipmentStagesIncludingRepeatedTransit()
     {
@@ -67,11 +63,11 @@ public class TrackingRepositorySmokeTests
     }
 
     /// <summary>
-    /// Asynchronously handles the add event async_should ignore near identical duplicate event process.
+    /// Adds event async should ignore near identical duplicate event.
     /// </summary>
     [Test]
     /// <summary>
-    /// Executes the AddEventAsync_ShouldIgnoreNearIdenticalDuplicateEvent operation.
+    /// Adds event async should ignore near identical duplicate event.
     /// </summary>
     public async Task AddEventAsync_ShouldIgnoreNearIdenticalDuplicateEvent()
     {

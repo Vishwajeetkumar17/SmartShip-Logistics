@@ -1,7 +1,3 @@
-/// <summary>
-/// Provides backend implementation for DocumentsControllerTests.
-/// </summary>
-
 using System.Security.Claims;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -15,11 +11,11 @@ using SmartShip.Shared.DTOs;
 namespace SmartShip.DocumentService.UnitTests;
 
 /// <summary>
-    /// Represents the documents controller tests entity or configuration model.
-    /// </summary>
+/// Domain model for documents controller tests.
+/// </summary>
     [TestFixture]
 /// <summary>
-/// Represents DocumentsControllerTests.
+/// Domain model for documents controller tests.
 /// </summary>
 public class DocumentsControllerTests
 {
@@ -27,11 +23,11 @@ public class DocumentsControllerTests
     private DocumentsController _controller = null!;
 
     /// <summary>
-    /// Asynchronously handles the set up process.
+    /// Sets up.
     /// </summary>
     [SetUp]
     /// <summary>
-    /// Executes the SetUp operation.
+    /// Sets up.
     /// </summary>
     public void SetUp()
     {
@@ -40,11 +36,11 @@ public class DocumentsControllerTests
     }
 
     /// <summary>
-    /// Asynchronously handles the upload document_when no user claim_returns unauthorized process.
+    /// Uploads document when no user claim returns unauthorized.
     /// </summary>
     [Test]
     /// <summary>
-    /// Executes the UploadDocument_WhenNoUserClaim_ReturnsUnauthorized operation.
+    /// Uploads document when no user claim returns unauthorized.
     /// </summary>
     public async Task UploadDocument_WhenNoUserClaim_ReturnsUnauthorized()
     {
@@ -56,11 +52,11 @@ public class DocumentsControllerTests
     }
 
     /// <summary>
-    /// Asynchronously handles the upload document_when user exists_calls service and returns ok process.
+    /// Uploads document when user exists calls service and returns ok.
     /// </summary>
     [Test]
     /// <summary>
-    /// Executes the UploadDocument_WhenUserExists_CallsServiceAndReturnsOk operation.
+    /// Uploads document when user exists calls service and returns ok.
     /// </summary>
     public async Task UploadDocument_WhenUserExists_CallsServiceAndReturnsOk()
     {
@@ -78,11 +74,11 @@ public class DocumentsControllerTests
     }
 
     /// <summary>
-    /// Asynchronously handles the get document_when not owner_returns forbid process.
+    /// Returns document when not owner returns forbid.
     /// </summary>
     [Test]
     /// <summary>
-    /// Executes the GetDocument_WhenNotOwner_ReturnsForbid operation.
+    /// Returns document when not owner returns forbid.
     /// </summary>
     public async Task GetDocument_WhenNotOwner_ReturnsForbid()
     {
@@ -95,11 +91,11 @@ public class DocumentsControllerTests
     }
 
     /// <summary>
-    /// Asynchronously handles the get documents by shipment_when no user claim_returns unauthorized process.
+    /// Returns documents by shipment when no user claim returns unauthorized.
     /// </summary>
     [Test]
     /// <summary>
-    /// Executes the GetDocumentsByShipment_WhenNoUserClaim_ReturnsUnauthorized operation.
+    /// Returns documents by shipment when no user claim returns unauthorized.
     /// </summary>
     public async Task GetDocumentsByShipment_WhenNoUserClaim_ReturnsUnauthorized()
     {
@@ -120,11 +116,11 @@ public class DocumentsControllerTests
     }
 
     /// <summary>
-    /// Asynchronously handles the get documents by shipment_when non admin_filters to current user process.
+    /// Returns documents by shipment when non admin filters to current user.
     /// </summary>
     [Test]
     /// <summary>
-    /// Executes the GetDocumentsByShipment_WhenNonAdmin_FiltersToCurrentUser operation.
+    /// Returns documents by shipment when non admin filters to current user.
     /// </summary>
     public async Task GetDocumentsByShipment_WhenNonAdmin_FiltersToCurrentUser()
     {
@@ -155,11 +151,11 @@ public class DocumentsControllerTests
     }
 
     /// <summary>
-    /// Asynchronously handles the get delivery proof_when no user claim_returns unauthorized process.
+    /// Returns delivery proof when no user claim returns unauthorized.
     /// </summary>
     [Test]
     /// <summary>
-    /// Executes the GetDeliveryProof_WhenNoUserClaim_ReturnsUnauthorized operation.
+    /// Returns delivery proof when no user claim returns unauthorized.
     /// </summary>
     public async Task GetDeliveryProof_WhenNoUserClaim_ReturnsUnauthorized()
     {
@@ -172,11 +168,11 @@ public class DocumentsControllerTests
     }
 
     /// <summary>
-    /// Asynchronously handles the get delivery proof_when user not owner_returns forbid process.
+    /// Returns delivery proof when user not owner returns forbid.
     /// </summary>
     [Test]
     /// <summary>
-    /// Executes the GetDeliveryProof_WhenUserNotOwner_ReturnsForbid operation.
+    /// Returns delivery proof when user not owner returns forbid.
     /// </summary>
     public async Task GetDeliveryProof_WhenUserNotOwner_ReturnsForbid()
     {
@@ -200,11 +196,11 @@ public class DocumentsControllerTests
     }
 
     /// <summary>
-    /// Asynchronously handles the get delivery proof_when user owns shipment_returns ok process.
+    /// Returns delivery proof when user owns shipment returns ok.
     /// </summary>
     [Test]
     /// <summary>
-    /// Executes the GetDeliveryProof_WhenUserOwnsShipment_ReturnsOk operation.
+    /// Returns delivery proof when user owns shipment returns ok.
     /// </summary>
     public async Task GetDeliveryProof_WhenUserOwnsShipment_ReturnsOk()
     {
@@ -232,11 +228,11 @@ public class DocumentsControllerTests
     }
 
     /// <summary>
-    /// Asynchronously handles the get documents by shipment_when called_returns paginated documents process.
+    /// Returns documents by shipment when called returns paginated documents.
     /// </summary>
     [Test]
     /// <summary>
-    /// Executes the GetDocumentsByShipment_WhenCalled_ReturnsPaginatedDocuments operation.
+    /// Returns documents by shipment when called returns paginated documents.
     /// </summary>
     public async Task GetDocumentsByShipment_WhenCalled_ReturnsPaginatedDocuments()
     {
@@ -274,11 +270,11 @@ public class DocumentsControllerTests
     }
 
     /// <summary>
-    /// Asynchronously handles the get documents by shipment_when page number2_returns second page process.
+    /// Returns documents by shipment when page number2 returns second page.
     /// </summary>
     [Test]
     /// <summary>
-    /// Executes the GetDocumentsByShipment_WhenPageNumber2_ReturnsSecondPage operation.
+    /// Returns documents by shipment when page number2 returns second page.
     /// </summary>
     public async Task GetDocumentsByShipment_WhenPageNumber2_ReturnsSecondPage()
     {

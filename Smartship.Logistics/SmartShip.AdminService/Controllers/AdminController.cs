@@ -1,7 +1,3 @@
-/// <summary>
-/// Provides backend implementation for AdminController.
-/// </summary>
-
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
@@ -14,13 +10,16 @@ namespace SmartShip.AdminService.Controllers;
 [Route("api/admin")]
 [Authorize(Roles = "ADMIN")]
 /// <summary>
-/// Represents AdminController.
+/// Admin-only API: hubs and service locations, exceptions, cross-service shipment views, and operational reports.
 /// </summary>
 public class AdminController : ControllerBase
 {
     private readonly IAdminService _service;
     private readonly ILogger<AdminController> _logger;
 
+    /// <summary>
+    /// Initializes the controller with admin business services and structured logging.
+    /// </summary>
     public AdminController(IAdminService service, ILogger<AdminController> logger)
     {
         _service = service;
@@ -29,7 +28,7 @@ public class AdminController : ControllerBase
 
     [HttpGet("logging-demo")]
     /// <summary>
-    /// Executes LoggingDemo.
+    /// Emits sample logs to verify structured logging and correlation IDs.
     /// </summary>
     public IActionResult LoggingDemo([FromQuery] bool fail = false)
     {
@@ -56,7 +55,7 @@ public class AdminController : ControllerBase
     // Dashboard & Stats
     [HttpGet("dashboard")]
     /// <summary>
-    /// Executes GetDashboard.
+    /// Returns high-level KPIs: active hubs, locations, and open shipment exceptions.
     /// </summary>
     public async Task<IActionResult> GetDashboard()
     {
@@ -66,7 +65,7 @@ public class AdminController : ControllerBase
 
     [HttpGet("statistics")]
     /// <summary>
-    /// Executes GetStatistics.
+    /// Returns the comprehensive analytics dashboard (trends, distributions, delivery performance).
     /// </summary>
     public async Task<IActionResult> GetStatistics()
     {
@@ -77,7 +76,7 @@ public class AdminController : ControllerBase
     // Hubs
     [HttpGet("hubs")]
     /// <summary>
-    /// Executes GetAllHubs.
+    /// Returns a paginated list of hubs with their service locations.
     /// </summary>
     public async Task<IActionResult> GetAllHubs([FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 5)
     {
@@ -87,7 +86,7 @@ public class AdminController : ControllerBase
 
     [HttpGet("hubs/{id:int}")]
     /// <summary>
-    /// Executes GetHub.
+    /// Returns a single hub by identifier, including nested service locations.
     /// </summary>
     public async Task<IActionResult> GetHub(int id)
     {
@@ -97,7 +96,7 @@ public class AdminController : ControllerBase
 
     [HttpPost("hubs")]
     /// <summary>
-    /// Executes CreateHub.
+    /// Creates a new logistics hub (name must be unique).
     /// </summary>
     public async Task<IActionResult> CreateHub([FromBody] CreateHubDTO dto)
     {
@@ -107,7 +106,7 @@ public class AdminController : ControllerBase
 
     [HttpPut("hubs/{id:int}")]
     /// <summary>
-    /// Executes UpdateHub.
+    /// Updates hub metadata and active status.
     /// </summary>
     public async Task<IActionResult> UpdateHub(int id, [FromBody] UpdateHubDTO dto)
     {
@@ -117,7 +116,7 @@ public class AdminController : ControllerBase
 
     [HttpDelete("hubs/{id:int}")]
     /// <summary>
-    /// Executes DeleteHub.
+    /// Deletes a hub when it has no assigned service locations.
     /// </summary>
     public async Task<IActionResult> DeleteHub(int id)
     {
@@ -128,7 +127,7 @@ public class AdminController : ControllerBase
     // Locations
     [HttpGet("locations")]
     /// <summary>
-    /// Executes GetAllLocations.
+    /// Returns a paginated list of service locations (ZIP coverage per hub).
     /// </summary>
     public async Task<IActionResult> GetAllLocations([FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 5)
     {
@@ -138,7 +137,7 @@ public class AdminController : ControllerBase
 
     [HttpPost("locations")]
     /// <summary>
-    /// Executes CreateLocation.
+    /// Adds a service location to a hub (ZIP code must be unique).
     /// </summary>
     public async Task<IActionResult> CreateLocation([FromBody] CreateLocationDTO dto)
     {
@@ -148,7 +147,7 @@ public class AdminController : ControllerBase
 
     [HttpPut("locations/{id:int}")]
     /// <summary>
-    /// Executes UpdateLocation.
+    /// Updates a service location (hub assignment, name, ZIP, active flag).
     /// </summary>
     public async Task<IActionResult> UpdateLocation(int id, [FromBody] UpdateLocationDTO dto)
     {
@@ -158,7 +157,7 @@ public class AdminController : ControllerBase
 
     [HttpDelete("locations/{id:int}")]
     /// <summary>
-    /// Executes DeleteLocation.
+    /// Removes a service location from the network.
     /// </summary>
     public async Task<IActionResult> DeleteLocation(int id)
     {
@@ -169,7 +168,7 @@ public class AdminController : ControllerBase
     // Exceptions
     [HttpGet("exceptions")]
     /// <summary>
-    /// Executes GetExceptions.
+    /// Returns a paginated list of open shipment exceptions for operations triage.
     /// </summary>
     public async Task<IActionResult> GetExceptions([FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 5)
     {
@@ -179,7 +178,7 @@ public class AdminController : ControllerBase
 
     [HttpPut("shipments/{id:int}/resolve")]
     /// <summary>
-    /// Executes ResolveException.
+    /// Closes an open exception for the shipment with resolution notes.
     /// </summary>
     public async Task<IActionResult> ResolveException(int id, [FromBody] ResolveExceptionDTO dto)
     {
@@ -190,7 +189,7 @@ public class AdminController : ControllerBase
 
     [HttpPut("shipments/{id:int}/delay")]
     /// <summary>
-    /// Executes DelayShipment.
+    /// Marks an active shipment exception as delayed.
     /// </summary>
     public async Task<IActionResult> DelayShipment(int id, [FromBody] ShipmentActionReasonDTO dto)
     {
@@ -200,7 +199,7 @@ public class AdminController : ControllerBase
 
     [HttpPut("shipments/{id:int}/return")]
     /// <summary>
-    /// Executes ReturnShipment.
+    /// Marks an active shipment exception as returned to sender.
     /// </summary>
     public async Task<IActionResult> ReturnShipment(int id, [FromBody] ShipmentActionReasonDTO dto)
     {
@@ -211,7 +210,7 @@ public class AdminController : ControllerBase
     // Shipment Monitoring Integration
     [HttpGet("shipments")]
     /// <summary>
-    /// Executes GetShipments.
+    /// Returns a paginated view of shipments from ShipmentService (aggregated for admin monitoring).
     /// </summary>
     public async Task<IActionResult> GetShipments([FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 5)
     {
@@ -221,7 +220,7 @@ public class AdminController : ControllerBase
 
     [HttpGet("shipments/{id:int}")]
     /// <summary>
-    /// Executes GetShipmentById.
+    /// Returns shipment details by identifier via ShipmentService.
     /// </summary>
     public async Task<IActionResult> GetShipmentById(int id)
     {
@@ -231,7 +230,7 @@ public class AdminController : ControllerBase
 
     [HttpGet("shipments/hub/{hubId:int}")]
     /// <summary>
-    /// Executes GetShipmentsByHub.
+    /// Returns shipments whose sender or receiver ZIP matches the hub's service locations.
     /// </summary>
     public async Task<IActionResult> GetShipmentsByHub(int hubId, [FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 5)
     {
@@ -242,7 +241,7 @@ public class AdminController : ControllerBase
     // Reports Integration
     [HttpGet("reports")]
     /// <summary>
-    /// Executes GetReports.
+    /// Returns a summary overview for reporting (counts, revenue proxy, active exceptions).
     /// </summary>
     public async Task<IActionResult> GetReports()
     {
@@ -252,7 +251,7 @@ public class AdminController : ControllerBase
 
     [HttpGet("reports/shipment-performance")]
     /// <summary>
-    /// Executes GetShipmentPerformance.
+    /// Returns delivery performance metrics (delivered vs total shipments).
     /// </summary>
     public async Task<IActionResult> GetShipmentPerformance()
     {
@@ -262,7 +261,7 @@ public class AdminController : ControllerBase
 
     [HttpGet("reports/delivery-sla")]
     /// <summary>
-    /// Executes GetDeliverySLA.
+    /// Returns delivery SLA metrics against the configured on-time window.
     /// </summary>
     public async Task<IActionResult> GetDeliverySLA()
     {
@@ -272,7 +271,7 @@ public class AdminController : ControllerBase
 
     [HttpGet("reports/revenue")]
     /// <summary>
-    /// Executes GetRevenue.
+    /// Returns a revenue estimate derived from shipped weight over the reporting period.
     /// </summary>
     public async Task<IActionResult> GetRevenue()
     {
@@ -282,7 +281,7 @@ public class AdminController : ControllerBase
 
     [HttpGet("reports/hub-performance")]
     /// <summary>
-    /// Executes GetHubPerformance.
+    /// Returns shipment volume attributed to each hub via matching ZIP codes.
     /// </summary>
     public async Task<IActionResult> GetHubPerformance()
     {

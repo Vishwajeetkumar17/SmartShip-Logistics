@@ -1,7 +1,3 @@
-/// <summary>
-/// Provides backend implementation for RabbitMQPublisher.
-/// </summary>
-
 using System.Text.Json;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
@@ -12,7 +8,7 @@ using SmartShip.EventBus.Configuration;
 namespace SmartShip.EventBus.Infrastructure;
 
 /// <summary>
-/// Represents RabbitMQPublisher.
+/// Domain model for rabbit mqpublisher.
 /// </summary>
 public sealed class RabbitMQPublisher : IEventPublisher
 {
@@ -22,7 +18,7 @@ public sealed class RabbitMQPublisher : IEventPublisher
     private readonly JsonSerializerOptions _serializerOptions = new(JsonSerializerDefaults.Web);
 
     /// <summary>
-    /// Initializes a new instance of the rabbit mqpublisher class.
+    /// Processes rabbit mqpublisher.
     /// </summary>
     public RabbitMQPublisher(
         RabbitMQConnectionManager connectionManager,
@@ -35,7 +31,7 @@ public sealed class RabbitMQPublisher : IEventPublisher
     }
 
     /// <summary>
-    /// Asynchronously handles the publish async process.
+    /// Code summary.
     /// </summary>
     public async Task PublishAsync<T>(string queueName, T @event, CancellationToken cancellationToken = default) where T : class
     {

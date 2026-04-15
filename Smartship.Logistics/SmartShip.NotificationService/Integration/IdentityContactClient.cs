@@ -1,7 +1,3 @@
-/// <summary>
-/// Provides backend implementation for IdentityContactClient.
-/// </summary>
-
 using System.Net;
 using System.Net.Http.Json;
 using Microsoft.Extensions.Logging;
@@ -11,7 +7,7 @@ using SmartShip.NotificationService.Configurations;
 namespace SmartShip.NotificationService.Integration;
 
 /// <summary>
-/// Represents IdentityContactClient.
+/// Domain model for identity contact client.
 /// </summary>
 public sealed class IdentityContactClient : IIdentityContactClient
 {
@@ -20,7 +16,7 @@ public sealed class IdentityContactClient : IIdentityContactClient
     private readonly ILogger<IdentityContactClient> _logger;
 
     /// <summary>
-    /// Initializes a new instance of the identity contact client class.
+    /// Processes identity contact client.
     /// </summary>
     public IdentityContactClient(
         HttpClient httpClient,
@@ -33,7 +29,7 @@ public sealed class IdentityContactClient : IIdentityContactClient
     }
 
     /// <summary>
-    /// Executes the GetUserContactAsync operation.
+    /// Returns user contact async.
     /// </summary>
     public async Task<UserContactDto?> GetUserContactAsync(int userId, CancellationToken cancellationToken, string? correlationId = null)
     {

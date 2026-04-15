@@ -1,7 +1,3 @@
-/// <summary>
-/// Provides backend implementation for Program.
-/// </summary>
-
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Hosting;
@@ -25,12 +21,12 @@ using System.Text;
 namespace SmartShip.TrackingService;
 
 /// <summary>
-/// Represents Program.
+/// Application entry point that configures services and starts the host.
 /// </summary>
 public class Program
 {
     /// <summary>
-    /// Executes the Main operation.
+    /// Application entry point that configures services and starts the host.
     /// </summary>
     public static void Main(string[] args)
     {

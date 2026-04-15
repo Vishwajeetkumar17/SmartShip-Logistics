@@ -1,14 +1,14 @@
-/// <summary>
-/// Provides backend implementation for DownstreamTelemetryHandler.
-/// </summary>
-
 namespace SmartShip.Gateway.DelegatingHandlers;
 
 /// <summary>
-/// Represents DownstreamTelemetryHandler.
+/// Handler component for downstream telemetry processing.
 /// </summary>
 public class DownstreamTelemetryHandler(ILogger<DownstreamTelemetryHandler> logger) : DelegatingHandler
 {
+    #region Protected API
+    /// <summary>
+    /// Sends async.
+    /// </summary>
     protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
     {
         var startedAt = DateTime.UtcNow;
@@ -41,6 +41,7 @@ public class DownstreamTelemetryHandler(ILogger<DownstreamTelemetryHandler> logg
             throw;
         }
     }
+    #endregion
 }
 
 

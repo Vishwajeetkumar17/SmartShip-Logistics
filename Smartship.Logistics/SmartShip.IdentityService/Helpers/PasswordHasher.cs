@@ -1,19 +1,15 @@
-/// <summary>
-/// Provides backend implementation for PasswordHasher.
-/// </summary>
-
 using System.Security.Cryptography;
 using System.Text;
 
 namespace SmartShip.IdentityService.Helpers
 {
     /// <summary>
-    /// Represents PasswordHasher.
+    /// SHA-256 based password hashing for stored credentials (verify compares hashes).
     /// </summary>
     public class PasswordHasher
     {
         /// <summary>
-        /// Executes the Hash operation.
+        /// Returns a Base64 hash of the UTF-8 password bytes.
         /// </summary>
         public static string Hash(string password)
         {
@@ -24,7 +20,7 @@ namespace SmartShip.IdentityService.Helpers
             return Convert.ToBase64String(hash);
         }
         /// <summary>
-        /// Executes the Verify operation.
+        /// Returns true when the password hashes to the same value as the stored hash.
         /// </summary>
         public static bool Verify(string password, string hash)
         {

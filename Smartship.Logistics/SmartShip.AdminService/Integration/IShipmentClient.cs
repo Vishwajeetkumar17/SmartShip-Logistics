@@ -1,13 +1,9 @@
-/// <summary>
-/// Provides backend implementation for IShipmentClient.
-/// </summary>
-
 using SmartShip.Shared.DTOs.Shipment;
 
 namespace SmartShip.AdminService.Integration;
 
 /// <summary>
-/// Represents IShipmentClient.
+/// Contract for shipment client behavior.
 /// </summary>
 public interface IShipmentClient
 {

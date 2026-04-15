@@ -1,9 +1,3 @@
-/// <summary>
-/// Entity Framework Core implementation of the Admin repository.
-/// Provides data access for Hubs, Service Locations, and Exception Records
-/// using the AdminDbContext.
-/// </summary>
-
 using Microsoft.EntityFrameworkCore;
 using SmartShip.AdminService.Data;
 using SmartShip.AdminService.Models;
@@ -11,15 +5,14 @@ using SmartShip.AdminService.Models;
 namespace SmartShip.AdminService.Repositories;
 
 /// <summary>
-/// Concrete EF Core repository for admin data persistence operations.
-/// Handles CRUD for hubs, service locations, and shipment exception records.
+/// Repository for admin data access operations.
 /// </summary>
 public class AdminRepository : IAdminRepository
 {
     private readonly AdminDbContext _context;
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="AdminRepository"/> class.
+    /// Initializes admin repository dependencies.
     /// </summary>
     /// <param name="context">The injected Admin database context.</param>
     public AdminRepository(AdminDbContext context)
@@ -30,7 +23,7 @@ public class AdminRepository : IAdminRepository
     #region Hub Operations
 
     /// <summary>
-    /// Retrieves all hubs with their associated service locations (read-only).
+    /// Returns all hubs.
     /// </summary>
     public async Task<List<Hub>> GetAllHubsAsync()
     {
@@ -41,7 +34,7 @@ public class AdminRepository : IAdminRepository
     }
 
     /// <summary>
-    /// Retrieves a single hub by ID, including its service locations (tracked for updates).
+    /// Returns hub by id.
     /// </summary>
     public async Task<Hub?> GetHubByIdAsync(int hubId)
     {
@@ -51,7 +44,7 @@ public class AdminRepository : IAdminRepository
     }
 
     /// <summary>
-    /// Persists a new hub entity and commits the transaction.
+    /// Adds hub.
     /// </summary>
     public async Task AddHubAsync(Hub hub)
     {
@@ -60,7 +53,7 @@ public class AdminRepository : IAdminRepository
     }
 
     /// <summary>
-    /// Updates an existing hub entity and commits the transaction.
+    /// Updates hub.
     /// </summary>
     public async Task UpdateHubAsync(Hub hub)
     {
@@ -69,7 +62,7 @@ public class AdminRepository : IAdminRepository
     }
 
     /// <summary>
-    /// Removes a hub entity from the database and commits the transaction.
+    /// Deletes hub.
     /// </summary>
     public async Task DeleteHubAsync(Hub hub)
     {
@@ -78,7 +71,7 @@ public class AdminRepository : IAdminRepository
     }
 
     /// <summary>
-    /// Checks if a hub name already exists, optionally excluding a specific hub ID (for updates).
+    /// Checks whether a hub name is already in use.
     /// </summary>
     public async Task<bool> HubNameExistsAsync(string name, int? excludingHubId = null)
     {
@@ -90,7 +83,7 @@ public class AdminRepository : IAdminRepository
     #region Service Location Operations
 
     /// <summary>
-    /// Retrieves all service locations (read-only, no tracking).
+    /// Returns all locations.
     /// </summary>
     public async Task<List<ServiceLocation>> GetAllLocationsAsync()
     {
@@ -100,7 +93,7 @@ public class AdminRepository : IAdminRepository
     }
 
     /// <summary>
-    /// Retrieves a single service location by its primary key.
+    /// Returns location by id.
     /// </summary>
     public async Task<ServiceLocation?> GetLocationByIdAsync(int locationId)
     {
@@ -108,7 +101,7 @@ public class AdminRepository : IAdminRepository
     }
 
     /// <summary>
-    /// Persists a new service location entity and commits the transaction.
+    /// Adds location.
     /// </summary>
     public async Task AddLocationAsync(ServiceLocation location)
     {
@@ -117,7 +110,7 @@ public class AdminRepository : IAdminRepository
     }
 
     /// <summary>
-    /// Updates an existing service location entity and commits the transaction.
+    /// Updates location.
     /// </summary>
     public async Task UpdateLocationAsync(ServiceLocation location)
     {
@@ -126,7 +119,7 @@ public class AdminRepository : IAdminRepository
     }
 
     /// <summary>
-    /// Removes a service location from the database and commits the transaction.
+    /// Deletes location.
     /// </summary>
     public async Task DeleteLocationAsync(ServiceLocation location)
     {
@@ -135,7 +128,7 @@ public class AdminRepository : IAdminRepository
     }
 
     /// <summary>
-    /// Checks if a ZIP code already exists, optionally excluding a specific location ID (for updates).
+    /// Checks whether a ZIP code is already assigned to a location.
     /// </summary>
     public async Task<bool> ZipCodeExistsAsync(string zipCode, int? excludingLocationId = null)
     {
@@ -147,7 +140,7 @@ public class AdminRepository : IAdminRepository
     #region Exception Record Operations
 
     /// <summary>
-    /// Retrieves all open/active exception records, ordered by most recent first (read-only).
+    /// Returns active exceptions.
     /// </summary>
     public async Task<List<ExceptionRecord>> GetActiveExceptionsAsync()
     {
@@ -159,7 +152,7 @@ public class AdminRepository : IAdminRepository
     }
 
     /// <summary>
-    /// Retrieves a single exception record by its primary key.
+    /// Returns exception by id.
     /// </summary>
     public async Task<ExceptionRecord?> GetExceptionByIdAsync(int exceptionId)
     {
@@ -167,7 +160,7 @@ public class AdminRepository : IAdminRepository
     }
 
     /// <summary>
-    /// Finds the most recent open exception for a specific shipment.
+    /// Returns exception by shipment id.
     /// </summary>
     public async Task<ExceptionRecord?> GetExceptionByShipmentIdAsync(int shipmentId)
     {
@@ -178,7 +171,7 @@ public class AdminRepository : IAdminRepository
     }
 
     /// <summary>
-    /// Finds an open exception of a specific type for a shipment (prevents duplicates).
+    /// Returns open exception by shipment and type.
     /// </summary>
     public async Task<ExceptionRecord?> GetOpenExceptionByShipmentAndTypeAsync(int shipmentId, string exceptionType)
     {
@@ -190,7 +183,7 @@ public class AdminRepository : IAdminRepository
     }
 
     /// <summary>
-    /// Persists a new exception record and commits the transaction.
+    /// Adds exception record.
     /// </summary>
     public async Task AddExceptionRecordAsync(ExceptionRecord record)
     {
@@ -199,7 +192,7 @@ public class AdminRepository : IAdminRepository
     }
 
     /// <summary>
-    /// Updates an existing exception record (e.g., to mark as resolved) and commits.
+    /// Updates exception record.
     /// </summary>
     public async Task UpdateExceptionRecordAsync(ExceptionRecord record)
     {
@@ -212,7 +205,7 @@ public class AdminRepository : IAdminRepository
     #region Aggregation Queries
 
     /// <summary>
-    /// Counts all hubs currently marked as active.
+    /// Returns total active hubs.
     /// </summary>
     public async Task<int> GetTotalActiveHubsAsync()
     {
@@ -220,7 +213,7 @@ public class AdminRepository : IAdminRepository
     }
 
     /// <summary>
-    /// Counts all exception records with an "Open" status.
+    /// Returns total active exceptions.
     /// </summary>
     public async Task<int> GetTotalActiveExceptionsAsync()
     {

@@ -1,7 +1,3 @@
-/// <summary>
-/// Provides backend implementation for ShipmentsController.
-/// </summary>
-
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SmartShip.Shared.Common.Extensions;
@@ -15,21 +11,29 @@ namespace SmartShip.ShipmentService.Controllers;
 [ApiController]
 [Route("api/shipments")]
 /// <summary>
-/// Represents ShipmentsController.
+/// Shipment lifecycle API: create and query shipments, admin status transitions, customer pickup and issues.
 /// </summary>
 public class ShipmentsController : ControllerBase
 {
+    #region Fields
     private readonly IShipmentService _service;
+    #endregion
 
+    #region Constructor
+    /// <summary>
+    /// Initializes the shipments controller dependencies.
+    /// </summary>
     public ShipmentsController(IShipmentService service)
     {
         _service = service;
     }
+    #endregion
 
+    #region Create and Query Endpoints
     [HttpPost]
     [Authorize]
     /// <summary>
-    /// Executes Create.
+    /// Creates a new shipment and scopes customer ownership for non-admin callers.
     /// </summary>
     public async Task<IActionResult> Create([FromBody] CreateShipmentDTO dto)
     {
@@ -50,7 +54,7 @@ public class ShipmentsController : ControllerBase
     [HttpGet]
     [Authorize(Roles = "ADMIN")]
     /// <summary>
-    /// Executes GetAll.
+    /// Returns a paginated list of all shipments (admin only).
     /// </summary>
     public async Task<IActionResult> GetAll([FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 5)
     {
@@ -60,7 +64,7 @@ public class ShipmentsController : ControllerBase
     [HttpGet("{id:int}")]
     [Authorize]
     /// <summary>
-    /// Executes Get.
+    /// Returns shipment details by identifier with role-based ownership checks.
     /// </summary>
     public async Task<IActionResult> Get(int id)
     {
@@ -84,7 +88,7 @@ public class ShipmentsController : ControllerBase
     [HttpGet("tracking/{trackingNumber}")]
     [Authorize]
     /// <summary>
-    /// Executes GetByTrackingNumber.
+    /// Returns a shipment by tracking number.
     /// </summary>
     public async Task<IActionResult> GetByTrackingNumber(string trackingNumber)
     {
@@ -108,7 +112,7 @@ public class ShipmentsController : ControllerBase
     [HttpGet("my")]
     [Authorize]
     /// <summary>
-    /// Executes GetMyShipments.
+    /// Returns shipments for the authenticated customer.
     /// </summary>
     public async Task<IActionResult> GetMyShipments([FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 5)
     {
@@ -123,17 +127,19 @@ public class ShipmentsController : ControllerBase
     [HttpGet("customer/{customerId:int}")]
     [Authorize(Roles = "ADMIN")]
     /// <summary>
-    /// Executes GetCustomerShipments.
+    /// Returns customer shipments.
     /// </summary>
     public async Task<IActionResult> GetCustomerShipments(int customerId, [FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 5)
     {
         return Ok(await _service.GetCustomerShipments(customerId, pageNumber, pageSize));
     }
+    #endregion
 
+    #region Management Endpoints
     [HttpPut("{id:int}")]
     [Authorize(Roles = "ADMIN")]
     /// <summary>
-    /// Executes Update.
+    /// Updates shipment details for administrator-driven corrections.
     /// </summary>
     public async Task<IActionResult> Update(int id, [FromBody] UpdateShipmentDTO dto)
     {
@@ -144,7 +150,7 @@ public class ShipmentsController : ControllerBase
     [HttpDelete("{id:int}")]
     [Authorize(Roles = "ADMIN")]
     /// <summary>
-    /// Executes Delete.
+    /// Deletes a shipment record from the administrative management flow.
     /// </summary>
     public async Task<IActionResult> Delete(int id)
     {
@@ -155,7 +161,7 @@ public class ShipmentsController : ControllerBase
     [HttpDelete("{id:int}/my")]
     [Authorize]
     /// <summary>
-    /// Executes DeleteMyShipment.
+    /// Deletes my shipment.
     /// </summary>
     public async Task<IActionResult> DeleteMyShipment(int id)
     {
@@ -167,11 +173,13 @@ public class ShipmentsController : ControllerBase
         await _service.DeleteCustomerShipment(id, customerId);
         return Ok();
     }
+    #endregion
 
+    #region Status Transition Endpoints
     [HttpPut("{id:int}/book")]
     [Authorize(Roles = "ADMIN")]
     /// <summary>
-    /// Executes BookShipment.
+    /// Confirms booking details for a shipment after creation (admin workflow).
     /// </summary>
     public async Task<IActionResult> BookShipment(int id, [FromBody] BookShipmentDTO dto)
     {
@@ -182,7 +190,7 @@ public class ShipmentsController : ControllerBase
     [HttpPut("{id:int}/pickup")]
     [Authorize(Roles = "ADMIN")]
     /// <summary>
-    /// Executes Pickup.
+    /// Sets shipment status to picked up; optional hub location is recorded on the timeline.
     /// </summary>
     public async Task<IActionResult> Pickup(int id, [FromBody] ShipmentStatusUpdateDTO? dto)
     {
@@ -193,7 +201,7 @@ public class ShipmentsController : ControllerBase
     [HttpPut("{id:int}/in-transit")]
     [Authorize(Roles = "ADMIN")]
     /// <summary>
-    /// Executes InTransit.
+    /// Sets shipment status to in transit; optional hub location is recorded on the timeline.
     /// </summary>
     public async Task<IActionResult> InTransit(int id, [FromBody] ShipmentStatusUpdateDTO? dto)
     {
@@ -204,7 +212,7 @@ public class ShipmentsController : ControllerBase
     [HttpPut("{id:int}/out-for-delivery")]
     [Authorize(Roles = "ADMIN")]
     /// <summary>
-    /// Executes OutForDelivery.
+    /// Sets shipment status to out for delivery; optional hub location is recorded on the timeline.
     /// </summary>
     public async Task<IActionResult> OutForDelivery(int id, [FromBody] ShipmentStatusUpdateDTO? dto)
     {
@@ -215,18 +223,20 @@ public class ShipmentsController : ControllerBase
     [HttpPut("{id:int}/deliver")]
     [Authorize(Roles = "ADMIN")]
     /// <summary>
-    /// Executes Deliver.
+    /// Marks the shipment as delivered; optional hub location is recorded on the timeline.
     /// </summary>
     public async Task<IActionResult> Deliver(int id, [FromBody] ShipmentStatusUpdateDTO? dto)
     {
         await _service.UpdateStatus(id, ShipmentStatus.Delivered, dto?.HubLocation);
         return Ok();
     }
+    #endregion
 
+    #region Customer Action Endpoints
     [HttpPut("{id:int}/schedule-pickup")]
     [Authorize]
     /// <summary>
-    /// Executes SchedulePickup.
+    /// Sets or updates the customer-requested pickup window for the shipment.
     /// </summary>
     public async Task<IActionResult> SchedulePickup(int id, [FromBody] PickupScheduleDTO dto)
     {
@@ -251,7 +261,7 @@ public class ShipmentsController : ControllerBase
     [HttpPost("{id:int}/raise-issue")]
     [Authorize]
     /// <summary>
-    /// Executes RaiseIssue.
+    /// Records a customer-reported issue (delay, damage, etc.) for support follow-up.
     /// </summary>
     public async Task<IActionResult> RaiseIssue(int id, [FromBody] ShipmentIssueDTO dto)
     {
@@ -278,7 +288,7 @@ public class ShipmentsController : ControllerBase
     [HttpGet("{id:int}/pickup-details")]
     [Authorize]
     /// <summary>
-    /// Executes PickupDetails.
+    /// Returns the scheduled pickup details for a shipment when a pickup has been arranged.
     /// </summary>
     public async Task<IActionResult> PickupDetails(int id)
     {
@@ -298,10 +308,12 @@ public class ShipmentsController : ControllerBase
 
         return Ok(shipment.PickupSchedule);
     }
+    #endregion
 
+    #region Utility Endpoints
     [HttpPost("calculate-rate")]
     /// <summary>
-    /// Executes CalculateRate.
+    /// Returns an estimated shipping rate from weight, dimensions, and service selection (unauthenticated).
     /// </summary>
     public IActionResult CalculateRate([FromBody] RateRequestDTO dto)
     {
@@ -311,10 +323,11 @@ public class ShipmentsController : ControllerBase
 
     [HttpGet("services")]
     /// <summary>
-    /// Executes GetServices.
+    /// Returns available shipping service options.
     /// </summary>
     public IActionResult GetServices()
     {
+        // Keep this endpoint lightweight so UI can render static service choices quickly.
         return Ok(new[]
         {
             new { name = "Standard", delivery = "3-5 days" },
@@ -322,6 +335,7 @@ public class ShipmentsController : ControllerBase
             new { name = "Economy", delivery = "5-7 days" }
         });
     }
+    #endregion
 }
 
 

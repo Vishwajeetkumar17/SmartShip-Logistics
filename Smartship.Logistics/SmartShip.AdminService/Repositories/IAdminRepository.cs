@@ -1,17 +1,14 @@
-/// <summary>
-/// Provides backend implementation for IAdminRepository.
-/// </summary>
-
 using SmartShip.AdminService.Models;
 
 namespace SmartShip.AdminService.Repositories;
 
 /// <summary>
-/// Represents IAdminRepository.
+/// Contract for admin persistence operations across hubs, service locations, and exceptions.
 /// </summary>
 public interface IAdminRepository
 {
-    // Hub methods
+    #region Hub Operations
+
     Task<List<Hub>> GetAllHubsAsync();
     Task<Hub?> GetHubByIdAsync(int hubId);
     Task AddHubAsync(Hub hub);
@@ -19,7 +16,10 @@ public interface IAdminRepository
     Task DeleteHubAsync(Hub hub);
     Task<bool> HubNameExistsAsync(string name, int? excludingHubId = null);
 
-    // Location methods
+    #endregion
+
+    #region Service Location Operations
+
     Task<List<ServiceLocation>> GetAllLocationsAsync();
     Task<ServiceLocation?> GetLocationByIdAsync(int locationId);
     Task AddLocationAsync(ServiceLocation location);
@@ -27,7 +27,10 @@ public interface IAdminRepository
     Task DeleteLocationAsync(ServiceLocation location);
     Task<bool> ZipCodeExistsAsync(string zipCode, int? excludingLocationId = null);
 
-    // Exception methods
+    #endregion
+
+    #region Exception Record Operations
+
     Task<List<ExceptionRecord>> GetActiveExceptionsAsync();
     Task<ExceptionRecord?> GetExceptionByIdAsync(int exceptionId);
     Task<ExceptionRecord?> GetExceptionByShipmentIdAsync(int shipmentId);
@@ -35,9 +38,14 @@ public interface IAdminRepository
     Task AddExceptionRecordAsync(ExceptionRecord record);
     Task UpdateExceptionRecordAsync(ExceptionRecord record);
 
-    // Aggregation Methods
+    #endregion
+
+    #region Aggregation Queries
+
     Task<int> GetTotalActiveHubsAsync();
     Task<int> GetTotalActiveExceptionsAsync();
+
+    #endregion
 }
 
 

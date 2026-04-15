@@ -1,7 +1,3 @@
-/// <summary>
-/// Provides backend implementation for ShipmentClient.
-/// </summary>
-
 using System.Net;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
@@ -14,7 +10,7 @@ using SmartShip.Shared.DTOs.Shipment;
 namespace SmartShip.AdminService.Integration;
 
 /// <summary>
-/// Represents ShipmentClient.
+/// Typed HTTP client for ShipmentService: lists shipments and forwards auth and correlation headers.
 /// </summary>
 public class ShipmentClient : IShipmentClient
 {
@@ -26,7 +22,7 @@ public class ShipmentClient : IShipmentClient
     };
 
     /// <summary>
-    /// Initializes a new instance of the shipment client class.
+    /// Initializes shipment service HTTP client dependencies.
     /// </summary>
     public ShipmentClient(HttpClient httpClient, IHttpContextAccessor httpContextAccessor)
     {
@@ -35,7 +31,7 @@ public class ShipmentClient : IShipmentClient
     }
 
     /// <summary>
-    /// Executes the GetAllShipmentsAsync operation.
+    /// Loads all shipments by walking ShipmentService paged results until no next page remains.
     /// </summary>
     public async Task<List<ShipmentExternalDto>> GetAllShipmentsAsync()
     {
@@ -68,7 +64,7 @@ public class ShipmentClient : IShipmentClient
     }
 
     /// <summary>
-    /// Executes the GetShipmentByIdAsync operation.
+    /// Fetches a single shipment by id; maps 404 to <see cref="NotFoundException"/>.
     /// </summary>
     public async Task<ShipmentExternalDto?> GetShipmentByIdAsync(int shipmentId)
     {

@@ -1,18 +1,14 @@
-/// <summary>
-/// Provides backend implementation for ShippingRateCalculator.
-/// </summary>
-
 using SmartShip.ShipmentService.DTOs;
 
 namespace SmartShip.ShipmentService.Helpers;
 
 /// <summary>
-/// Represents ShippingRateCalculator.
+/// Domain model for shipping rate calculator.
 /// </summary>
 public static class ShippingRateCalculator
 {
     /// <summary>
-    /// Executes the Calculate operation.
+    /// Processes calculate.
     /// </summary>
     public static decimal Calculate(RateRequestDTO dto)
     {

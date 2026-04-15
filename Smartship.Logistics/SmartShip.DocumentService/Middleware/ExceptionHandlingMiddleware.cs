@@ -1,7 +1,3 @@
-/// <summary>
-/// Provides backend implementation for ExceptionHandlingMiddleware.
-/// </summary>
-
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -11,12 +7,12 @@ using SmartShip.Shared.Common.Services;
 namespace SmartShip.DocumentService.Middleware;
 
 /// <summary>
-/// Represents ExceptionHandlingMiddleware.
+/// Middleware component for exception handling request pipeline behavior.
 /// </summary>
 public static class ExceptionHandlingMiddleware
 {
     /// <summary>
-    /// Executes the UseGlobalExceptionHandling operation.
+    /// Registers global exception handling.
     /// </summary>
     public static void UseGlobalExceptionHandling(this IApplicationBuilder app)
     {

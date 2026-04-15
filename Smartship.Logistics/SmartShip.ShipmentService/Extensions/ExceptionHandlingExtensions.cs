@@ -1,7 +1,3 @@
-/// <summary>
-/// Provides backend implementation for ExceptionHandlingExtensions.
-/// </summary>
-
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -10,12 +6,12 @@ using SmartShip.Shared.Common.Exceptions;
 namespace SmartShip.ShipmentService.Extensions;
 
 /// <summary>
-/// Represents ExceptionHandlingExtensions.
+/// Domain model for exception handling extensions.
 /// </summary>
 public static class ExceptionHandlingExtensions
 {
     /// <summary>
-    /// Executes the UseGlobalExceptionHandling operation.
+    /// Registers global exception handling.
     /// </summary>
     public static void UseGlobalExceptionHandling(this WebApplication app)
     {

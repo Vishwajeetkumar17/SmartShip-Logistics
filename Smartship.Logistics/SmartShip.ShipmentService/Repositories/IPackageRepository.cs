@@ -1,13 +1,9 @@
-/// <summary>
-/// Provides backend implementation for IPackageRepository.
-/// </summary>
-
 using SmartShip.ShipmentService.Models;
 
 namespace SmartShip.ShipmentService.Repositories;
 
 /// <summary>
-/// Represents IPackageRepository.
+/// Contract for ipackage persistence operations.
 /// </summary>
 public interface IPackageRepository
 {

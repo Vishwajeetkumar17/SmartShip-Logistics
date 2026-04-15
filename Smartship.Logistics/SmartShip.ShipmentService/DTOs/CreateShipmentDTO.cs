@@ -1,7 +1,3 @@
-/// <summary>
-/// Provides backend implementation for CreateShipmentDTO.
-/// </summary>
-
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
 using SmartShip.ShipmentService.Models;
@@ -9,52 +5,52 @@ using SmartShip.ShipmentService.Models;
 namespace SmartShip.ShipmentService.DTOs;
 
 /// <summary>
-/// Represents CreateShipmentDTO.
+/// Data transfer model for create shipment payloads.
 /// </summary>
 public class CreateShipmentDTO
 {
     /// <summary>
-    /// Gets or sets the customer id.
+    /// Identifier for customer.
     /// </summary>
     [JsonIgnore]
     public int CustomerId { get; set; }
 
     /// <summary>
-    /// Gets or sets the sender name.
+    /// Sender Name value.
     /// </summary>
     [Required]
     [MaxLength(200)]
     public string SenderName { get; set; } = string.Empty;
 
     /// <summary>
-    /// Gets or sets the sender phone.
+    /// Phone number used for contact.
     /// </summary>
     [Phone]
     [MaxLength(20)]
     public string? SenderPhone { get; set; }
 
     /// <summary>
-    /// Gets or sets the receiver name.
+    /// Receiver Name value.
     /// </summary>
     [Required]
     [MaxLength(200)]
     public string ReceiverName { get; set; } = string.Empty;
 
     /// <summary>
-    /// Gets or sets the receiver phone.
+    /// Phone number used for contact.
     /// </summary>
     [Phone]
     [MaxLength(20)]
     public string? ReceiverPhone { get; set; }
 
     /// <summary>
-    /// Gets or sets the estimated cost.
+    /// Estimated Cost value.
     /// </summary>
     [Range(0, 1000000)]
     public decimal? EstimatedCost { get; set; }
 
     /// <summary>
-    /// Gets or sets the service type.
+    /// Service Type value.
     /// </summary>
     [Required]
     [MaxLength(20)]
@@ -62,26 +58,26 @@ public class CreateShipmentDTO
     public string ServiceType { get; set; } = "Standard";
 
     /// <summary>
-    /// Gets or sets the sender address.
+    /// Sender Address value.
     /// </summary>
     [Required]
     public required Address SenderAddress { get; set; }
 
     /// <summary>
-    /// Gets or sets the receiver address.
+    /// Receiver Address value.
     /// </summary>
     [Required]
     public required Address ReceiverAddress { get; set; }
 
     /// <summary>
-    /// Gets or sets the packages.
+    /// Processes new.
     /// </summary>
     [Required]
     [MinLength(1, ErrorMessage = "At least one package is required")]
     public List<PackageDTO> Packages { get; set; } = new();
 
     /// <summary>
-    /// Gets or sets the pickup schedule.
+    /// Pickup Schedule value.
     /// </summary>
     public PickupScheduleDTO? PickupSchedule { get; set; }
 }

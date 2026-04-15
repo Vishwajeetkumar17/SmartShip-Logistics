@@ -1,7 +1,3 @@
-/// <summary>
-/// Provides backend implementation for DocumentShipmentEventsConsumerService.
-/// </summary>
-
 using Microsoft.Extensions.DependencyInjection;
 using SmartShip.DocumentService.Services;
 using SmartShip.EventBus.Abstractions;
@@ -12,7 +8,7 @@ using Serilog.Context;
 namespace SmartShip.DocumentService.BackgroundServices;
 
 /// <summary>
-/// Represents DocumentShipmentEventsConsumerService.
+/// Implements document shipment events consumer business workflows for SmartShip logistics operations.
 /// </summary>
 public sealed class DocumentShipmentEventsConsumerService : BackgroundService
 {

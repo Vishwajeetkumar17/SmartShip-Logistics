@@ -1,7 +1,3 @@
-/// <summary>
-/// Provides backend implementation for JwtTokenGenerator.
-/// </summary>
-
 using Microsoft.IdentityModel.Tokens;
 using SmartShip.Shared.Common.Configuration;
 using SmartShip.Shared.Common.Helpers;
@@ -12,7 +8,7 @@ using System.Text;
 namespace SmartShip.IdentityService.Security
 {
     /// <summary>
-    /// Represents JwtTokenGenerator.
+    /// Builds signed JWT access tokens from configured issuer, audience, and signing key.
     /// </summary>
     public class JwtTokenGenerator
     {
@@ -20,7 +16,7 @@ namespace SmartShip.IdentityService.Security
         private readonly JwtSettings _settings;
 
         /// <summary>
-        /// Initializes a new instance of the jwt token generator class.
+        /// Initializes the generator with JWT signing and lifetime settings.
         /// </summary>
         public JwtTokenGenerator(JwtSettings settings)
         {
@@ -28,7 +24,7 @@ namespace SmartShip.IdentityService.Security
         }
 
         /// <summary>
-        /// Executes the GenerateToken operation.
+        /// Creates a signed JWT containing user id, email, and role claims.
         /// </summary>
         public string GenerateToken(int userId, string email, string role)
         {

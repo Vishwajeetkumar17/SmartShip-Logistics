@@ -1,7 +1,3 @@
-/// <summary>
-/// Provides backend implementation for Program.
-/// </summary>
-
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
@@ -25,12 +21,12 @@ using System.Text;
 namespace SmartShip.Gateway;
 
 /// <summary>
-/// Represents Program.
+/// Application entry point that configures services and starts the host.
 /// </summary>
 public class Program
 {
     /// <summary>
-    /// Executes the Main operation.
+    /// Application entry point that configures services and starts the host.
     /// </summary>
     public static async Task Main(string[] args)
     {

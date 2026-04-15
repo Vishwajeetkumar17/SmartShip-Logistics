@@ -1,7 +1,3 @@
-/// <summary>
-/// Provides tracking timeline, status, and location operations for shipments.
-/// </summary>
-
 using SmartShip.Shared.Common.Exceptions;
 using SmartShip.Shared.Common.Helpers;
 using SmartShip.TrackingService.DTOs;
@@ -12,7 +8,7 @@ using SmartShip.TrackingService.Repositories;
 namespace SmartShip.TrackingService.Services;
 
 /// <summary>
-/// Coordinates shipment tracking events and location history operations.
+/// Implements tracking business workflows for SmartShip logistics operations.
 /// </summary>
 public class TrackingService : ITrackingService
 {
@@ -20,9 +16,9 @@ public class TrackingService : ITrackingService
 
 
 
-    #region TrackingService
+    #region Constructor
     /// <summary>
-    /// Initializes a new instance of the TrackingService service.
+    /// Implements tracking service workflows.
     /// </summary>
     public TrackingService(ITrackingRepository repository)
     {
@@ -32,9 +28,9 @@ public class TrackingService : ITrackingService
 
 
 
-    #region GetTrackingInfoAsync
+    #region Public API
     /// <summary>
-    /// Retrieves tracking info for the current request.
+    /// Returns tracking info async.
     /// </summary>
     public async Task<TrackingResponseDTO> GetTrackingInfoAsync(string trackingNumber)
     {
@@ -66,9 +62,9 @@ public class TrackingService : ITrackingService
 
 
 
-    #region GetTimelineAsync
+    #region Public API
     /// <summary>
-    /// Retrieves timeline for the current request.
+    /// Returns timeline async.
     /// </summary>
     public async Task<List<TrackingEventDTO>> GetTimelineAsync(string trackingNumber)
     {
@@ -86,9 +82,9 @@ public class TrackingService : ITrackingService
 
 
 
-    #region GetEventsAsync
+    #region Public API
     /// <summary>
-    /// Retrieves events for the current request.
+    /// Returns events async.
     /// </summary>
     public async Task<List<TrackingEventDTO>> GetEventsAsync(string trackingNumber)
     {
@@ -101,9 +97,9 @@ public class TrackingService : ITrackingService
 
 
 
-    #region AddTrackingEventAsync
+    #region Public API
     /// <summary>
-    /// Adds tracking event using service business rules.
+    /// Adds tracking event async.
     /// </summary>
     public async Task<TrackingEventDTO> AddTrackingEventAsync(TrackingEventDTO dto)
     {
@@ -125,9 +121,9 @@ public class TrackingService : ITrackingService
 
 
 
-    #region UpdateTrackingEventAsync
+    #region Public API
     /// <summary>
-    /// Updates tracking event using service business rules.
+    /// Updates tracking event async.
     /// </summary>
     public async Task UpdateTrackingEventAsync(int eventId, TrackingEventDTO dto)
     {
@@ -148,9 +144,9 @@ public class TrackingService : ITrackingService
 
 
 
-    #region DeleteTrackingEventAsync
+    #region Public API
     /// <summary>
-    /// Deletes tracking event using service business rules.
+    /// Deletes tracking event async.
     /// </summary>
     public async Task DeleteTrackingEventAsync(int eventId)
     {
@@ -163,9 +159,9 @@ public class TrackingService : ITrackingService
 
 
 
-    #region AddLocationUpdateAsync
+    #region Public API
     /// <summary>
-    /// Adds location update using service business rules.
+    /// Adds location update async.
     /// </summary>
     public async Task AddLocationUpdateAsync(LocationUpdateDTO dto)
     {
@@ -185,9 +181,9 @@ public class TrackingService : ITrackingService
 
 
 
-    #region GetLatestLocationAsync
+    #region Public API
     /// <summary>
-    /// Retrieves latest location for the current request.
+    /// Returns latest location async.
     /// </summary>
     public async Task<LocationUpdateDTO?> GetLatestLocationAsync(string trackingNumber)
     {
@@ -211,9 +207,9 @@ public class TrackingService : ITrackingService
 
 
 
-    #region GetDeliveryStatusAsync
+    #region Public API
     /// <summary>
-    /// Retrieves delivery status for the current request.
+    /// Returns delivery status async.
     /// </summary>
     public async Task<StatusUpdateDTO> GetDeliveryStatusAsync(string trackingNumber)
     {
@@ -235,9 +231,9 @@ public class TrackingService : ITrackingService
 
 
 
-    #region UpdateDeliveryStatusAsync
+    #region Public API
     /// <summary>
-    /// Updates delivery status using service business rules.
+    /// Updates delivery status async.
     /// </summary>
     public async Task UpdateDeliveryStatusAsync(string trackingNumber, StatusUpdateDTO dto)
     {
@@ -259,9 +255,9 @@ public class TrackingService : ITrackingService
 
 
 
-    #region MapToDto
+    #region Private Helpers
     /// <summary>
-    /// Maps to dto to the corresponding DTO or response model.
+    /// Maps to dto.
     /// </summary>
     private static TrackingEventDTO MapToDto(TrackingEvent trackingEvent)
     {

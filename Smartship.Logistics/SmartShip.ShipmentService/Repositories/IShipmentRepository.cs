@@ -1,13 +1,9 @@
-/// <summary>
-/// Provides backend implementation for IShipmentRepository.
-/// </summary>
-
 using SmartShip.ShipmentService.Models;
 
 namespace SmartShip.ShipmentService.Repositories;
 
 /// <summary>
-/// Represents IShipmentRepository.
+/// Contract for ishipment persistence operations.
 /// </summary>
 public interface IShipmentRepository
 {

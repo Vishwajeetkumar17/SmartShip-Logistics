@@ -1,7 +1,3 @@
-/// <summary>
-/// Provides backend implementation for ShipmentDelayExceptionMonitorService.
-/// </summary>
-
 using Microsoft.Extensions.Options;
 using SmartShip.EventBus.Abstractions;
 using SmartShip.EventBus.Constants;
@@ -14,7 +10,7 @@ using SmartShip.Shared.Common.Helpers;
 namespace SmartShip.ShipmentService.BackgroundServices;
 
 /// <summary>
-/// Represents ShipmentDelayExceptionMonitorService.
+/// Implements shipment delay exception monitor business workflows for SmartShip logistics operations.
 /// </summary>
 public sealed class ShipmentDelayExceptionMonitorService : BackgroundService
 {
@@ -32,6 +28,9 @@ public sealed class ShipmentDelayExceptionMonitorService : BackgroundService
         _logger = logger;
     }
 
+    /// <summary>
+    /// Processes execute asynchronously.
+    /// </summary>
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
         var intervalMinutes = _options.CheckIntervalMinutes <= 0 ? 10 : _options.CheckIntervalMinutes;
@@ -54,6 +53,9 @@ public sealed class ShipmentDelayExceptionMonitorService : BackgroundService
         }
     }
 
+    /// <summary>
+    /// Checks delayed shipments async.
+    /// </summary>
     private async Task CheckDelayedShipmentsAsync(CancellationToken cancellationToken)
     {
         using var scope = _scopeFactory.CreateScope();
@@ -98,6 +100,9 @@ public sealed class ShipmentDelayExceptionMonitorService : BackgroundService
         }
     }
 
+    /// <summary>
+    /// Resolves threshold hours.
+    /// </summary>
     private int ResolveThresholdHours(string? serviceType)
     {
         var normalized = (serviceType ?? string.Empty).Trim().ToLowerInvariant();
@@ -113,11 +118,6 @@ public sealed class ShipmentDelayExceptionMonitorService : BackgroundService
 
         return _options.StandardThresholdHours;
     }
-}
-
-
-
-    #endregion
 }
 
 

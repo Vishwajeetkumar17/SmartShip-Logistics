@@ -1,7 +1,3 @@
-/// <summary>
-/// Provides backend implementation for AuthController.
-/// </summary>
-
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.RateLimiting;
@@ -16,13 +12,16 @@ namespace SmartShip.IdentityService.Controllers
     [ApiController]
     [Route("auth")]
     /// <summary>
-    /// Represents AuthController.
+    /// Authentication and account API: registration, login, tokens, passwords, profiles, and admin user management.
     /// </summary>
     public class AuthController : ControllerBase
     {
         private readonly IAuthService _service;
         private readonly InternalServiceAuthSettings _internalServiceAuth;
 
+        /// <summary>
+        /// Initializes the controller with identity services and internal-service auth settings.
+        /// </summary>
         public AuthController(IAuthService service, IOptions<InternalServiceAuthSettings> internalServiceAuth)
         {
             _service = service;
@@ -33,7 +32,7 @@ namespace SmartShip.IdentityService.Controllers
         [EnableRateLimiting("AuthSensitive")]
         [HttpPost("signup")]
         /// <summary>
-        /// Executes RequestSignupOtp.
+        /// Sends a one-time code to the registrant's email so signup can be completed after verification.
         /// </summary>
         public async Task<IActionResult> RequestSignupOtp([FromBody] RegisterDTO dto)
         {
@@ -45,7 +44,7 @@ namespace SmartShip.IdentityService.Controllers
         [EnableRateLimiting("AuthSensitive")]
         [HttpPost("signup/verify-otp")]
         /// <summary>
-        /// Executes VerifySignupOtp.
+        /// Completes email-verified registration and returns access and refresh tokens.
         /// </summary>
         public async Task<IActionResult> VerifySignupOtp([FromBody] VerifySignupOtpDTO dto)
         {
@@ -56,7 +55,7 @@ namespace SmartShip.IdentityService.Controllers
         [EnableRateLimiting("AuthSensitive")]
         [HttpPost("google-signup")]
         /// <summary>
-        /// Executes GoogleSignup.
+        /// Registers or signs in a user using a validated Google ID token.
         /// </summary>
         public async Task<IActionResult> GoogleSignup([FromBody] GoogleSignupDTO dto)
         {
@@ -67,7 +66,7 @@ namespace SmartShip.IdentityService.Controllers
         [EnableRateLimiting("AuthSensitive")]
         [HttpPost("login")]
         /// <summary>
-        /// Executes Login.
+        /// Authenticates credentials and returns JWT access and refresh tokens.
         /// </summary>
         public async Task<IActionResult> Login([FromBody] LoginDTO dto)
         {
@@ -77,7 +76,7 @@ namespace SmartShip.IdentityService.Controllers
         [Authorize]
         [HttpPost("logout")]
         /// <summary>
-        /// Executes Logout.
+        /// Revokes the current user's refresh token session (caller must be authenticated).
         /// </summary>
         public async Task<IActionResult> Logout()
         {
@@ -93,7 +92,7 @@ namespace SmartShip.IdentityService.Controllers
         [EnableRateLimiting("AuthSensitive")]
         [HttpPost("refresh-token")]
         /// <summary>
-        /// Executes RefreshToken.
+        /// Issues a new access token (and rotated refresh token) using a valid refresh token.
         /// </summary>
         public async Task<IActionResult> RefreshToken([FromBody] RefreshTokenDTO dto)
         {
@@ -104,7 +103,7 @@ namespace SmartShip.IdentityService.Controllers
         [EnableRateLimiting("AuthSensitive")]
         [HttpPost("forgot-password")]
         /// <summary>
-        /// Executes ForgotPassword.
+        /// Sends a password reset link or code to the account email if it exists.
         /// </summary>
         public async Task<IActionResult> ForgotPassword([FromBody] ForgotPasswordDTO dto)
         {
@@ -116,7 +115,7 @@ namespace SmartShip.IdentityService.Controllers
         [EnableRateLimiting("AuthSensitive")]
         [HttpPost("reset-password")]
         /// <summary>
-        /// Executes ResetPassword.
+        /// Sets a new password using a valid reset token from the forgot-password flow.
         /// </summary>
         public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordDTO dto)
         {
@@ -127,7 +126,7 @@ namespace SmartShip.IdentityService.Controllers
         [Authorize]
         [HttpGet("profile")]
         /// <summary>
-        /// Executes Profile.
+        /// Returns the authenticated user's profile (name, email, role).
         /// </summary>
         public async Task<IActionResult> Profile()
         {
@@ -141,7 +140,7 @@ namespace SmartShip.IdentityService.Controllers
         [Authorize]
         [HttpPut("profile")]
         /// <summary>
-        /// Executes UpdateProfile.
+        /// Updates editable profile fields for the authenticated user.
         /// </summary>
         public async Task<IActionResult> UpdateProfile([FromBody] UpdateProfileDTO dto)
         {
@@ -156,7 +155,7 @@ namespace SmartShip.IdentityService.Controllers
         [Authorize]
         [HttpPut("change-password")]
         /// <summary>
-        /// Executes ChangePassword.
+        /// Changes the authenticated user's password after verifying the current password.
         /// </summary>
         public async Task<IActionResult> ChangePassword([FromBody] ChangePasswordDTO dto)
         {
@@ -171,7 +170,7 @@ namespace SmartShip.IdentityService.Controllers
         [Authorize(Roles = "ADMIN")]
         [HttpGet("users")]
         /// <summary>
-        /// Executes GetUsers.
+        /// Returns a paginated directory of users (admin only).
         /// </summary>
         public async Task<IActionResult> GetUsers([FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 5)
         {
@@ -181,7 +180,7 @@ namespace SmartShip.IdentityService.Controllers
         [Authorize(Roles = "ADMIN")]
         [HttpGet("users/{id:int}")]
         /// <summary>
-        /// Executes GetUserById.
+        /// Returns a single user by identifier (admin only).
         /// </summary>
         public async Task<IActionResult> GetUserById(int id)
         {
@@ -191,7 +190,7 @@ namespace SmartShip.IdentityService.Controllers
         [AllowAnonymous]
         [HttpGet("internal/users/{id:int}/contact")]
         /// <summary>
-        /// Executes GetUserContactInternal.
+        /// Returns minimal contact info for a user; restricted to trusted services via X-Internal-Api-Key.
         /// </summary>
         public async Task<IActionResult> GetUserContactInternal(
             int id,
@@ -221,7 +220,7 @@ namespace SmartShip.IdentityService.Controllers
         [Authorize(Roles = "ADMIN")]
         [HttpPost("users")]
         /// <summary>
-        /// Executes CreateUser.
+        /// Creates a user account as an administrator (admin only).
         /// </summary>
         public async Task<IActionResult> CreateUser([FromBody] CreateUserDTO dto)
         {
@@ -232,7 +231,7 @@ namespace SmartShip.IdentityService.Controllers
         [Authorize(Roles = "ADMIN")]
         [HttpPost("users/{id:int}/resend-welcome")]
         /// <summary>
-        /// Executes ResendWelcomeEmail.
+        /// Triggers another welcome or onboarding email for the specified user (admin only).
         /// </summary>
         public async Task<IActionResult> ResendWelcomeEmail(int id)
         {
@@ -243,7 +242,7 @@ namespace SmartShip.IdentityService.Controllers
         [Authorize(Roles = "ADMIN")]
         [HttpPut("users/{id:int}")]
         /// <summary>
-        /// Executes UpdateUser.
+        /// Updates profile and role-related fields for a user (admin only).
         /// </summary>
         public async Task<IActionResult> UpdateUser(int id, [FromBody] UpdateUserDTO dto)
         {
@@ -254,7 +253,7 @@ namespace SmartShip.IdentityService.Controllers
         [Authorize(Roles = "ADMIN")]
         [HttpDelete("users/{id:int}")]
         /// <summary>
-        /// Executes DeleteUser.
+        /// Deletes a user account by identifier (admin only).
         /// </summary>
         public async Task<IActionResult> DeleteUser(int id)
         {
@@ -265,7 +264,7 @@ namespace SmartShip.IdentityService.Controllers
         [Authorize(Roles = "ADMIN")]
         [HttpGet("roles")]
         /// <summary>
-        /// Executes GetRoles.
+        /// Returns a paginated list of role definitions (admin only).
         /// </summary>
         public async Task<IActionResult> GetRoles([FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 5)
         {
@@ -275,7 +274,7 @@ namespace SmartShip.IdentityService.Controllers
         [Authorize(Roles = "ADMIN")]
         [HttpPost("roles")]
         /// <summary>
-        /// Executes CreateRole.
+        /// Creates a new role (admin only).
         /// </summary>
         public async Task<IActionResult> CreateRole([FromBody] CreateRoleDTO dto)
         {
@@ -285,7 +284,7 @@ namespace SmartShip.IdentityService.Controllers
         [Authorize(Roles = "ADMIN")]
         [HttpPut("users/{id:int}/role")]
         /// <summary>
-        /// Executes AssignRole.
+        /// Assigns a role to a user (admin only).
         /// </summary>
         public async Task<IActionResult> AssignRole(int id, [FromBody] AssignRoleDTO dto)
         {

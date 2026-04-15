@@ -1,7 +1,3 @@
-/// <summary>
-/// Provides backend implementation for PackagesControllerTests.
-/// </summary>
-
 using System.Security.Claims;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -13,11 +9,11 @@ using SmartShip.ShipmentService.Services;
 namespace SmartShip.ShipmentService.UnitTests;
 
 /// <summary>
-    /// Represents the packages controller tests entity or configuration model.
-    /// </summary>
+/// Domain model for packages controller tests.
+/// </summary>
     [TestFixture]
 /// <summary>
-/// Represents PackagesControllerTests.
+/// Domain model for packages controller tests.
 /// </summary>
 public class PackagesControllerTests
 {
@@ -26,11 +22,11 @@ public class PackagesControllerTests
     private PackagesController _controller = null!;
 
     /// <summary>
-    /// Asynchronously handles the set up process.
+    /// Sets up.
     /// </summary>
     [SetUp]
     /// <summary>
-    /// Executes the SetUp operation.
+    /// Sets up.
     /// </summary>
     public void SetUp()
     {
@@ -40,11 +36,11 @@ public class PackagesControllerTests
     }
 
     /// <summary>
-    /// Asynchronously handles the add package_when shipment missing_returns not found process.
+    /// Adds package when shipment missing returns not found.
     /// </summary>
     [Test]
     /// <summary>
-    /// Executes the AddPackage_WhenShipmentMissing_ReturnsNotFound operation.
+    /// Adds package when shipment missing returns not found.
     /// </summary>
     public async Task AddPackage_WhenShipmentMissing_ReturnsNotFound()
     {
@@ -57,11 +53,11 @@ public class PackagesControllerTests
     }
 
     /// <summary>
-    /// Asynchronously handles the add package_when customer claim missing_returns unauthorized process.
+    /// Adds package when customer claim missing returns unauthorized.
     /// </summary>
     [Test]
     /// <summary>
-    /// Executes the AddPackage_WhenCustomerClaimMissing_ReturnsUnauthorized operation.
+    /// Adds package when customer claim missing returns unauthorized.
     /// </summary>
     public async Task AddPackage_WhenCustomerClaimMissing_ReturnsUnauthorized()
     {
@@ -74,11 +70,11 @@ public class PackagesControllerTests
     }
 
     /// <summary>
-    /// Asynchronously handles the add package_when non owner_returns forbid process.
+    /// Adds package when non owner returns forbid.
     /// </summary>
     [Test]
     /// <summary>
-    /// Executes the AddPackage_WhenNonOwner_ReturnsForbid operation.
+    /// Adds package when non owner returns forbid.
     /// </summary>
     public async Task AddPackage_WhenNonOwner_ReturnsForbid()
     {
@@ -91,11 +87,11 @@ public class PackagesControllerTests
     }
 
     /// <summary>
-    /// Asynchronously handles the add package_when owner_calls service and returns ok process.
+    /// Adds package when owner calls service and returns ok.
     /// </summary>
     [Test]
     /// <summary>
-    /// Executes the AddPackage_WhenOwner_CallsServiceAndReturnsOk operation.
+    /// Adds package when owner calls service and returns ok.
     /// </summary>
     public async Task AddPackage_WhenOwner_CallsServiceAndReturnsOk()
     {
@@ -111,11 +107,11 @@ public class PackagesControllerTests
     }
 
     /// <summary>
-    /// Asynchronously handles the get packages_when admin_returns packages process.
+    /// Returns packages when admin returns packages.
     /// </summary>
     [Test]
     /// <summary>
-    /// Executes the GetPackages_WhenAdmin_ReturnsPackages operation.
+    /// Returns packages when admin returns packages.
     /// </summary>
     public async Task GetPackages_WhenAdmin_ReturnsPackages()
     {

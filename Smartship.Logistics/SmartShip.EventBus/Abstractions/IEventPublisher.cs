@@ -1,11 +1,7 @@
-/// <summary>
-/// Provides backend implementation for IEventPublisher.
-/// </summary>
-
 namespace SmartShip.EventBus.Abstractions;
 
 /// <summary>
-/// Represents IEventPublisher.
+/// Contract for event publisher behavior.
 /// </summary>
 public interface IEventPublisher
 {

@@ -3,12 +3,12 @@ using SmartShip.Shared.DTOs;
 namespace SmartShip.Shared.Common.Extensions;
 
 /// <summary>
-/// Extension methods for pagination operations
+/// Domain model for pagination extensions.
 /// </summary>
 public static class PaginationExtensions
 {
     /// <summary>
-    /// Converts an enumerable collection to a paginated response
+    /// Code summary.
     /// </summary>
     /// <typeparam name="T">Type of items in the collection</typeparam>
     /// <param name="items">The enumerable collection to paginate</param>
@@ -48,7 +48,7 @@ public static class PaginationExtensions
     }
 
     /// <summary>
-    /// Applies pagination to an IQueryable collection
+    /// Code summary.
     /// </summary>
     /// <typeparam name="T">Type of items in the queryable</typeparam>
     /// <param name="query">The IQueryable collection</param>

@@ -1,19 +1,15 @@
-/// <summary>
-/// Provides backend implementation for ClaimsPrincipalExtensions.
-/// </summary>
-
 using System.Security.Claims;
 using SmartShip.Shared.Common.Security;
 
 namespace SmartShip.Shared.Common.Extensions;
 
 /// <summary>
-/// Represents ClaimsPrincipalExtensions.
+/// Domain model for claims principal extensions.
 /// </summary>
 public static class ClaimsPrincipalExtensions
 {
     /// <summary>
-    /// Executes the TryGetUserId operation.
+    /// Attempts to get user id.
     /// </summary>
     public static bool TryGetUserId(this ClaimsPrincipal user, out int userId)
     {
@@ -31,7 +27,7 @@ public static class ClaimsPrincipalExtensions
     }
 
     /// <summary>
-    /// Executes the TryGetCustomerId operation.
+    /// Attempts to get customer id.
     /// </summary>
     public static bool TryGetCustomerId(this ClaimsPrincipal user, out int customerId)
     {
@@ -39,7 +35,7 @@ public static class ClaimsPrincipalExtensions
     }
 
     /// <summary>
-    /// Executes the IsAdmin operation.
+    /// Processes is admin.
     /// </summary>
     public static bool IsAdmin(this ClaimsPrincipal user)
     {

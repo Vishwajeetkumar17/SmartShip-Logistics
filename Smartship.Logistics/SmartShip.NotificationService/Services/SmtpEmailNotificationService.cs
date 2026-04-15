@@ -1,7 +1,3 @@
-/// <summary>
-/// Provides backend implementation for SmtpEmailNotificationService.
-/// </summary>
-
 using System.Net;
 using System.Net.Mail;
 using Microsoft.Extensions.Logging;
@@ -11,7 +7,7 @@ using SmartShip.NotificationService.Configurations;
 namespace SmartShip.NotificationService.Services;
 
 /// <summary>
-/// Represents SmtpEmailNotificationService.
+/// Implements smtp email notification business workflows for SmartShip logistics operations.
 /// </summary>
 public sealed class SmtpEmailNotificationService : IEmailNotificationService
 {
@@ -27,7 +23,7 @@ public sealed class SmtpEmailNotificationService : IEmailNotificationService
     }
 
     /// <summary>
-    /// Executes SendEmailAsync.
+    /// Sends email async.
     /// </summary>
     public async Task SendEmailAsync(IEnumerable<string> recipients, string subject, string body, CancellationToken cancellationToken)
     {

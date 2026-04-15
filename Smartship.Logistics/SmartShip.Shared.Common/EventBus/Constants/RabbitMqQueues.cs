@@ -1,11 +1,7 @@
-/// <summary>
-/// Provides backend implementation for RabbitMqQueues.
-/// </summary>
-
 namespace SmartShip.EventBus.Constants;
 
 /// <summary>
-/// Represents RabbitMqQueues.
+/// Domain model for rabbit mq queues.
 /// </summary>
 public static class RabbitMqQueues
 {

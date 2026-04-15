@@ -1,11 +1,7 @@
-/// <summary>
-/// Provides backend implementation for IEventConsumer.
-/// </summary>
-
 namespace SmartShip.EventBus.Abstractions;
 
 /// <summary>
-/// Represents IEventConsumer.
+/// Contract for event consumer behavior.
 /// </summary>
 public interface IEventConsumer
 {

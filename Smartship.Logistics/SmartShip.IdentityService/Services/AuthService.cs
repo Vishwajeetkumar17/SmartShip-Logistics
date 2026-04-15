@@ -1,7 +1,3 @@
-/// <summary>
-/// Implements identity workflows including registration (OTP-based), login, token issuance/refresh, and profile management.
-/// </summary>
-
 using Google.Apis.Auth;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
@@ -25,7 +21,7 @@ using System.Security.Cryptography;
 namespace SmartShip.IdentityService.Services
 {
     /// <summary>
-    /// Coordinates identity workflows and enforces service-level rules for authentication and account operations.
+    /// Implements registration, credential verification, JWT and refresh tokens, password flows, and admin user management.
     /// </summary>
     public class AuthService : IAuthService
     {
@@ -42,7 +38,7 @@ namespace SmartShip.IdentityService.Services
 
         #region Construction
         /// <summary>
-        /// Initializes a new instance of <see cref="AuthService"/>.
+        /// Wires repositories, JWT issuance, email delivery, Google verification, event publishing, and OTP cache.
         /// </summary>
         public AuthService(
             IUserRepository repository,
@@ -64,7 +60,7 @@ namespace SmartShip.IdentityService.Services
         #endregion
         #region RequestSignupOtpAsync
         /// <summary>
-        /// Generates and emails a signup OTP, caching a pending signup entry with expiry and attempt limits.
+        /// Stores a pending signup with hashed OTP and emails a verification code (conflicts if email exists).
         /// </summary>
         public async Task RequestSignupOtpAsync(RegisterDTO dto)
         {
@@ -104,7 +100,7 @@ namespace SmartShip.IdentityService.Services
         #endregion
         #region VerifySignupOtpAndRegisterAsync
         /// <summary>
-        /// Verifies the signup OTP, creates the user if valid, publishes a user-created event, and returns tokens.
+        /// Validates the signup OTP, creates the user, clears cache state, and returns auth tokens.
         /// </summary>
         public async Task<AuthDTO> VerifySignupOtpAndRegisterAsync(VerifySignupOtpDTO dto)
         {
@@ -174,7 +170,7 @@ namespace SmartShip.IdentityService.Services
         #endregion
         #region RegisterAsync
         /// <summary>
-        /// Disabled direct signup entrypoint. Use OTP-based registration instead.
+        /// Legacy entry point; registration is completed via OTP verification instead of a direct call.
         /// </summary>
         public async Task<AuthDTO> RegisterAsync(RegisterDTO dto)
         {
@@ -183,7 +179,7 @@ namespace SmartShip.IdentityService.Services
         #endregion
         #region LoginAsync
         /// <summary>
-        /// Authenticates a user by email/password and issues access/refresh tokens.
+        /// Validates credentials, issues JWT and refresh token, and updates last-login metadata.
         /// </summary>
         public async Task<AuthDTO> LoginAsync(LoginDTO dto)
         {
@@ -205,7 +201,7 @@ namespace SmartShip.IdentityService.Services
         #endregion
         #region GoogleSignupAsync
         /// <summary>
-        /// Validates a Google ID token, creates the user if needed, and issues access/refresh tokens.
+        /// Verifies the Google ID token, creates or links the user, and returns auth tokens.
         /// </summary>
         public async Task<AuthDTO> GoogleSignupAsync(GoogleSignupDTO dto)
         {
@@ -266,7 +262,7 @@ namespace SmartShip.IdentityService.Services
         #endregion
         #region LogoutAsync
         /// <summary>
-        /// Revokes active refresh tokens for the user.
+        /// Revokes active refresh tokens for the user so refresh-based access stops.
         /// </summary>
         public async Task LogoutAsync(int userId)
         {
@@ -284,7 +280,7 @@ namespace SmartShip.IdentityService.Services
         #endregion
         #region ChangePasswordAsync
         /// <summary>
-        /// Changes the user's password after validating the existing password.
+        /// Verifies current password, updates stored hash, and may invalidate existing refresh tokens.
         /// </summary>
         public async Task<bool> ChangePasswordAsync(int userId, ChangePasswordDTO dto)
         {
@@ -301,7 +297,7 @@ namespace SmartShip.IdentityService.Services
         #endregion
         #region GetProfileAsync
         /// <summary>
-        /// Retrieves the user's profile details.
+        /// Returns profile async.
         /// </summary>
         public async Task<AuthDTO> GetProfileAsync(int userId)
         {
@@ -312,7 +308,7 @@ namespace SmartShip.IdentityService.Services
         #endregion
         #region UpdateProfileAsync
         /// <summary>
-        /// Updates basic profile fields (name/phone).
+        /// Updates profile async.
         /// </summary>
         public async Task UpdateProfileAsync(int userId, UpdateProfileDTO dto)
         {
@@ -327,7 +323,7 @@ namespace SmartShip.IdentityService.Services
 
         #region GetUsersAsync
         /// <summary>
-        /// Retrieves users for the current request.
+        /// Returns users async.
         /// </summary>
         public async Task<PaginatedResponse<AuthDTO>> GetUsersAsync(int pageNumber = 1, int pageSize = 5)
         {
@@ -354,7 +350,7 @@ namespace SmartShip.IdentityService.Services
 
         #region GetUserByIdAsync
         /// <summary>
-        /// Retrieves user by id for the current request.
+        /// Returns user by id async.
         /// </summary>
         public async Task<AuthDTO> GetUserByIdAsync(int id)
         {
@@ -368,7 +364,7 @@ namespace SmartShip.IdentityService.Services
 
         #region CreateUserAsync
         /// <summary>
-        /// Creates user using service business rules.
+        /// Creates user async.
         /// </summary>
         public async Task CreateUserAsync(CreateUserDTO dto)
         {
@@ -398,7 +394,7 @@ namespace SmartShip.IdentityService.Services
 
         #region ResendWelcomeEmailAsync
         /// <summary>
-        /// Performs resend welcome email as part of the AuthService workflow.
+        /// Sends the welcome or onboarding email again for an existing user (admin).
         /// </summary>
         public async Task ResendWelcomeEmailAsync(int id)
         {
@@ -412,7 +408,7 @@ namespace SmartShip.IdentityService.Services
 
         #region UpdateUserAsync
         /// <summary>
-        /// Updates user using service business rules.
+        /// Updates user async.
         /// </summary>
         public async Task UpdateUserAsync(int id, UpdateUserDTO dto)
         {
@@ -435,7 +431,7 @@ namespace SmartShip.IdentityService.Services
 
         #region AssignRoleAsync
         /// <summary>
-        /// Performs assign role as part of the AuthService workflow.
+        /// Assigns role async.
         /// </summary>
         public async Task AssignRoleAsync(int id, int roleId)
         {
@@ -451,7 +447,7 @@ namespace SmartShip.IdentityService.Services
 
         #region DeleteUserAsync
         /// <summary>
-        /// Deletes user using service business rules.
+        /// Deletes user async.
         /// </summary>
         public async Task DeleteUserAsync(int id)
         {
@@ -464,7 +460,7 @@ namespace SmartShip.IdentityService.Services
 
         #region GetRolesAsync
         /// <summary>
-        /// Retrieves roles for the current request.
+        /// Returns roles async.
         /// </summary>
         public async Task<PaginatedResponse<RoleDTO>> GetRolesAsync(int pageNumber = 1, int pageSize = 5)
         {
@@ -491,7 +487,7 @@ namespace SmartShip.IdentityService.Services
 
         #region CreateRoleAsync
         /// <summary>
-        /// Creates role using service business rules.
+        /// Creates role async.
         /// </summary>
         public async Task<RoleDTO> CreateRoleAsync(CreateRoleDTO dto)
         {
@@ -516,7 +512,7 @@ namespace SmartShip.IdentityService.Services
 
         #region RefreshTokenAsync
         /// <summary>
-        /// Refreshes token using service business rules.
+        /// Validates refresh token hash, rotates tokens, and returns a new JWT pair.
         /// </summary>
         public async Task<AuthDTO> RefreshTokenAsync(string refreshToken)
         {
@@ -544,7 +540,7 @@ namespace SmartShip.IdentityService.Services
 
         #region ForgotPasswordAsync
         /// <summary>
-        /// Initiates recovery for password using service business rules.
+        /// Creates a password-reset token and emails instructions (no user enumeration on success).
         /// </summary>
         public async Task ForgotPasswordAsync(string email)
         {
@@ -593,7 +589,7 @@ namespace SmartShip.IdentityService.Services
 
         #region ResetPasswordAsync
         /// <summary>
-        /// Resets password using service business rules.
+        /// Applies a new password when the reset token is valid and not expired.
         /// </summary>
         public async Task ResetPasswordAsync(ResetPasswordDTO dto)
         {
@@ -620,7 +616,7 @@ namespace SmartShip.IdentityService.Services
 
         #region GetRequiredUserAsync
         /// <summary>
-        /// Retrieves required user for the current request.
+        /// Returns required user async.
         /// </summary>
         private async Task<User> GetRequiredUserAsync(int userId)
         {
@@ -636,7 +632,7 @@ namespace SmartShip.IdentityService.Services
 
         #region EnsureRoleExistsAsync
         /// <summary>
-        /// Performs ensure role exists as part of the AuthService workflow.
+        /// Ensures role exists async.
         /// </summary>
         private async Task EnsureRoleExistsAsync(int roleId)
         {
@@ -650,7 +646,7 @@ namespace SmartShip.IdentityService.Services
 
         #region GetRoleNameAsync
         /// <summary>
-        /// Retrieves role name for the current request.
+        /// Returns role name async.
         /// </summary>
         private async Task<string> GetRoleNameAsync(int roleId)
         {
@@ -666,7 +662,7 @@ namespace SmartShip.IdentityService.Services
 
         #region GetDefaultCustomerRoleIdAsync
         /// <summary>
-        /// Retrieves default customer role id for the current request.
+        /// Returns default customer role id async.
         /// </summary>
         private async Task<int> GetDefaultCustomerRoleIdAsync()
         {
@@ -693,7 +689,7 @@ namespace SmartShip.IdentityService.Services
 
         #region CreateAndStoreRefreshTokenAsync
         /// <summary>
-        /// Creates and store refresh token using service business rules.
+        /// Creates and store refresh token async.
         /// </summary>
         private async Task<string> CreateAndStoreRefreshTokenAsync(int userId)
         {
@@ -717,7 +713,7 @@ namespace SmartShip.IdentityService.Services
 
         #region CreateSecureToken
         /// <summary>
-        /// Creates secure token using service business rules.
+        /// Creates secure token.
         /// </summary>
         private static string CreateSecureToken()
         {
@@ -729,7 +725,7 @@ namespace SmartShip.IdentityService.Services
 
         #region CreateUniquePasswordResetOtpAsync
         /// <summary>
-        /// Creates unique password reset otp using service business rules.
+        /// Creates unique password reset otp async.
         /// </summary>
         private async Task<string> CreateUniquePasswordResetOtpAsync()
         {
@@ -755,7 +751,7 @@ namespace SmartShip.IdentityService.Services
 
         #region NormalizeEmail
         /// <summary>
-        /// Performs normalize email as part of the AuthService workflow.
+        /// Normalizes email.
         /// </summary>
         private static string NormalizeEmail(string email)
         {
@@ -767,7 +763,7 @@ namespace SmartShip.IdentityService.Services
 
         #region GetSignupOtpCacheKey
         /// <summary>
-        /// Retrieves signup otp cache key for the current request.
+        /// Returns signup otp cache key.
         /// </summary>
         private static string GetSignupOtpCacheKey(string normalizedEmail)
         {
@@ -779,7 +775,7 @@ namespace SmartShip.IdentityService.Services
 
         #region CreateOtp
         /// <summary>
-        /// Creates otp using service business rules.
+        /// Creates otp.
         /// </summary>
         private static string CreateOtp()
         {
@@ -791,7 +787,7 @@ namespace SmartShip.IdentityService.Services
 
         #region PublishUserCreatedEventAsync
         /// <summary>
-        /// Publishes user created event using service business rules.
+        /// Publishes user created event async.
         /// </summary>
         private async Task PublishUserCreatedEventAsync(User user, string roleName)
         {
@@ -812,7 +808,7 @@ namespace SmartShip.IdentityService.Services
 
         #region MapToAuthDto
         /// <summary>
-        /// Maps to auth dto to the corresponding DTO or response model.
+        /// Maps authentication result data to the response DTO.
         /// </summary>
         private static AuthDTO MapToAuthDto(User user, string roleName, string token, string refreshToken)
         {
@@ -831,41 +827,17 @@ namespace SmartShip.IdentityService.Services
 
         #region Nested types
         /// <summary>
-        /// Cached signup state used to complete OTP-based registration.
+        /// Cached signup draft and OTP verification state before the user row is created.
         /// </summary>
         private sealed class PendingSignupOtp
         {
-            /// <summary>
-            /// Gets or sets the name.
-            /// </summary>
             public string Name { get; init; } = string.Empty;
-            /// <summary>
-            /// Gets or sets the email.
-            /// </summary>
             public string Email { get; init; } = string.Empty;
-            /// <summary>
-            /// Gets or sets the phone.
-            /// </summary>
             public string Phone { get; init; } = string.Empty;
-            /// <summary>
-            /// Gets or sets the password hash.
-            /// </summary>
             public string PasswordHash { get; init; } = string.Empty;
-            /// <summary>
-            /// Gets or sets the role id.
-            /// </summary>
             public int RoleId { get; init; }
-            /// <summary>
-            /// Gets or sets the otp hash.
-            /// </summary>
             public string OtpHash { get; init; } = string.Empty;
-            /// <summary>
-            /// Gets or sets the expires at.
-            /// </summary>
             public DateTime ExpiresAt { get; init; }
-            /// <summary>
-            /// Gets or sets the remaining attempts.
-            /// </summary>
             public int RemainingAttempts { get; set; }
         }
         #endregion

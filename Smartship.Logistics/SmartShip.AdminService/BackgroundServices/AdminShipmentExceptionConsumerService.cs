@@ -1,7 +1,3 @@
-/// <summary>
-/// Provides backend implementation for AdminShipmentExceptionConsumerService.
-/// </summary>
-
 using Microsoft.Extensions.DependencyInjection;
 using SmartShip.AdminService.Services;
 using SmartShip.EventBus.Abstractions;
@@ -12,7 +8,7 @@ using Serilog.Context;
 namespace SmartShip.AdminService.BackgroundServices;
 
 /// <summary>
-/// Represents AdminShipmentExceptionConsumerService.
+/// Implements admin shipment exception consumer business workflows for SmartShip logistics operations.
 /// </summary>
 public sealed class AdminShipmentExceptionConsumerService : BackgroundService
 {
@@ -40,6 +36,9 @@ public sealed class AdminShipmentExceptionConsumerService : BackgroundService
             stoppingToken);
     }
 
+    /// <summary>
+    /// Processes shipment exception asynchronously.
+    /// </summary>
     private async Task HandleShipmentExceptionAsync(ShipmentExceptionEvent @event, CancellationToken cancellationToken)
     {
         // ✓ Generate correlation ID for event processing
