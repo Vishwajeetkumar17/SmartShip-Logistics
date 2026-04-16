@@ -219,27 +219,12 @@
   border-radius: 0 0 4px 4px;
 }
 
-/* ===== Left Panel â€” Brand ===== */
-
-
-
+/* ===== Left Panel Brand ===== */
 
 .brand-icon .material-icons {
   font-size: 1.1rem;
 }
-
-
-
-
-
-/* ===== Left Panel â€” Hero ===== */
-
-
-
-
-
-
-/* ===== Auth Card â€” Typography ===== */
+/* ===== Auth Card Typography ===== */
 .auth-card h1 {
   font-size: 1.5rem;
   font-weight: 700;
