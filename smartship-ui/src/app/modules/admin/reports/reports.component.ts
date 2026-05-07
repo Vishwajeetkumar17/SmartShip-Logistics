@@ -155,7 +155,9 @@ export class ReportsComponent implements OnInit {
     }).pipe(
       finalize(() => this._isLoading.set(false))
     ).subscribe((data) => {
-      const liveShipments = Array.isArray(data?.shipments) ? data.shipments as ShipmentResponse[] : [];      this._rawShipments.set(liveShipments);      const liveStats = this.buildLiveStats(liveShipments);
+      const liveShipments = Array.isArray(data?.shipments) ? data.shipments as ShipmentResponse[] : [];      
+      this._rawShipments.set(liveShipments);      
+      const liveStats = this.buildLiveStats(liveShipments);
 
       const total = this.toNumber(
         liveStats.totalShipments,

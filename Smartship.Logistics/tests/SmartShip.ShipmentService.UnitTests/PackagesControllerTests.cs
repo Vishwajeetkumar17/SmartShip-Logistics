@@ -12,9 +12,6 @@ namespace SmartShip.ShipmentService.UnitTests;
 /// Domain model for packages controller tests.
 /// </summary>
     [TestFixture]
-/// <summary>
-/// Domain model for packages controller tests.
-/// </summary>
 public class PackagesControllerTests
 {
     private Mock<IPackageService> _packageServiceMock = null!;
@@ -25,9 +22,6 @@ public class PackagesControllerTests
     /// Sets up.
     /// </summary>
     [SetUp]
-    /// <summary>
-    /// Sets up.
-    /// </summary>
     public void SetUp()
     {
         _packageServiceMock = new Mock<IPackageService>(MockBehavior.Strict);
@@ -39,9 +33,6 @@ public class PackagesControllerTests
     /// Adds package when shipment missing returns not found.
     /// </summary>
     [Test]
-    /// <summary>
-    /// Adds package when shipment missing returns not found.
-    /// </summary>
     public async Task AddPackage_WhenShipmentMissing_ReturnsNotFound()
     {
         SetUser(_controller, userId: 3, isAdmin: false);
@@ -56,9 +47,6 @@ public class PackagesControllerTests
     /// Adds package when customer claim missing returns unauthorized.
     /// </summary>
     [Test]
-    /// <summary>
-    /// Adds package when customer claim missing returns unauthorized.
-    /// </summary>
     public async Task AddPackage_WhenCustomerClaimMissing_ReturnsUnauthorized()
     {
         SetUser(_controller, userId: null, isAdmin: false);
@@ -73,9 +61,6 @@ public class PackagesControllerTests
     /// Adds package when non owner returns forbid.
     /// </summary>
     [Test]
-    /// <summary>
-    /// Adds package when non owner returns forbid.
-    /// </summary>
     public async Task AddPackage_WhenNonOwner_ReturnsForbid()
     {
         SetUser(_controller, userId: 5, isAdmin: false);
@@ -90,9 +75,6 @@ public class PackagesControllerTests
     /// Adds package when owner calls service and returns ok.
     /// </summary>
     [Test]
-    /// <summary>
-    /// Adds package when owner calls service and returns ok.
-    /// </summary>
     public async Task AddPackage_WhenOwner_CallsServiceAndReturnsOk()
     {
         SetUser(_controller, userId: 3, isAdmin: false);
@@ -110,9 +92,6 @@ public class PackagesControllerTests
     /// Returns packages when admin returns packages.
     /// </summary>
     [Test]
-    /// <summary>
-    /// Returns packages when admin returns packages.
-    /// </summary>
     public async Task GetPackages_WhenAdmin_ReturnsPackages()
     {
         SetUser(_controller, userId: 1, isAdmin: true);

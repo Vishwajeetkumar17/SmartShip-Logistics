@@ -11,9 +11,6 @@ namespace SmartShip.TrackingService.UnitTests;
 /// Domain model for tracking controller tests.
 /// </summary>
     [TestFixture]
-/// <summary>
-/// Domain model for tracking controller tests.
-/// </summary>
 public class TrackingControllerTests
 {
     private Mock<ITrackingService> _serviceMock = null!;
@@ -23,9 +20,6 @@ public class TrackingControllerTests
     /// Sets up.
     /// </summary>
     [SetUp]
-    /// <summary>
-    /// Sets up.
-    /// </summary>
     public void SetUp()
     {
         _serviceMock = new Mock<ITrackingService>(MockBehavior.Strict);
@@ -36,9 +30,6 @@ public class TrackingControllerTests
     /// Returns tracking info returns ok with payload.
     /// </summary>
     [Test]
-    /// <summary>
-    /// Returns tracking info returns ok with payload.
-    /// </summary>
     public async Task GetTrackingInfo_ReturnsOkWithPayload()
     {
         var response = new TrackingResponseDTO { TrackingNumber = "TRK123", CurrentStatus = "InTransit" };
@@ -55,9 +46,6 @@ public class TrackingControllerTests
     /// Adds event calls service and returns ok.
     /// </summary>
     [Test]
-    /// <summary>
-    /// Adds event calls service and returns ok.
-    /// </summary>
     public async Task AddEvent_CallsServiceAndReturnsOk()
     {
         var dto = new TrackingEventDTO
@@ -81,9 +69,6 @@ public class TrackingControllerTests
     /// Updates status normalizes tracking number in dto.
     /// </summary>
     [Test]
-    /// <summary>
-    /// Updates status normalizes tracking number in dto.
-    /// </summary>
     public async Task UpdateStatus_NormalizesTrackingNumberInDto()
     {
         var dto = new StatusUpdateDTO { Status = "Delivered", Location = "Delivery Center - Mumbai", Description = "Delivered to customer" };
@@ -102,9 +87,6 @@ public class TrackingControllerTests
     /// Updates status when tracking number blank throws validation exception.
     /// </summary>
     [Test]
-    /// <summary>
-    /// Updates status when tracking number blank throws validation exception.
-    /// </summary>
     public void UpdateStatus_WhenTrackingNumberBlank_ThrowsValidationException()
     {
         var dto = new StatusUpdateDTO { Status = "Delivered", Location = "Delivery Center - Bangalore" };

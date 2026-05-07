@@ -15,9 +15,6 @@ namespace SmartShip.ShipmentService.UnitTests;
 /// Domain model for shipments controller tests.
 /// </summary>
     [TestFixture]
-/// <summary>
-/// Domain model for shipments controller tests.
-/// </summary>
 public class ShipmentsControllerTests
 {
     private Mock<IShipmentService> _shipmentServiceMock = null!;
@@ -27,9 +24,6 @@ public class ShipmentsControllerTests
     /// Sets up.
     /// </summary>
     [SetUp]
-    /// <summary>
-    /// Sets up.
-    /// </summary>
     public void SetUp()
     {
         _shipmentServiceMock = new Mock<IShipmentService>(MockBehavior.Strict);
@@ -40,9 +34,6 @@ public class ShipmentsControllerTests
     /// Creates when customer claim missing returns unauthorized.
     /// </summary>
     [Test]
-    /// <summary>
-    /// Creates when customer claim missing returns unauthorized.
-    /// </summary>
     public async Task Create_WhenCustomerClaimMissing_ReturnsUnauthorized()
     {
         SetUser(_controller, userId: null, isAdmin: false);
@@ -59,9 +50,6 @@ public class ShipmentsControllerTests
     /// Creates when non admin assigns customer id and returns ok.
     /// </summary>
     [Test]
-    /// <summary>
-    /// Creates when non admin assigns customer id and returns ok.
-    /// </summary>
     public async Task Create_WhenNonAdmin_AssignsCustomerIdAndReturnsOk()
     {
         SetUser(_controller, userId: 22, isAdmin: false);
@@ -82,9 +70,6 @@ public class ShipmentsControllerTests
     /// Returns when shipment not found returns not found.
     /// </summary>
     [Test]
-    /// <summary>
-    /// Returns when shipment not found returns not found.
-    /// </summary>
     public async Task Get_WhenShipmentNotFound_ReturnsNotFound()
     {
         SetUser(_controller, userId: 1, isAdmin: true);
@@ -100,9 +85,6 @@ public class ShipmentsControllerTests
     /// Returns when non admin accesses another customer returns forbid.
     /// </summary>
     [Test]
-    /// <summary>
-    /// Returns when non admin accesses another customer returns forbid.
-    /// </summary>
     public async Task Get_WhenNonAdminAccessesAnotherCustomer_ReturnsForbid()
     {
         SetUser(_controller, userId: 5, isAdmin: false);
@@ -117,9 +99,6 @@ public class ShipmentsControllerTests
     /// Returns when non admin accesses own shipment returns ok.
     /// </summary>
     [Test]
-    /// <summary>
-    /// Returns when non admin accesses own shipment returns ok.
-    /// </summary>
     public async Task Get_WhenNonAdminAccessesOwnShipment_ReturnsOk()
     {
         SetUser(_controller, userId: 5, isAdmin: false);
@@ -134,9 +113,6 @@ public class ShipmentsControllerTests
     /// Schedules pickup when shipment missing returns not found.
     /// </summary>
     [Test]
-    /// <summary>
-    /// Schedules pickup when shipment missing returns not found.
-    /// </summary>
     public async Task SchedulePickup_WhenShipmentMissing_ReturnsNotFound()
     {
         SetUser(_controller, userId: 5, isAdmin: false);
@@ -151,9 +127,6 @@ public class ShipmentsControllerTests
     /// Schedules pickup when non owner returns forbid.
     /// </summary>
     [Test]
-    /// <summary>
-    /// Schedules pickup when non owner returns forbid.
-    /// </summary>
     public async Task SchedulePickup_WhenNonOwner_ReturnsForbid()
     {
         SetUser(_controller, userId: 1, isAdmin: false);
@@ -168,9 +141,6 @@ public class ShipmentsControllerTests
     /// Schedules pickup when admin calls service and returns ok.
     /// </summary>
     [Test]
-    /// <summary>
-    /// Schedules pickup when admin calls service and returns ok.
-    /// </summary>
     public async Task SchedulePickup_WhenAdmin_CallsServiceAndReturnsOk()
     {
         SetUser(_controller, userId: 1, isAdmin: true);
@@ -187,9 +157,6 @@ public class ShipmentsControllerTests
     /// Submits issue when unauthenticated returns unauthorized.
     /// </summary>
     [Test]
-    /// <summary>
-    /// Submits issue when unauthenticated returns unauthorized.
-    /// </summary>
     public async Task RaiseIssue_WhenUnauthenticated_ReturnsUnauthorized()
     {
         SetUser(_controller, userId: null, isAdmin: false);
@@ -203,9 +170,6 @@ public class ShipmentsControllerTests
     /// Submits issue when owner calls service and returns ok.
     /// </summary>
     [Test]
-    /// <summary>
-    /// Submits issue when owner calls service and returns ok.
-    /// </summary>
     public async Task RaiseIssue_WhenOwner_CallsServiceAndReturnsOk()
     {
         SetUser(_controller, userId: 3, isAdmin: false);
@@ -224,9 +188,6 @@ public class ShipmentsControllerTests
     /// Processes pickup for when called uses picked up status.
     /// </summary>
     [Test]
-    /// <summary>
-    /// Processes pickup for when called uses picked up status.
-    /// </summary>
     public async Task Pickup_WhenCalled_UsesPickedUpStatus()
     {
         SetUser(_controller, userId: 1, isAdmin: true);
@@ -242,9 +203,6 @@ public class ShipmentsControllerTests
     /// Returns all when called returns paginated response.
     /// </summary>
     [Test]
-    /// <summary>
-    /// Returns all when called returns paginated response.
-    /// </summary>
     public async Task GetAll_WhenCalled_ReturnsPaginatedResponse()
     {
         SetUser(_controller, userId: 1, isAdmin: true);
@@ -286,9 +244,6 @@ public class ShipmentsControllerTests
     /// Returns all when page number2 returns second page.
     /// </summary>
     [Test]
-    /// <summary>
-    /// Returns all when page number2 returns second page.
-    /// </summary>
     public async Task GetAll_WhenPageNumber2_ReturnsSecondPage()
     {
         SetUser(_controller, userId: 1, isAdmin: true);
@@ -329,9 +284,6 @@ public class ShipmentsControllerTests
     /// Returns all when last page verifies pagination metadata.
     /// </summary>
     [Test]
-    /// <summary>
-    /// Returns all when last page verifies pagination metadata.
-    /// </summary>
     public async Task GetAll_WhenLastPage_VerifiesPaginationMetadata()
     {
         SetUser(_controller, userId: 1, isAdmin: true);
@@ -371,9 +323,6 @@ public class ShipmentsControllerTests
     /// Returns all when custom page size returns smaller pages.
     /// </summary>
     [Test]
-    /// <summary>
-    /// Returns all when custom page size returns smaller pages.
-    /// </summary>
     public async Task GetAll_WhenCustomPageSize_ReturnsSmallerPages()
     {
         SetUser(_controller, userId: 1, isAdmin: true);

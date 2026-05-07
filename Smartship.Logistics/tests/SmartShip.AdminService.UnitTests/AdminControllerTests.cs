@@ -14,9 +14,6 @@ namespace SmartShip.AdminService.UnitTests;
 /// Domain model for admin controller tests.
 /// </summary>
     [TestFixture]
-/// <summary>
-/// Domain model for admin controller tests.
-/// </summary>
 public class AdminControllerTests
 {
     private Mock<IAdminService> _serviceMock = null!;
@@ -27,9 +24,6 @@ public class AdminControllerTests
     /// Sets up.
     /// </summary>
     [SetUp]
-    /// <summary>
-    /// Sets up.
-    /// </summary>
     public void SetUp()
     {
         _serviceMock = new Mock<IAdminService>(MockBehavior.Strict);
@@ -42,9 +36,6 @@ public class AdminControllerTests
     /// Processes logging demo calls service and returns ok.
     /// </summary>
     [Test]
-    /// <summary>
-    /// Processes logging demo calls service and returns ok.
-    /// </summary>
     public void LoggingDemo_CallsServiceAndReturnsOk()
     {
         _serviceMock
@@ -60,9 +51,6 @@ public class AdminControllerTests
     /// Returns dashboard returns ok.
     /// </summary>
     [Test]
-    /// <summary>
-    /// Returns dashboard returns ok.
-    /// </summary>
     public async Task GetDashboard_ReturnsOk()
     {
         _serviceMock.Setup(s => s.GetDashboardMetricsAsync()).ReturnsAsync(new DashboardMetricsDTO());
@@ -76,9 +64,6 @@ public class AdminControllerTests
     /// Creates hub calls service and returns ok.
     /// </summary>
     [Test]
-    /// <summary>
-    /// Creates hub calls service and returns ok.
-    /// </summary>
     public async Task CreateHub_CallsServiceAndReturnsOk()
     {
         var dto = new CreateHubDTO { Name = "Delhi Distribution Center", Address = "Plot 456, Sector 28, Delhi, DL 110001" };
@@ -94,9 +79,6 @@ public class AdminControllerTests
     /// Deletes hub calls service and returns ok.
     /// </summary>
     [Test]
-    /// <summary>
-    /// Deletes hub calls service and returns ok.
-    /// </summary>
     public async Task DeleteHub_CallsServiceAndReturnsOk()
     {
         _serviceMock.Setup(s => s.DeleteHubAsync(6)).Returns(Task.CompletedTask);
@@ -111,9 +93,6 @@ public class AdminControllerTests
     /// Resolves exception sets shipment id before calling service.
     /// </summary>
     [Test]
-    /// <summary>
-    /// Resolves exception sets shipment id before calling service.
-    /// </summary>
     public async Task ResolveException_SetsShipmentIdBeforeCallingService()
     {
         ResolveExceptionDTO? capturedDto = null;
@@ -133,9 +112,6 @@ public class AdminControllerTests
     /// Marks shipment passes reason to service.
     /// </summary>
     [Test]
-    /// <summary>
-    /// Marks shipment passes reason to service.
-    /// </summary>
     public async Task DelayShipment_PassesReasonToService()
     {
         _serviceMock
@@ -152,9 +128,6 @@ public class AdminControllerTests
     /// Returns reports returns ok.
     /// </summary>
     [Test]
-    /// <summary>
-    /// Returns reports returns ok.
-    /// </summary>
     public async Task GetReports_ReturnsOk()
     {
         _serviceMock.Setup(s => s.GetReportsOverviewAsync()).ReturnsAsync(new { Total = 3 });
@@ -168,9 +141,6 @@ public class AdminControllerTests
     /// Returns all hubs when called returns paginated response.
     /// </summary>
     [Test]
-    /// <summary>
-    /// Returns all hubs when called returns paginated response.
-    /// </summary>
     public async Task GetAllHubs_WhenCalled_ReturnsPaginatedResponse()
     {
         var hubs = Enumerable.Range(1, 8).Select(i => new HubResponseDTO
@@ -209,9 +179,6 @@ public class AdminControllerTests
     /// Returns all locations when page number2 returns second page.
     /// </summary>
     [Test]
-    /// <summary>
-    /// Returns all locations when page number2 returns second page.
-    /// </summary>
     public async Task GetAllLocations_WhenPageNumber2_ReturnsSecondPage()
     {
         var locations = Enumerable.Range(6, 5).Select(i => new LocationResponseDTO
@@ -249,9 +216,6 @@ public class AdminControllerTests
     /// Returns exceptions when called returns paginated exceptions.
     /// </summary>
     [Test]
-    /// <summary>
-    /// Returns exceptions when called returns paginated exceptions.
-    /// </summary>
     public async Task GetExceptions_WhenCalled_ReturnsPaginatedExceptions()
     {
         var exceptions = Enumerable.Range(1, 3).Select(i => new ExceptionRecordResponseDTO

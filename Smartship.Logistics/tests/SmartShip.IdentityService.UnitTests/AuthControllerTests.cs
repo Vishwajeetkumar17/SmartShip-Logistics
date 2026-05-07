@@ -15,9 +15,6 @@ namespace SmartShip.IdentityService.UnitTests;
 /// Domain model for auth controller tests.
 /// </summary>
     [TestFixture]
-/// <summary>
-/// Domain model for auth controller tests.
-/// </summary>
 public class AuthControllerTests
 {
     private Mock<IAuthService> _authServiceMock = null!;
@@ -26,9 +23,6 @@ public class AuthControllerTests
     /// Sets up.
     /// </summary>
     [SetUp]
-    /// <summary>
-    /// Sets up.
-    /// </summary>
     public void SetUp()
     {
         _authServiceMock = new Mock<IAuthService>(MockBehavior.Strict);
@@ -38,9 +32,6 @@ public class AuthControllerTests
     /// Processes logout when user id claim missing returns unauthorized.
     /// </summary>
     [Test]
-    /// <summary>
-    /// Processes logout when user id claim missing returns unauthorized.
-    /// </summary>
     public async Task Logout_WhenUserIdClaimMissing_ReturnsUnauthorized()
     {
         var controller = BuildController(apiKey: "internal-key");
@@ -56,9 +47,6 @@ public class AuthControllerTests
     /// Processes logout when user id present calls service and returns ok.
     /// </summary>
     [Test]
-    /// <summary>
-    /// Processes logout when user id present calls service and returns ok.
-    /// </summary>
     public async Task Logout_WhenUserIdPresent_CallsServiceAndReturnsOk()
     {
         var controller = BuildController(apiKey: "internal-key");
@@ -75,9 +63,6 @@ public class AuthControllerTests
     /// Processes profile when user id missing returns unauthorized.
     /// </summary>
     [Test]
-    /// <summary>
-    /// Processes profile when user id missing returns unauthorized.
-    /// </summary>
     public async Task Profile_WhenUserIdMissing_ReturnsUnauthorized()
     {
         var controller = BuildController(apiKey: "internal-key");
@@ -92,9 +77,6 @@ public class AuthControllerTests
     /// Processes request signup otp calls service and returns ok.
     /// </summary>
     [Test]
-    /// <summary>
-    /// Processes request signup otp calls service and returns ok.
-    /// </summary>
     public async Task RequestSignupOtp_CallsServiceAndReturnsOk()
     {
         var controller = BuildController(apiKey: "internal-key");
@@ -110,9 +92,6 @@ public class AuthControllerTests
     /// Returns user contact internal when api key config missing returns500.
     /// </summary>
     [Test]
-    /// <summary>
-    /// Returns user contact internal when api key config missing returns500.
-    /// </summary>
     public async Task GetUserContactInternal_WhenApiKeyConfigMissing_Returns500()
     {
         var controller = BuildController(apiKey: string.Empty);
@@ -128,9 +107,6 @@ public class AuthControllerTests
     /// Returns user contact internal when api key invalid returns unauthorized.
     /// </summary>
     [Test]
-    /// <summary>
-    /// Returns user contact internal when api key invalid returns unauthorized.
-    /// </summary>
     public async Task GetUserContactInternal_WhenApiKeyInvalid_ReturnsUnauthorized()
     {
         var controller = BuildController(apiKey: "expected");
@@ -144,9 +120,6 @@ public class AuthControllerTests
     /// Returns user contact internal when api key valid returns mapped contact.
     /// </summary>
     [Test]
-    /// <summary>
-    /// Returns user contact internal when api key valid returns mapped contact.
-    /// </summary>
     public async Task GetUserContactInternal_WhenApiKeyValid_ReturnsMappedContact()
     {
         var controller = BuildController(apiKey: "expected");
@@ -172,9 +145,6 @@ public class AuthControllerTests
     /// Assigns role calls service and returns ok.
     /// </summary>
     [Test]
-    /// <summary>
-    /// Assigns role calls service and returns ok.
-    /// </summary>
     public async Task AssignRole_CallsServiceAndReturnsOk()
     {
         var controller = BuildController(apiKey: "internal-key");
@@ -190,9 +160,6 @@ public class AuthControllerTests
     /// Returns users when called returns paginated users.
     /// </summary>
     [Test]
-    /// <summary>
-    /// Returns users when called returns paginated users.
-    /// </summary>
     public async Task GetUsers_WhenCalled_ReturnsPaginatedUsers()
     {
         var controller = BuildController(apiKey: "internal-key");
@@ -233,9 +200,6 @@ public class AuthControllerTests
     /// Returns roles when called returns paginated roles.
     /// </summary>
     [Test]
-    /// <summary>
-    /// Returns roles when called returns paginated roles.
-    /// </summary>
     public async Task GetRoles_WhenCalled_ReturnsPaginatedRoles()
     {
         var controller = BuildController(apiKey: "internal-key");

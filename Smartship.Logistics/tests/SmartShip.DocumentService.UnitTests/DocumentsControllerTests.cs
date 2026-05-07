@@ -14,9 +14,7 @@ namespace SmartShip.DocumentService.UnitTests;
 /// Domain model for documents controller tests.
 /// </summary>
     [TestFixture]
-/// <summary>
-/// Domain model for documents controller tests.
-/// </summary>
+
 public class DocumentsControllerTests
 {
     private Mock<IDocumentService> _serviceMock = null!;
@@ -26,9 +24,6 @@ public class DocumentsControllerTests
     /// Sets up.
     /// </summary>
     [SetUp]
-    /// <summary>
-    /// Sets up.
-    /// </summary>
     public void SetUp()
     {
         _serviceMock = new Mock<IDocumentService>(MockBehavior.Strict);
@@ -39,9 +34,6 @@ public class DocumentsControllerTests
     /// Uploads document when no user claim returns unauthorized.
     /// </summary>
     [Test]
-    /// <summary>
-    /// Uploads document when no user claim returns unauthorized.
-    /// </summary>
     public async Task UploadDocument_WhenNoUserClaim_ReturnsUnauthorized()
     {
         SetUser(_controller, userId: null, isAdmin: false);
@@ -55,9 +47,6 @@ public class DocumentsControllerTests
     /// Uploads document when user exists calls service and returns ok.
     /// </summary>
     [Test]
-    /// <summary>
-    /// Uploads document when user exists calls service and returns ok.
-    /// </summary>
     public async Task UploadDocument_WhenUserExists_CallsServiceAndReturnsOk()
     {
         SetUser(_controller, userId: 11, isAdmin: false);
@@ -77,9 +66,6 @@ public class DocumentsControllerTests
     /// Returns document when not owner returns forbid.
     /// </summary>
     [Test]
-    /// <summary>
-    /// Returns document when not owner returns forbid.
-    /// </summary>
     public async Task GetDocument_WhenNotOwner_ReturnsForbid()
     {
         SetUser(_controller, userId: 7, isAdmin: false);
@@ -94,9 +80,6 @@ public class DocumentsControllerTests
     /// Returns documents by shipment when no user claim returns unauthorized.
     /// </summary>
     [Test]
-    /// <summary>
-    /// Returns documents by shipment when no user claim returns unauthorized.
-    /// </summary>
     public async Task GetDocumentsByShipment_WhenNoUserClaim_ReturnsUnauthorized()
     {
         SetUser(_controller, userId: null, isAdmin: false);
@@ -119,9 +102,6 @@ public class DocumentsControllerTests
     /// Returns documents by shipment when non admin filters to current user.
     /// </summary>
     [Test]
-    /// <summary>
-    /// Returns documents by shipment when non admin filters to current user.
-    /// </summary>
     public async Task GetDocumentsByShipment_WhenNonAdmin_FiltersToCurrentUser()
     {
         SetUser(_controller, userId: 4, isAdmin: false);
@@ -154,9 +134,6 @@ public class DocumentsControllerTests
     /// Returns delivery proof when no user claim returns unauthorized.
     /// </summary>
     [Test]
-    /// <summary>
-    /// Returns delivery proof when no user claim returns unauthorized.
-    /// </summary>
     public async Task GetDeliveryProof_WhenNoUserClaim_ReturnsUnauthorized()
     {
         SetUser(_controller, userId: null, isAdmin: false);
@@ -171,9 +148,6 @@ public class DocumentsControllerTests
     /// Returns delivery proof when user not owner returns forbid.
     /// </summary>
     [Test]
-    /// <summary>
-    /// Returns delivery proof when user not owner returns forbid.
-    /// </summary>
     public async Task GetDeliveryProof_WhenUserNotOwner_ReturnsForbid()
     {
         SetUser(_controller, userId: 3, isAdmin: false);
@@ -199,9 +173,6 @@ public class DocumentsControllerTests
     /// Returns delivery proof when user owns shipment returns ok.
     /// </summary>
     [Test]
-    /// <summary>
-    /// Returns delivery proof when user owns shipment returns ok.
-    /// </summary>
     public async Task GetDeliveryProof_WhenUserOwnsShipment_ReturnsOk()
     {
         SetUser(_controller, userId: 3, isAdmin: false);
@@ -231,9 +202,6 @@ public class DocumentsControllerTests
     /// Returns documents by shipment when called returns paginated documents.
     /// </summary>
     [Test]
-    /// <summary>
-    /// Returns documents by shipment when called returns paginated documents.
-    /// </summary>
     public async Task GetDocumentsByShipment_WhenCalled_ReturnsPaginatedDocuments()
     {
         SetUser(_controller, userId: 1, isAdmin: true);
@@ -273,9 +241,6 @@ public class DocumentsControllerTests
     /// Returns documents by shipment when page number2 returns second page.
     /// </summary>
     [Test]
-    /// <summary>
-    /// Returns documents by shipment when page number2 returns second page.
-    /// </summary>
     public async Task GetDocumentsByShipment_WhenPageNumber2_ReturnsSecondPage()
     {
         SetUser(_controller, userId: 1, isAdmin: true);

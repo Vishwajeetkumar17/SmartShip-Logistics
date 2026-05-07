@@ -9,9 +9,6 @@ namespace SmartShip.TrackingService.UnitTests;
 /// Domain model for tracking repository smoke tests.
 /// </summary>
     [TestFixture]
-/// <summary>
-/// Domain model for tracking repository smoke tests.
-/// </summary>
 public class TrackingRepositorySmokeTests
 {
     private static TrackingRepository CreateRepository(out TrackingDbContext context)
@@ -28,9 +25,6 @@ public class TrackingRepositorySmokeTests
     /// Adds event async should store all shipment stages including repeated transit.
     /// </summary>
     [Test]
-    /// <summary>
-    /// Adds event async should store all shipment stages including repeated transit.
-    /// </summary>
     public async Task AddEventAsync_ShouldStoreAllShipmentStagesIncludingRepeatedTransit()
     {
         var repository = CreateRepository(out var context);
@@ -66,9 +60,6 @@ public class TrackingRepositorySmokeTests
     /// Adds event async should ignore near identical duplicate event.
     /// </summary>
     [Test]
-    /// <summary>
-    /// Adds event async should ignore near identical duplicate event.
-    /// </summary>
     public async Task AddEventAsync_ShouldIgnoreNearIdenticalDuplicateEvent()
     {
         var repository = CreateRepository(out var context);
